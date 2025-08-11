@@ -535,7 +535,12 @@
             <h1>🔧 Laundry Engineers Quiz</h1>
             <p>Knowledge Check - Industrial Equipment Maintenance</p>
             <!-- Welcoming George -->
-<img class="george-welcome" src="images/george-welcome.png" alt="Welcome George">
+            <svg class="george-welcome" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- This is a placeholder for the actual George image -->
+                <rect width="400" height="400" fill="#3498db" rx="20"/>
+                <text x="200" y="200" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Welcome George</text>
+                <text x="200" y="230" text-anchor="middle" fill="white" font-size="12">Replace with actual image</text>
+            </svg>
         </div>
         
         <div class="admin-section">
@@ -556,7 +561,7 @@
                     
                     <div class="instructions">
                         <strong>For Engineers:</strong> Just enter your name and take the quiz - everything is automatic!<br>
-                        <strong>For Admin:</strong> Update questions in the "Quiz Questions" tab of your Google Sheet.
+                        <strong>For Admin:</strong> Update quiz names in "Quiz List" tab, and questions in "Quiz Questions" tab of your Google Sheet.
                     </div>
                 </div>
                 
@@ -564,6 +569,7 @@
                     <button class="btn btn-primary" onclick="openGoogleSheet()">📊 Open Google Sheet</button>
                     <button class="btn btn-primary" onclick="selectQuiz()">📝 Select Quiz</button>
                     <button class="btn btn-primary" onclick="refreshQuestions()">🔄 Refresh Questions</button>
+                    <button class="btn btn-primary" onclick="manageQuizzes()">📋 Manage Quiz List</button>
                     <button class="btn btn-danger" onclick="clearLocalData()">🗑️ Clear Cache</button>
                 </div>
             </div>
@@ -626,12 +632,237 @@
             questionsSheetUrl: 'https://script.google.com/macros/s/AKfycbzCTRJ_166V_E9M4nEdyZRO-X-PqTxnpa_tDfkxSGKjOhblURlU_wuDAWNOTe2IomVe/exec?action=getQuestions'
         };
 
-        // George images
-const GEORGE_IMAGES = {
-    welcome: `<img src="images/george-welcome.png" alt="Welcome George" style="width: 150px; height: auto;">`,
-    celebrate: `<img src="images/george-celebrate.png" alt="Celebrating George" style="width: 150px; height: auto;">`,
-    frustrated: `<img src="images/george-frustrated.png" alt="Frustrated George" style="width: 150px; height: auto;">`
-};
+        // George images as SVG
+        const GEORGE_IMAGES = {
+            welcome: `<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background -->
+                <rect width="400" height="500" fill="#f0f8ff" rx="20"/>
+                
+                <!-- Speech bubble -->
+                <ellipse cx="200" cy="80" rx="180" ry="60" fill="white" stroke="#333" stroke-width="3"/>
+                <polygon points="150,130 170,160 130,140" fill="white" stroke="#333" stroke-width="3"/>
+                <text x="200" y="65" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">RIGHT THEN,</text>
+                <text x="200" y="85" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">LET'S SEE WHAT</text>
+                <text x="200" y="105" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">YOU KNOW!</text>
+                
+                <!-- Head -->
+                <ellipse cx="200" cy="220" rx="70" ry="75" fill="#F4C2A1"/>
+                <ellipse cx="200" cy="200" rx="65" ry="50" fill="#F4C2A1"/>
+                
+                <!-- Glasses -->
+                <rect x="150" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
+                <rect x="210" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
+                <line x1="190" y1="205" x2="210" y2="205" stroke="#333" stroke-width="4"/>
+                <line x1="130" y1="205" x2="150" y2="205" stroke="#333" stroke-width="3"/>
+                <line x1="250" y1="205" x2="270" y2="205" stroke="#333" stroke-width="3"/>
+                
+                <!-- Eyes -->
+                <circle cx="170" cy="205" r="8" fill="#333"/>
+                <circle cx="230" cy="205" r="8" fill="#333"/>
+                <circle cx="172" cy="202" r="2" fill="white"/>
+                <circle cx="232" cy="202" r="2" fill="white"/>
+                
+                <!-- Nose -->
+                <ellipse cx="200" cy="220" rx="8" ry="12" fill="#E6A87C"/>
+                
+                <!-- Smile -->
+                <path d="M 180 240 Q 200 260 220 240" stroke="#333" stroke-width="4" fill="none"/>
+                <ellipse cx="200" cy="250" rx="20" ry="8" fill="#333"/>
+                <rect x="185" y="245" width="30" height="10" fill="white"/>
+                <line x1="190" y1="245" x2="190" y2="255" stroke="#333" stroke-width="1"/>
+                <line x1="195" y1="245" x2="195" y2="255" stroke="#333" stroke-width="1"/>
+                <line x1="205" y1="245" x2="205" y2="255" stroke="#333" stroke-width="1"/>
+                <line x1="210" y1="245" x2="210" y2="255" stroke="#333" stroke-width="1"/>
+                
+                <!-- Beard -->
+                <ellipse cx="200" cy="280" rx="40" ry="25" fill="#8B4513"/>
+                
+                <!-- Ears -->
+                <ellipse cx="130" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
+                <ellipse cx="270" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
+                
+                <!-- Body -->
+                <ellipse cx="200" cy="380" rx="80" ry="90" fill="#2C5282"/>
+                
+                <!-- Collar -->
+                <path d="M 160 320 L 200 340 L 240 320 L 240 360 L 160 360 Z" fill="#2C5282"/>
+                <polygon points="180,340 200,355 220,340 220,350 200,365 180,350" fill="#1A365D"/>
+                
+                <!-- Polo buttons -->
+                <circle cx="200" cy="345" r="3" fill="#1A365D"/>
+                <circle cx="200" cy="360" r="3" fill="#1A365D"/>
+                
+                <!-- Arms -->
+                <ellipse cx="120" cy="360" rx="25" ry="60" fill="#2C5282"/>
+                <ellipse cx="280" cy="360" rx="25" ry="60" fill="#2C5282"/>
+                
+                <!-- Hands -->
+                <ellipse cx="110" cy="420" rx="18" ry="22" fill="#F4C2A1"/>
+                <ellipse cx="290" cy="420" rx="18" ry="22" fill="#F4C2A1"/>
+                
+                <!-- Thumbs up -->
+                <ellipse cx="300" cy="400" rx="8" ry="15" fill="#F4C2A1"/>
+                <rect x="295" y="395" width="10" height="10" fill="#F4C2A1"/>
+                
+                <!-- Lower body -->
+                <ellipse cx="200" cy="460" rx="50" ry="30" fill="#4A90C2"/>
+            </svg>`,
+            
+            celebrate: `<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background -->
+                <rect width="400" height="500" fill="#fff8dc" rx="20"/>
+                
+                <!-- Speech bubble -->
+                <ellipse cx="200" cy="80" rx="150" ry="50" fill="white" stroke="#333" stroke-width="3"/>
+                <polygon points="170,120 190,150 150,130" fill="white" stroke="#333" stroke-width="3"/>
+                <text x="200" y="70" text-anchor="middle" font-family="Arial Black" font-size="18" font-weight="bold" fill="#333">OUTSTANDING!</text>
+                <text x="200" y="95" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">BUY YOURSELF A PINT!</text>
+                
+                <!-- Head -->
+                <ellipse cx="200" cy="220" rx="70" ry="75" fill="#F4C2A1"/>
+                <ellipse cx="200" cy="200" rx="65" ry="50" fill="#F4C2A1"/>
+                
+                <!-- Glasses -->
+                <rect x="150" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
+                <rect x="210" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
+                <line x1="190" y1="205" x2="210" y2="205" stroke="#333" stroke-width="4"/>
+                <line x1="130" y1="205" x2="150" y2="205" stroke="#333" stroke-width="3"/>
+                <line x1="250" y1="205" x2="270" y2="205" stroke="#333" stroke-width="3"/>
+                
+                <!-- Eyes (happy) -->
+                <circle cx="170" cy="205" r="8" fill="#333"/>
+                <circle cx="230" cy="205" r="8" fill="#333"/>
+                <circle cx="172" cy="202" r="2" fill="white"/>
+                <circle cx="232" cy="202" r="2" fill="white"/>
+                
+                <!-- Nose -->
+                <ellipse cx="200" cy="220" rx="8" ry="12" fill="#E6A87C"/>
+                
+                <!-- Big smile -->
+                <path d="M 175 240 Q 200 270 225 240" stroke="#333" stroke-width="4" fill="none"/>
+                <ellipse cx="200" cy="255" rx="25" ry="12" fill="#333"/>
+                <rect x="180" y="248" width="40" height="14" fill="white"/>
+                <line x1="185" y1="248" x2="185" y2="262" stroke="#333" stroke-width="1"/>
+                <line x1="190" y1="248" x2="190" y2="262" stroke="#333" stroke-width="1"/>
+                <line x1="195" y1="248" x2="195" y2="262" stroke="#333" stroke-width="1"/>
+                <line x1="205" y1="248" x2="205" y2="262" stroke="#333" stroke-width="1"/>
+                <line x1="210" y1="248" x2="210" y2="262" stroke="#333" stroke-width="1"/>
+                <line x1="215" y1="248" x2="215" y2="262" stroke="#333" stroke-width="1"/>
+                
+                <!-- Beard -->
+                <ellipse cx="200" cy="280" rx="40" ry="25" fill="#8B4513"/>
+                
+                <!-- Ears -->
+                <ellipse cx="130" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
+                <ellipse cx="270" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
+                
+                <!-- Body -->
+                <ellipse cx="200" cy="380" rx="80" ry="90" fill="#2C5282"/>
+                
+                <!-- Collar -->
+                <path d="M 160 320 L 200 340 L 240 320 L 240 360 L 160 360 Z" fill="#2C5282"/>
+                <polygon points="180,340 200,355 220,340 220,350 200,365 180,350" fill="#1A365D"/>
+                
+                <!-- Polo buttons -->
+                <circle cx="200" cy="345" r="3" fill="#1A365D"/>
+                <circle cx="200" cy="360" r="3" fill="#1A365D"/>
+                
+                <!-- Arms -->
+                <ellipse cx="120" cy="360" rx="25" ry="60" fill="#2C5282"/>
+                <ellipse cx="310" cy="360" rx="25" ry="60" fill="#2C5282"/>
+                
+                <!-- Hands -->
+                <ellipse cx="110" cy="420" rx="18" ry="22" fill="#F4C2A1"/>
+                <ellipse cx="320" cy="420" rx="18" ry="22" fill="#F4C2A1"/>
+                
+                <!-- Left thumbs up -->
+                <ellipse cx="100" cy="400" rx="8" ry="15" fill="#F4C2A1"/>
+                <rect x="95" y="395" width="10" height="10" fill="#F4C2A1"/>
+                
+                <!-- Beer glass in right hand -->
+                <rect x="310" y="380" width="30" height="50" rx="5" fill="#FFD700" stroke="#333" stroke-width="2"/>
+                <rect x="315" y="385" width="20" height="35" fill="#FFA500"/>
+                <ellipse cx="325" cy="375" rx="15" ry="5" fill="white"/>
+                <rect x="305" y="370" width="6" height="15" fill="#8B4513"/>
+                
+                <!-- Lower body -->
+                <ellipse cx="200" cy="460" rx="50" ry="30" fill="#4A90C2"/>
+            </svg>`,
+            
+            frustrated: `<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background -->
+                <rect width="400" height="500" fill="#ffe4e1" rx="20"/>
+                
+                <!-- Speech bubble -->
+                <ellipse cx="200" cy="80" rx="160" ry="50" fill="white" stroke="#333" stroke-width="3"/>
+                <polygon points="160,120 180,150 140,130" fill="white" stroke="#333" stroke-width="3"/>
+                <text x="200" y="70" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">C'MON. USE YOUR</text>
+                <text x="200" y="95" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">FRIGGIN' HEAD.</text>
+                
+                <!-- Head -->
+                <ellipse cx="200" cy="220" rx="70" ry="75" fill="#F4C2A1"/>
+                <ellipse cx="200" cy="200" rx="65" ry="50" fill="#F4C2A1"/>
+                
+                <!-- Angry eyebrows -->
+                <line x1="150" y1="180" x2="190" y2="190" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+                <line x1="210" y1="190" x2="250" y2="180" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+                
+                <!-- Glasses -->
+                <rect x="150" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
+                <rect x="210" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
+                <line x1="190" y1="205" x2="210" y2="205" stroke="#333" stroke-width="4"/>
+                <line x1="130" y1="205" x2="150" y2="205" stroke="#333" stroke-width="3"/>
+                <line x1="250" y1="205" x2="270" y2="205" stroke="#333" stroke-width="3"/>
+                
+                <!-- Angry eyes -->
+                <ellipse cx="170" cy="205" rx="6" ry="8" fill="#333"/>
+                <ellipse cx="230" cy="205" rx="6" ry="8" fill="#333"/>
+                <circle cx="172" cy="202" r="1" fill="white"/>
+                <circle cx="232" cy="202" r="1" fill="white"/>
+                
+                <!-- Nose -->
+                <ellipse cx="200" cy="220" rx="8" ry="12" fill="#E6A87C"/>
+                
+                <!-- Gritted teeth/frown -->
+                <path d="M 180 245 Q 200 235 220 245" stroke="#333" stroke-width="4" fill="none"/>
+                <rect x="185" y="240" width="30" height="8" fill="#333"/>
+                <rect x="187" y="242" width="26" height="4" fill="white"/>
+                <line x1="190" y1="242" x2="190" y2="246" stroke="#333" stroke-width="1"/>
+                <line x1="195" y1="242" x2="195" y2="246" stroke="#333" stroke-width="1"/>
+                <line x1="200" y1="242" x2="200" y2="246" stroke="#333" stroke-width="1"/>
+                <line x1="205" y1="242" x2="205" y2="246" stroke="#333" stroke-width="1"/>
+                <line x1="210" y1="242" x2="210" y2="246" stroke="#333" stroke-width="1"/>
+                
+                <!-- Beard -->
+                <ellipse cx="200" cy="280" rx="40" ry="25" fill="#8B4513"/>
+                
+                <!-- Ears -->
+                <ellipse cx="130" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
+                <ellipse cx="270" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
+                
+                <!-- Body -->
+                <ellipse cx="200" cy="380" rx="80" ry="90" fill="#2C5282"/>
+                
+                <!-- Collar -->
+                <path d="M 160 320 L 200 340 L 240 320 L 240 360 L 160 360 Z" fill="#2C5282"/>
+                <polygon points="180,340 200,355 220,340 220,350 200,365 180,350" fill="#1A365D"/>
+                
+                <!-- Polo buttons -->
+                <circle cx="200" cy="345" r="3" fill="#1A365D"/>
+                <circle cx="200" cy="360" r="3" fill="#1A365D"/>
+                
+                <!-- Arms crossed -->
+                <ellipse cx="140" cy="360" rx="25" ry="60" fill="#2C5282" transform="rotate(30 140 360)"/>
+                <ellipse cx="260" cy="360" rx="25" ry="60" fill="#2C5282" transform="rotate(-30 260 360)"/>
+                
+                <!-- Crossed hands -->
+                <ellipse cx="180" cy="380" rx="18" ry="22" fill="#F4C2A1" transform="rotate(45 180 380)"/>
+                <ellipse cx="220" cy="380" rx="18" ry="22" fill="#F4C2A1" transform="rotate(-45 220 380)"/>
+                
+                <!-- Lower body -->
+                <ellipse cx="200" cy="460" rx="50" ry="30" fill="#4A90C2"/>
+            </svg>`
+        };
 
         // Default/fallback quiz questions
         const defaultQuizData = [
@@ -720,7 +951,7 @@ const GEORGE_IMAGES = {
                     shuffleArray(currentQuestions);
                     usingFallbackQuestions = false;
                     
-                    questionsStatus.textContent = `✅ Loaded "${currentQuiz}" questions from Google Sheets`;
+                    questionsStatus.textContent = `✅ Loaded "${currentQuiz}" questions from Google Sheets (${data.questions.length} questions)`;
                     questionsStatus.className = 'status-indicator status-connected';
                 } else {
                     throw new Error('No questions found for this quiz');
@@ -1033,31 +1264,52 @@ Please provide detailed explanations, common troubleshooting steps, and practica
             window.open(CONFIG.sheetUrl, '_blank');
         }
 
-        function selectQuiz() {
-            const availableQuizzes = [
-                'Bearing Maintenance Quiz',
-                'Electrical Safety Quiz',
-                'Heating Systems Quiz',
-                'Preventive Maintenance Quiz',
-                'Motor Troubleshooting Quiz',
-                'Safety Protocols Quiz'
-            ];
-            
-            const quizList = availableQuizzes.map((quiz, index) => `${index + 1}. ${quiz}`).join('\n');
-            const selection = prompt(`Select a quiz:\n\n${quizList}\n\nEnter number (1-${availableQuizzes.length}) or type custom quiz name:`);
-            
-            if (selection) {
-                const num = parseInt(selection);
-                if (num >= 1 && num <= availableQuizzes.length) {
-                    currentQuiz = availableQuizzes[num - 1];
-                } else {
-                    currentQuiz = selection;
-                }
+        async function selectQuiz() {
+            try {
+                // Load available quizzes from Google Sheets
+                const response = await fetch(CONFIG.quizListUrl);
+                const data = await response.json();
                 
-                localStorage.setItem('currentQuiz', currentQuiz);
-                document.getElementById('quiz-title').textContent = currentQuiz;
-                alert(`Quiz changed to: ${currentQuiz}. Refreshing questions...`);
-                initializeQuiz();
+                if (data.success && data.quizzes && data.quizzes.length > 0) {
+                    const availableQuizzes = data.quizzes;
+                    const quizList = availableQuizzes.map((quiz, index) => `${index + 1}. ${quiz}`).join('\n');
+                    const selection = prompt(`Select a quiz:\n\n${quizList}\n\nEnter number (1-${availableQuizzes.length}) or type custom quiz name:`);
+                    
+                    if (selection) {
+                        const num = parseInt(selection);
+                        if (num >= 1 && num <= availableQuizzes.length) {
+                            currentQuiz = availableQuizzes[num - 1];
+                        } else {
+                            currentQuiz = selection;
+                        }
+                        
+                        localStorage.setItem('currentQuiz', currentQuiz);
+                        document.getElementById('quiz-title').textContent = currentQuiz;
+                        alert(`Quiz changed to: ${currentQuiz}. Refreshing questions...`);
+                        initializeQuiz();
+                    }
+                } else {
+                    // Fallback to manual entry if Google Sheets fails
+                    const customQuiz = prompt('Enter quiz name (Google Sheets unavailable):');
+                    if (customQuiz) {
+                        currentQuiz = customQuiz;
+                        localStorage.setItem('currentQuiz', currentQuiz);
+                        document.getElementById('quiz-title').textContent = currentQuiz;
+                        alert(`Quiz changed to: ${currentQuiz}. Refreshing questions...`);
+                        initializeQuiz();
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading quiz list:', error);
+                // Fallback to manual entry
+                const customQuiz = prompt('Enter quiz name (connection failed):');
+                if (customQuiz) {
+                    currentQuiz = customQuiz;
+                    localStorage.setItem('currentQuiz', currentQuiz);
+                    document.getElementById('quiz-title').textContent = currentQuiz;
+                    alert(`Quiz changed to: ${currentQuiz}. Refreshing questions...`);
+                    initializeQuiz();
+                }
             }
         }
 
