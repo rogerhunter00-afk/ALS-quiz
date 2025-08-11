@@ -30,220 +30,59 @@
             position: relative;
         }
         
-        .header {
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: white;
-            padding: 30px;
+        /* Landing Page Styles */
+        .landing-page {
             text-align: center;
-            position: relative;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
         }
         
-        .header h1 {
-            font-size: 2.8em;
-            margin-bottom: 10px;
+        .landing-header h1 {
+            font-size: 3.2em;
+            color: #2c3e50;
+            margin-bottom: 15px;
             font-weight: 700;
         }
         
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+        .landing-header p {
+            font-size: 1.4em;
+            color: #7f8c8d;
+            margin-bottom: 40px;
         }
         
-        .george-welcome {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 120px;
+        .welcome-george {
+            width: 280px;
             height: auto;
+            margin: 30px auto;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
         }
         
-        .admin-section {
-            background: #f8fafc;
-            border-bottom: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
+        .welcome-george:hover {
+            transform: scale(1.05);
         }
         
-        .admin-toggle {
-            width: 100%;
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 15px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        .name-section {
+            margin: 40px 0;
         }
         
-        .admin-toggle:hover {
-            background: #2980b9;
-        }
-        
-        .admin-content {
-            padding: 20px 30px;
-            display: none;
-        }
-        
-        .admin-content.show {
-            display: block;
-        }
-        
-        .admin-section h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-        
-        .status-section {
-            background: #e8f4fd;
-            border: 2px solid #3498db;
-            border-radius: 12px;
-            padding: 20px;
+        .name-section h2 {
+            font-size: 1.8em;
+            color: #34495e;
             margin-bottom: 20px;
         }
         
-        .status-section h4 {
-            color: #2980b9;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-        
-        .status-indicator {
-            padding: 12px 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-weight: 600;
-            font-size: 0.95em;
-        }
-        
-        .status-connected {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .status-disconnected {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .status-warning {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
-        }
-        
-        .btn {
-            padding: 14px 28px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin: 8px 6px;
-            min-height: 48px;
-            touch-action: manipulation;
-        }
-        
-        .btn-primary {
-            background: #3498db;
-            color: white;
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
-        }
-        
-        .btn-primary:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
-        }
-        
-        .btn-success {
-            background: #27ae60;
-            color: white;
-            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
-            font-size: 1.1em;
-            padding: 16px 32px;
-        }
-        
-        .btn-success:hover {
-            background: #219a52;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(39, 174, 96, 0.4);
-        }
-        
-        .btn-danger {
-            background: #e74c3c;
-            color: white;
-            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
-        }
-        
-        .btn-danger:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-        }
-        
-        .admin-controls {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-        
-        .quiz-content {
-            padding: 40px 30px;
-        }
-        
-        .quiz-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .quiz-title {
-            font-size: 2em;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .progress-container {
-            background: #ecf0f1;
-            border-radius: 20px;
-            height: 8px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .progress-bar {
-            background: linear-gradient(90deg, #3498db, #2ecc71);
-            height: 100%;
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 20px;
-        }
-        
-        .progress-text {
-            text-align: center;
-            color: #7f8c8d;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-        
         .name-input {
-            margin-bottom: 40px;
-            text-align: center;
+            margin: 30px 0;
         }
         
         .name-input input {
-            padding: 18px 24px;
-            font-size: 1.3em;
+            padding: 20px 30px;
+            font-size: 1.4em;
             border: 3px solid #ddd;
             border-radius: 15px;
-            width: 320px;
+            width: 400px;
             max-width: 100%;
             text-align: center;
             transition: all 0.3s ease;
@@ -257,92 +96,248 @@
             background: white;
         }
         
+        .quiz-selector {
+            margin: 30px 0;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .quiz-selector h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .quiz-selector select {
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            background: white;
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 18px 36px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            min-height: 56px;
+            touch-action: manipulation;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
+            font-size: 1.3em;
+            padding: 20px 40px;
+        }
+        
+        .btn-success:hover {
+            background: #219a52;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+            font-size: 1em;
+            padding: 12px 24px;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+        
+        /* Admin Panel - Simplified */
+        .admin-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .admin-toggle {
+            background: #34495e;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .admin-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 20px;
+            min-width: 250px;
+            display: none;
+            margin-top: 10px;
+        }
+        
+        .admin-dropdown.show {
+            display: block;
+        }
+        
+        .status-indicator {
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 5px 0;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .status-connected { background: #d4edda; color: #155724; }
+        .status-warning { background: #fff3cd; color: #856404; }
+        .status-disconnected { background: #f8d7da; color: #721c24; }
+        
+        /* Quiz Section */
+        .quiz-section {
+            padding: 40px;
+        }
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .quiz-title {
+            font-size: 2.2em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .progress-container {
+            background: #ecf0f1;
+            border-radius: 20px;
+            height: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 20px;
+        }
+        
+        .progress-text {
+            color: #7f8c8d;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
         .question {
             background: #ffffff;
             border-radius: 20px;
             padding: 30px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border: 2px solid #e9ecef;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
         }
         
         .question:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
         }
         
         .question-number {
-            display: inline-block;
             background: #3498db;
             color: white;
-            font-size: 1em;
-            font-weight: 700;
             padding: 8px 16px;
             border-radius: 20px;
-            margin-bottom: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: inline-block;
         }
         
         .question h3 {
             color: #2c3e50;
-            margin-bottom: 25px;
-            font-size: 1.4em;
+            margin-bottom: 20px;
+            font-size: 1.3em;
             line-height: 1.4;
-            font-weight: 600;
         }
         
         .options {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
         
         .option {
             display: flex;
             align-items: center;
-            padding: 18px 20px;
+            padding: 15px 18px;
             background: #f8f9fa;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s ease;
-            border: 3px solid transparent;
-            min-height: 60px;
-            touch-action: manipulation;
+            border: 2px solid transparent;
         }
         
         .option:hover {
             background: #e3f2fd;
             border-color: #3498db;
-            transform: translateX(5px);
-        }
-        
-        .option input {
-            margin-right: 18px;
-            transform: scale(1.4);
-            cursor: pointer;
-        }
-        
-        .option label {
-            font-size: 1.1em;
-            cursor: pointer;
-            font-weight: 500;
-            flex: 1;
         }
         
         .option.selected {
             background: #e3f2fd;
             border-color: #3498db;
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.2);
+        }
+        
+        .option input {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+        
+        .option label {
+            font-size: 1.05em;
+            cursor: pointer;
+            flex: 1;
         }
         
         .text-answer {
             width: 100%;
-            padding: 18px;
-            border: 3px solid #ddd;
-            border-radius: 12px;
-            font-size: 1.1em;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.05em;
             resize: vertical;
-            min-height: 100px;
+            min-height: 80px;
             font-family: inherit;
             transition: all 0.3s ease;
         }
@@ -350,37 +345,26 @@
         .text-answer:focus {
             outline: none;
             border-color: #3498db;
-            box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
         }
         
-        .submit-btn {
+        /* Results Section */
+        .results-section {
             text-align: center;
-            margin-top: 50px;
+            padding: 50px 40px;
         }
         
-        .results {
-            text-align: center;
-            padding: 50px 30px;
-        }
-        
-        .george-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 30px;
-            gap: 30px;
-        }
-        
-        .george-image {
-            width: 150px;
+        .results-george {
+            width: 200px;
             height: auto;
-            animation: fadeInUp 0.6s ease;
+            margin: 20px auto;
+            border-radius: 15px;
         }
         
         .score-section {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 30px;
+            padding: 40px;
             border-radius: 20px;
             margin: 30px 0;
         }
@@ -392,20 +376,12 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
-        .score.low {
-            color: #ff6b6b;
-        }
-        
-        .score.medium {
-            color: #ffd93d;
-        }
-        
-        .score.high {
-            color: #6bcf7f;
-        }
+        .score.low { color: #ff6b6b; }
+        .score.medium { color: #ffd93d; }
+        .score.high { color: #6bcf7f; }
         
         .score-message {
-            font-size: 1.3em;
+            font-size: 1.4em;
             margin-bottom: 20px;
             font-weight: 600;
         }
@@ -413,51 +389,38 @@
         .chatgpt-link {
             background: linear-gradient(135deg, #10a37f, #1a7f64);
             color: white;
-            padding: 24px 36px;
-            border-radius: 16px;
+            padding: 20px 30px;
+            border-radius: 12px;
             text-decoration: none;
             display: inline-block;
-            margin-top: 30px;
-            font-size: 1.3em;
+            margin-top: 20px;
+            font-size: 1.1em;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(16, 163, 127, 0.3);
         }
         
         .chatgpt-link:hover {
             background: linear-gradient(135deg, #0d8f6a, #155a4a);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(16, 163, 127, 0.4);
+            transform: translateY(-2px);
         }
         
-        .loading-message {
+        /* Utility Classes */
+        .hidden { display: none; }
+        .loading {
             text-align: center;
             padding: 60px;
             color: #7f8c8d;
-            font-size: 1.3em;
+            font-size: 1.2em;
         }
         
         .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #ecf0f1;
-            border-top: 5px solid #3498db;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #ecf0f1;
+            border-top: 4px solid #3498db;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 20px auto;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        .instructions {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 20px;
-            font-size: 0.95em;
         }
         
         @keyframes spin {
@@ -465,150 +428,100 @@
             100% { transform: rotate(360deg); }
         }
         
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                border-radius: 20px;
-            }
-            
-            .header {
-                padding: 25px 20px;
-            }
-            
-            .header h1 {
-                font-size: 2.2em;
-            }
-            
-            .george-welcome {
-                width: 80px;
-                right: 15px;
-            }
-            
-            .quiz-content {
-                padding: 30px 20px;
-            }
-            
-            .question {
-                padding: 25px 20px;
-            }
-            
-            .admin-controls {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-                text-align: center;
-                margin: 5px 0;
-            }
-            
-            .name-input input {
-                width: 100%;
-                font-size: 1.2em;
-            }
-            
-            .george-container {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .george-image {
-                width: 120px;
-            }
+            .container { margin: 10px; }
+            .landing-page { padding: 40px 20px; }
+            .landing-header h1 { font-size: 2.5em; }
+            .welcome-george { width: 220px; }
+            .name-input input { width: 100%; font-size: 1.2em; }
+            .quiz-section { padding: 30px 20px; }
+            .question { padding: 20px; }
+            .admin-panel { position: static; margin: 20px; }
+            .admin-dropdown { position: static; margin-top: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🔧 Laundry Engineers Quiz</h1>
-            <p>Knowledge Check - Industrial Equipment Maintenance</p>
-            <!-- Welcoming George -->
-            <svg class="george-welcome" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                <!-- This is a placeholder for the actual George image -->
-                <rect width="400" height="400" fill="#3498db" rx="20"/>
-                <text x="200" y="200" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Welcome George</text>
-                <text x="200" y="230" text-anchor="middle" fill="white" font-size="12">Replace with actual image</text>
-            </svg>
-        </div>
-        
-        <div class="admin-section">
-            <button class="admin-toggle" onclick="toggleAdmin()">
-                🔧 Admin Controls (Click to Show/Hide)
-            </button>
-            <div class="admin-content" id="admin-content">
-                <h3>System Status & Configuration</h3>
-                
-                <div class="status-section">
-                    <h4>📊 System Status</h4>
-                    <div id="save-status" class="status-indicator status-connected">
-                        ✅ Ready to save results to Google Sheets
-                    </div>
-                    <div id="questions-status" class="status-indicator status-warning">
-                        🔄 Loading questions...
-                    </div>
-                    
-                    <div class="instructions">
-                        <strong>For Engineers:</strong> Just enter your name and take the quiz - everything is automatic!<br>
-                        <strong>For Admin:</strong> Update quiz names in "Quiz List" tab, and questions in "Quiz Questions" tab of your Google Sheet.
-                    </div>
-                </div>
-                
-                <div class="admin-controls">
-                    <button class="btn btn-primary" onclick="openGoogleSheet()">📊 Open Google Sheet</button>
-                    <button class="btn btn-primary" onclick="selectQuiz()">📝 Select Quiz</button>
-                    <button class="btn btn-primary" onclick="refreshQuestions()">🔄 Refresh Questions</button>
-                    <button class="btn btn-primary" onclick="manageQuizzes()">📋 Manage Quiz List</button>
-                    <button class="btn btn-danger" onclick="clearLocalData()">🗑️ Clear Cache</button>
+        <!-- Admin Panel -->
+        <div class="admin-panel">
+            <button class="admin-toggle" onclick="toggleAdmin()">⚙️ Admin</button>
+            <div class="admin-dropdown" id="admin-dropdown">
+                <div id="connection-status" class="status-indicator status-warning">🔄 Checking connection...</div>
+                <div style="margin: 15px 0;">
+                    <button class="btn btn-secondary" onclick="testConnection()">🔌 Test Connection</button>
+                    <button class="btn btn-secondary" onclick="openGoogleSheet()">📊 Open Sheet</button>
+                    <button class="btn btn-secondary" onclick="refreshQuestions()">🔄 Refresh</button>
                 </div>
             </div>
         </div>
-        
-        <div id="loading-section" class="loading-message">
+
+        <!-- Landing Page -->
+        <div id="landing-page" class="landing-page">
+            <div class="landing-header">
+                <h1>🔧 Laundry Engineers Quiz</h1>
+                <p>Test Your Industrial Equipment Knowledge</p>
+            </div>
+            
+            <img src="./george-welcome.png" alt="Welcome George" class="welcome-george" 
+                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDI4MCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyODAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMzQ5OGRiIiByeD0iMjAiLz4KPHRleHQgeD0iMTQwIiB5PSIxNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iYm9sZCI+V2VsY29tZSBHZW9yZ2U8L3RleHQ+Cjx0ZXh0IHg9IjE0MCIgeT0iMTcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pgo8L3N2Zz4K'">
+            
+            <div class="name-section">
+                <h2>Ready to test your knowledge?</h2>
+                <div class="name-input">
+                    <input type="text" id="engineer-name" placeholder="Enter your name" required>
+                </div>
+            </div>
+            
+            <div class="quiz-selector">
+                <h3>Select Quiz:</h3>
+                <select id="quiz-select">
+                    <option value="Bearing Maintenance Quiz">Bearing Maintenance Quiz</option>
+                    <option value="Motor Troubleshooting">Motor Troubleshooting</option>
+                    <option value="Electrical Safety">Electrical Safety</option>
+                    <option value="Custom Quiz">Custom Quiz Name...</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-success" onclick="startQuiz()">
+                🚀 Start Quiz
+            </button>
+        </div>
+
+        <!-- Loading Section -->
+        <div id="loading-section" class="loading hidden">
             <div class="loading-spinner"></div>
-            <h3>🔄 Loading Quiz Questions...</h3>
+            <h3>Loading Quiz Questions...</h3>
             <p>Fetching the latest questions from Google Sheets...</p>
         </div>
-        
-        <div id="quiz-section" class="quiz-content hidden">
+
+        <!-- Quiz Section -->
+        <div id="quiz-section" class="quiz-section hidden">
             <div class="quiz-header">
-                <div class="quiz-title" id="quiz-title">Loading Quiz...</div>
+                <div class="quiz-title" id="quiz-title">Quiz Title</div>
                 <div class="progress-container">
                     <div class="progress-bar" id="progress-bar"></div>
                 </div>
                 <div class="progress-text" id="progress-text">Question 0 of 0</div>
             </div>
             
-            <div class="name-input">
-                <input type="text" id="student-name" placeholder="Enter your name" required>
-            </div>
-            
             <form id="quiz-form">
                 <!-- Questions will be dynamically generated -->
             </form>
             
-            <div class="submit-btn">
+            <div style="text-align: center; margin-top: 40px;">
                 <button class="btn btn-success" onclick="submitQuiz()">
-                    Submit Quiz
+                    📝 Submit Quiz
                 </button>
             </div>
         </div>
-        
-        <div id="results-section" class="results hidden">
+
+        <!-- Results Section -->
+        <div id="results-section" class="results-section hidden">
             <h2>Quiz Results</h2>
             
-            <div class="george-container" id="george-container">
+            <div id="george-container">
                 <!-- George will appear here based on score -->
             </div>
             
@@ -620,261 +533,34 @@
             <div id="results-save-status"></div>
             <div id="chatgpt-section"></div>
             
-            <button class="btn btn-primary" onclick="restartQuiz()" style="margin-top: 30px;">Take Another Quiz</button>
+            <button class="btn btn-primary" onclick="backToHome()" style="margin-top: 30px;">
+                🏠 Take Another Quiz
+            </button>
         </div>
     </div>
 
     <script>
-        // CONFIGURATION - REPLACE THESE WITH YOUR ACTUAL URLS
+        // CONFIGURATION
         const CONFIG = {
             sheetUrl: 'https://docs.google.com/spreadsheets/d/1hl8L_oPTP5A47pIoGjaOV9vWg85x1BBSTEsUOXjqucE/edit?usp=sharing',
-            webAppUrl: 'https://script.google.com/macros/s/AKfycbzCTRJ_166V_E9M4nEdyZRO-X-PqTxnpa_tDfkxSGKjOhblURlU_wuDAWNOTe2IomVe/exec',
-            questionsSheetUrl: 'https://script.google.com/macros/s/AKfycbzCTRJ_166V_E9M4nEdyZRO-X-PqTxnpa_tDfkxSGKjOhblURlU_wuDAWNOTe2IomVe/exec?action=getQuestions'
+            webAppUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec',
+            quizListUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec?action=getQuizzes',
+            questionsUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec?action=getQuestions'
         };
 
-        // George images as SVG
+        // George image URLs - relative paths
         const GEORGE_IMAGES = {
-            welcome: `<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
-                <!-- Background -->
-                <rect width="400" height="500" fill="#f0f8ff" rx="20"/>
-                
-                <!-- Speech bubble -->
-                <ellipse cx="200" cy="80" rx="180" ry="60" fill="white" stroke="#333" stroke-width="3"/>
-                <polygon points="150,130 170,160 130,140" fill="white" stroke="#333" stroke-width="3"/>
-                <text x="200" y="65" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">RIGHT THEN,</text>
-                <text x="200" y="85" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">LET'S SEE WHAT</text>
-                <text x="200" y="105" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">YOU KNOW!</text>
-                
-                <!-- Head -->
-                <ellipse cx="200" cy="220" rx="70" ry="75" fill="#F4C2A1"/>
-                <ellipse cx="200" cy="200" rx="65" ry="50" fill="#F4C2A1"/>
-                
-                <!-- Glasses -->
-                <rect x="150" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
-                <rect x="210" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
-                <line x1="190" y1="205" x2="210" y2="205" stroke="#333" stroke-width="4"/>
-                <line x1="130" y1="205" x2="150" y2="205" stroke="#333" stroke-width="3"/>
-                <line x1="250" y1="205" x2="270" y2="205" stroke="#333" stroke-width="3"/>
-                
-                <!-- Eyes -->
-                <circle cx="170" cy="205" r="8" fill="#333"/>
-                <circle cx="230" cy="205" r="8" fill="#333"/>
-                <circle cx="172" cy="202" r="2" fill="white"/>
-                <circle cx="232" cy="202" r="2" fill="white"/>
-                
-                <!-- Nose -->
-                <ellipse cx="200" cy="220" rx="8" ry="12" fill="#E6A87C"/>
-                
-                <!-- Smile -->
-                <path d="M 180 240 Q 200 260 220 240" stroke="#333" stroke-width="4" fill="none"/>
-                <ellipse cx="200" cy="250" rx="20" ry="8" fill="#333"/>
-                <rect x="185" y="245" width="30" height="10" fill="white"/>
-                <line x1="190" y1="245" x2="190" y2="255" stroke="#333" stroke-width="1"/>
-                <line x1="195" y1="245" x2="195" y2="255" stroke="#333" stroke-width="1"/>
-                <line x1="205" y1="245" x2="205" y2="255" stroke="#333" stroke-width="1"/>
-                <line x1="210" y1="245" x2="210" y2="255" stroke="#333" stroke-width="1"/>
-                
-                <!-- Beard -->
-                <ellipse cx="200" cy="280" rx="40" ry="25" fill="#8B4513"/>
-                
-                <!-- Ears -->
-                <ellipse cx="130" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
-                <ellipse cx="270" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
-                
-                <!-- Body -->
-                <ellipse cx="200" cy="380" rx="80" ry="90" fill="#2C5282"/>
-                
-                <!-- Collar -->
-                <path d="M 160 320 L 200 340 L 240 320 L 240 360 L 160 360 Z" fill="#2C5282"/>
-                <polygon points="180,340 200,355 220,340 220,350 200,365 180,350" fill="#1A365D"/>
-                
-                <!-- Polo buttons -->
-                <circle cx="200" cy="345" r="3" fill="#1A365D"/>
-                <circle cx="200" cy="360" r="3" fill="#1A365D"/>
-                
-                <!-- Arms -->
-                <ellipse cx="120" cy="360" rx="25" ry="60" fill="#2C5282"/>
-                <ellipse cx="280" cy="360" rx="25" ry="60" fill="#2C5282"/>
-                
-                <!-- Hands -->
-                <ellipse cx="110" cy="420" rx="18" ry="22" fill="#F4C2A1"/>
-                <ellipse cx="290" cy="420" rx="18" ry="22" fill="#F4C2A1"/>
-                
-                <!-- Thumbs up -->
-                <ellipse cx="300" cy="400" rx="8" ry="15" fill="#F4C2A1"/>
-                <rect x="295" y="395" width="10" height="10" fill="#F4C2A1"/>
-                
-                <!-- Lower body -->
-                <ellipse cx="200" cy="460" rx="50" ry="30" fill="#4A90C2"/>
-            </svg>`,
-            
-            celebrate: `<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
-                <!-- Background -->
-                <rect width="400" height="500" fill="#fff8dc" rx="20"/>
-                
-                <!-- Speech bubble -->
-                <ellipse cx="200" cy="80" rx="150" ry="50" fill="white" stroke="#333" stroke-width="3"/>
-                <polygon points="170,120 190,150 150,130" fill="white" stroke="#333" stroke-width="3"/>
-                <text x="200" y="70" text-anchor="middle" font-family="Arial Black" font-size="18" font-weight="bold" fill="#333">OUTSTANDING!</text>
-                <text x="200" y="95" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">BUY YOURSELF A PINT!</text>
-                
-                <!-- Head -->
-                <ellipse cx="200" cy="220" rx="70" ry="75" fill="#F4C2A1"/>
-                <ellipse cx="200" cy="200" rx="65" ry="50" fill="#F4C2A1"/>
-                
-                <!-- Glasses -->
-                <rect x="150" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
-                <rect x="210" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
-                <line x1="190" y1="205" x2="210" y2="205" stroke="#333" stroke-width="4"/>
-                <line x1="130" y1="205" x2="150" y2="205" stroke="#333" stroke-width="3"/>
-                <line x1="250" y1="205" x2="270" y2="205" stroke="#333" stroke-width="3"/>
-                
-                <!-- Eyes (happy) -->
-                <circle cx="170" cy="205" r="8" fill="#333"/>
-                <circle cx="230" cy="205" r="8" fill="#333"/>
-                <circle cx="172" cy="202" r="2" fill="white"/>
-                <circle cx="232" cy="202" r="2" fill="white"/>
-                
-                <!-- Nose -->
-                <ellipse cx="200" cy="220" rx="8" ry="12" fill="#E6A87C"/>
-                
-                <!-- Big smile -->
-                <path d="M 175 240 Q 200 270 225 240" stroke="#333" stroke-width="4" fill="none"/>
-                <ellipse cx="200" cy="255" rx="25" ry="12" fill="#333"/>
-                <rect x="180" y="248" width="40" height="14" fill="white"/>
-                <line x1="185" y1="248" x2="185" y2="262" stroke="#333" stroke-width="1"/>
-                <line x1="190" y1="248" x2="190" y2="262" stroke="#333" stroke-width="1"/>
-                <line x1="195" y1="248" x2="195" y2="262" stroke="#333" stroke-width="1"/>
-                <line x1="205" y1="248" x2="205" y2="262" stroke="#333" stroke-width="1"/>
-                <line x1="210" y1="248" x2="210" y2="262" stroke="#333" stroke-width="1"/>
-                <line x1="215" y1="248" x2="215" y2="262" stroke="#333" stroke-width="1"/>
-                
-                <!-- Beard -->
-                <ellipse cx="200" cy="280" rx="40" ry="25" fill="#8B4513"/>
-                
-                <!-- Ears -->
-                <ellipse cx="130" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
-                <ellipse cx="270" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
-                
-                <!-- Body -->
-                <ellipse cx="200" cy="380" rx="80" ry="90" fill="#2C5282"/>
-                
-                <!-- Collar -->
-                <path d="M 160 320 L 200 340 L 240 320 L 240 360 L 160 360 Z" fill="#2C5282"/>
-                <polygon points="180,340 200,355 220,340 220,350 200,365 180,350" fill="#1A365D"/>
-                
-                <!-- Polo buttons -->
-                <circle cx="200" cy="345" r="3" fill="#1A365D"/>
-                <circle cx="200" cy="360" r="3" fill="#1A365D"/>
-                
-                <!-- Arms -->
-                <ellipse cx="120" cy="360" rx="25" ry="60" fill="#2C5282"/>
-                <ellipse cx="310" cy="360" rx="25" ry="60" fill="#2C5282"/>
-                
-                <!-- Hands -->
-                <ellipse cx="110" cy="420" rx="18" ry="22" fill="#F4C2A1"/>
-                <ellipse cx="320" cy="420" rx="18" ry="22" fill="#F4C2A1"/>
-                
-                <!-- Left thumbs up -->
-                <ellipse cx="100" cy="400" rx="8" ry="15" fill="#F4C2A1"/>
-                <rect x="95" y="395" width="10" height="10" fill="#F4C2A1"/>
-                
-                <!-- Beer glass in right hand -->
-                <rect x="310" y="380" width="30" height="50" rx="5" fill="#FFD700" stroke="#333" stroke-width="2"/>
-                <rect x="315" y="385" width="20" height="35" fill="#FFA500"/>
-                <ellipse cx="325" cy="375" rx="15" ry="5" fill="white"/>
-                <rect x="305" y="370" width="6" height="15" fill="#8B4513"/>
-                
-                <!-- Lower body -->
-                <ellipse cx="200" cy="460" rx="50" ry="30" fill="#4A90C2"/>
-            </svg>`,
-            
-            frustrated: `<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
-                <!-- Background -->
-                <rect width="400" height="500" fill="#ffe4e1" rx="20"/>
-                
-                <!-- Speech bubble -->
-                <ellipse cx="200" cy="80" rx="160" ry="50" fill="white" stroke="#333" stroke-width="3"/>
-                <polygon points="160,120 180,150 140,130" fill="white" stroke="#333" stroke-width="3"/>
-                <text x="200" y="70" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">C'MON. USE YOUR</text>
-                <text x="200" y="95" text-anchor="middle" font-family="Arial Black" font-size="16" font-weight="bold" fill="#333">FRIGGIN' HEAD.</text>
-                
-                <!-- Head -->
-                <ellipse cx="200" cy="220" rx="70" ry="75" fill="#F4C2A1"/>
-                <ellipse cx="200" cy="200" rx="65" ry="50" fill="#F4C2A1"/>
-                
-                <!-- Angry eyebrows -->
-                <line x1="150" y1="180" x2="190" y2="190" stroke="#333" stroke-width="6" stroke-linecap="round"/>
-                <line x1="210" y1="190" x2="250" y2="180" stroke="#333" stroke-width="6" stroke-linecap="round"/>
-                
-                <!-- Glasses -->
-                <rect x="150" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
-                <rect x="210" y="190" width="40" height="30" rx="15" fill="none" stroke="#333" stroke-width="4"/>
-                <line x1="190" y1="205" x2="210" y2="205" stroke="#333" stroke-width="4"/>
-                <line x1="130" y1="205" x2="150" y2="205" stroke="#333" stroke-width="3"/>
-                <line x1="250" y1="205" x2="270" y2="205" stroke="#333" stroke-width="3"/>
-                
-                <!-- Angry eyes -->
-                <ellipse cx="170" cy="205" rx="6" ry="8" fill="#333"/>
-                <ellipse cx="230" cy="205" rx="6" ry="8" fill="#333"/>
-                <circle cx="172" cy="202" r="1" fill="white"/>
-                <circle cx="232" cy="202" r="1" fill="white"/>
-                
-                <!-- Nose -->
-                <ellipse cx="200" cy="220" rx="8" ry="12" fill="#E6A87C"/>
-                
-                <!-- Gritted teeth/frown -->
-                <path d="M 180 245 Q 200 235 220 245" stroke="#333" stroke-width="4" fill="none"/>
-                <rect x="185" y="240" width="30" height="8" fill="#333"/>
-                <rect x="187" y="242" width="26" height="4" fill="white"/>
-                <line x1="190" y1="242" x2="190" y2="246" stroke="#333" stroke-width="1"/>
-                <line x1="195" y1="242" x2="195" y2="246" stroke="#333" stroke-width="1"/>
-                <line x1="200" y1="242" x2="200" y2="246" stroke="#333" stroke-width="1"/>
-                <line x1="205" y1="242" x2="205" y2="246" stroke="#333" stroke-width="1"/>
-                <line x1="210" y1="242" x2="210" y2="246" stroke="#333" stroke-width="1"/>
-                
-                <!-- Beard -->
-                <ellipse cx="200" cy="280" rx="40" ry="25" fill="#8B4513"/>
-                
-                <!-- Ears -->
-                <ellipse cx="130" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
-                <ellipse cx="270" cy="210" rx="15" ry="20" fill="#F4C2A1"/>
-                
-                <!-- Body -->
-                <ellipse cx="200" cy="380" rx="80" ry="90" fill="#2C5282"/>
-                
-                <!-- Collar -->
-                <path d="M 160 320 L 200 340 L 240 320 L 240 360 L 160 360 Z" fill="#2C5282"/>
-                <polygon points="180,340 200,355 220,340 220,350 200,365 180,350" fill="#1A365D"/>
-                
-                <!-- Polo buttons -->
-                <circle cx="200" cy="345" r="3" fill="#1A365D"/>
-                <circle cx="200" cy="360" r="3" fill="#1A365D"/>
-                
-                <!-- Arms crossed -->
-                <ellipse cx="140" cy="360" rx="25" ry="60" fill="#2C5282" transform="rotate(30 140 360)"/>
-                <ellipse cx="260" cy="360" rx="25" ry="60" fill="#2C5282" transform="rotate(-30 260 360)"/>
-                
-                <!-- Crossed hands -->
-                <ellipse cx="180" cy="380" rx="18" ry="22" fill="#F4C2A1" transform="rotate(45 180 380)"/>
-                <ellipse cx="220" cy="380" rx="18" ry="22" fill="#F4C2A1" transform="rotate(-45 220 380)"/>
-                
-                <!-- Lower body -->
-                <ellipse cx="200" cy="460" rx="50" ry="30" fill="#4A90C2"/>
-            </svg>`
+            welcome: './george-welcome.png',
+            celebrate: './george-celebrate.png',
+            frustrated: './george-frustrated.png'
         };
 
-        // Default/fallback quiz questions
-        const defaultQuizData = [
+        // Default quiz questions
+        const DEFAULT_QUESTIONS = [
             {
                 type: 'multiple',
                 question: 'What is the most common cause of bearing failure in industrial washing machine drums?',
-                options: [
-                    'Electrical overload',
-                    'Lack of lubrication',
-                    'Water contamination',
-                    'Excessive vibration'
-                ],
+                options: ['Electrical overload', 'Lack of lubrication', 'Water contamination', 'Excessive vibration'],
                 correct: 1,
                 explanation: 'Lack of lubrication causes increased friction and heat, leading to bearing failure.'
             },
@@ -887,12 +573,7 @@
             {
                 type: 'multiple',
                 question: 'What voltage reading would indicate a faulty heating element in a dryer?',
-                options: [
-                    'Full line voltage across element',
-                    'Zero voltage across element',
-                    'Half line voltage across element',
-                    'Fluctuating voltage across element'
-                ],
+                options: ['Full line voltage across element', 'Zero voltage across element', 'Half line voltage across element', 'Fluctuating voltage across element'],
                 correct: 1,
                 explanation: 'Zero voltage across the element indicates an open circuit (burned out element).'
             },
@@ -905,180 +586,109 @@
             {
                 type: 'multiple',
                 question: 'What is the primary purpose of a VFD (Variable Frequency Drive) in washing machines?',
-                options: [
-                    'Reduce electrical noise',
-                    'Control motor speed and torque',
-                    'Improve power factor',
-                    'Protect against voltage spikes'
-                ],
+                options: ['Reduce electrical noise', 'Control motor speed and torque', 'Improve power factor', 'Protect against voltage spikes'],
                 correct: 1,
                 explanation: 'VFDs control motor speed and torque for different wash cycles and energy efficiency.'
             }
         ];
 
+        // App state
         let currentQuestions = [];
         let wrongAnswers = [];
-        let currentQuiz = localStorage.getItem('currentQuiz') || 'Bearing Maintenance Quiz';
+        let currentQuiz = 'Bearing Maintenance Quiz';
         let usingFallbackQuestions = false;
-        let currentQuestionIndex = 0;
 
-        async function initializeQuiz() {
-            document.getElementById('quiz-title').textContent = currentQuiz;
-            
-            try {
-                await loadQuestionsFromSheet();
-            } catch (error) {
-                console.log('Failed to load from Google Sheets, using default questions');
-                loadDefaultQuestions();
-            }
-            
-            generateQuizHTML();
-            updateProgress();
-            showQuizSection();
+        // Admin functions - Define these first
+        function toggleAdmin() {
+            const dropdown = document.getElementById('admin-dropdown');
+            dropdown.classList.toggle('show');
         }
 
-        async function loadQuestionsFromSheet() {
-            const questionsStatus = document.getElementById('questions-status');
-            questionsStatus.textContent = '🔄 Loading questions from Google Sheets...';
-            questionsStatus.className = 'status-indicator status-warning';
+        async function testConnection() {
+            const statusElement = document.getElementById('connection-status');
+            statusElement.textContent = '🔄 Testing connection...';
+            statusElement.className = 'status-indicator status-warning';
             
             try {
-                const response = await fetch(CONFIG.questionsSheetUrl + `&quiz=${encodeURIComponent(currentQuiz)}`);
-                const data = await response.json();
+                const testData = {
+                    name: 'Test User',
+                    quiz: 'Connection Test',
+                    score: 1,
+                    total: 1,
+                    percentage: 100,
+                    date: new Date().toLocaleDateString(),
+                    time: new Date().toLocaleTimeString(),
+                    questions: ['Test Question'],
+                    answers: ['Test Answer'],
+                    questionsSource: 'Test'
+                };
                 
-                if (data.success && data.questions && data.questions.length > 0) {
-                    currentQuestions = data.questions;
-                    shuffleArray(currentQuestions);
-                    usingFallbackQuestions = false;
-                    
-                    questionsStatus.textContent = `✅ Loaded "${currentQuiz}" questions from Google Sheets (${data.questions.length} questions)`;
-                    questionsStatus.className = 'status-indicator status-connected';
+                const response = await fetch(CONFIG.webAppUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testData)
+                });
+                
+                if (response.ok) {
+                    statusElement.textContent = '✅ Connection working';
+                    statusElement.className = 'status-indicator status-connected';
                 } else {
-                    throw new Error('No questions found for this quiz');
+                    statusElement.textContent = `❌ Connection failed: HTTP ${response.status}`;
+                    statusElement.className = 'status-indicator status-disconnected';
                 }
             } catch (error) {
-                console.error('Error loading questions from sheet:', error);
-                throw error;
+                statusElement.textContent = `❌ Connection error: ${error.message}`;
+                statusElement.className = 'status-indicator status-disconnected';
             }
         }
 
-        function loadDefaultQuestions() {
-            const questionsStatus = document.getElementById('questions-status');
-            currentQuestions = [...defaultQuizData];
-            shuffleArray(currentQuestions);
-            usingFallbackQuestions = true;
-            
-            questionsStatus.textContent = '⚠️ Using default questions (Google Sheets unavailable)';
-            questionsStatus.className = 'status-indicator status-warning';
+        function openGoogleSheet() {
+            window.open(CONFIG.sheetUrl, '_blank');
         }
 
-        function showQuizSection() {
-            document.getElementById('loading-section').classList.add('hidden');
-            document.getElementById('quiz-section').classList.remove('hidden');
-        }
-
-        function updateProgress() {
-            const total = currentQuestions.length;
-            const current = currentQuestionIndex;
-            const percentage = total > 0 ? (current / total) * 100 : 0;
-            
-            document.getElementById('progress-bar').style.width = percentage + '%';
-            document.getElementById('progress-text').textContent = `Question ${current} of ${total}`;
-        }
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+        function refreshQuestions() {
+            if (confirm('Reload questions from Google Sheets?')) {
+                showSection('loading-section');
+                loadQuizQuestions();
             }
         }
 
-        function generateQuizHTML() {
-            const form = document.getElementById('quiz-form');
-            form.innerHTML = '';
-
-            currentQuestions.forEach((question, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'question';
-
-                let questionHTML = `
-                    <div class="question-number">Question ${index + 1}</div>
-                    <h3>${question.question}</h3>
-                `;
-
-                if (question.type === 'multiple') {
-                    questionHTML += '<div class="options">';
-                    question.options.forEach((option, optionIndex) => {
-                        questionHTML += `
-                            <div class="option" onclick="selectOption(${index}, ${optionIndex})">
-                                <input type="radio" name="q${index}" value="${optionIndex}" id="q${index}_${optionIndex}">
-                                <label for="q${index}_${optionIndex}">${option}</label>
-                            </div>
-                        `;
-                    });
-                    questionHTML += '</div>';
-                } else if (question.type === 'true_false') {
-                    questionHTML += `
-                        <div class="options">
-                            <div class="option" onclick="selectOption(${index}, true)">
-                                <input type="radio" name="q${index}" value="true" id="q${index}_true">
-                                <label for="q${index}_true">True</label>
-                            </div>
-                            <div class="option" onclick="selectOption(${index}, false)">
-                                <input type="radio" name="q${index}" value="false" id="q${index}_false">
-                                <label for="q${index}_false">False</label>
-                            </div>
-                        </div>
-                    `;
-                } else if (question.type === 'short') {
-                    questionHTML += `
-                        <textarea class="text-answer" name="q${index}" placeholder="Enter your answer here..." id="q${index}_text"></textarea>
-                    `;
-                }
-
-                questionDiv.innerHTML = questionHTML;
-                form.appendChild(questionDiv);
-            });
-
-            updateProgress();
-        }
-
-        function selectOption(questionIndex, optionIndex) {
-            const questionDiv = document.querySelectorAll('.question')[questionIndex];
-            questionDiv.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+        function startQuiz() {
+            const name = document.getElementById('engineer-name').value.trim();
+            const selectedQuiz = document.getElementById('quiz-select').value;
             
-            if (typeof optionIndex === 'number') {
-                questionDiv.querySelectorAll('.option')[optionIndex].classList.add('selected');
-                document.getElementById(`q${questionIndex}_${optionIndex}`).checked = true;
+            if (!name) {
+                alert('Please enter your name first!');
+                return;
+            }
+            
+            if (selectedQuiz === 'custom') {
+                const customQuiz = prompt('Enter custom quiz name:');
+                if (!customQuiz) return;
+                currentQuiz = customQuiz;
             } else {
-                const optionElement = questionDiv.querySelector(`input[value="${optionIndex}"]`).closest('.option');
-                optionElement.classList.add('selected');
-                document.querySelector(`input[value="${optionIndex}"][name="q${questionIndex}"]`).checked = true;
+                currentQuiz = selectedQuiz;
             }
-
-            // Update progress to show current question as "in progress"
-            const answeredQuestions = document.querySelectorAll('.option.selected').length + 
-                                   document.querySelectorAll('.text-answer').filter(ta => ta.value.trim()).length;
-            currentQuestionIndex = Math.min(answeredQuestions, currentQuestions.length);
-            updateProgress();
+            
+            // Store name for later use
+            window.quizTakerName = name;
+            
+            // Show loading and load quiz
+            showSection('loading-section');
+            loadQuizQuestions();
         }
 
         async function submitQuiz() {
-            const name = document.getElementById('student-name').value.trim();
-            if (!name) {
-                alert('Please enter your name before submitting.');
-                return;
-            }
-
-            const submitBtn = document.querySelector('.btn-success');
-            const originalText = submitBtn.textContent;
+            if (!confirm('Are you sure you want to submit your quiz?')) return;
+            
+            const submitBtn = event.target;
             submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
 
             let score = 0;
             wrongAnswers = [];
-            let allAnswers = [];
-            let allQuestions = [];
+            const allAnswers = [];
+            const allQuestions = [];
 
             currentQuestions.forEach((question, index) => {
                 let userAnswer;
@@ -1121,50 +731,183 @@
                 }
             });
 
-            const now = new Date();
+            // Save results
             const quizResults = {
-                name: name,
+                name: window.quizTakerName,
                 quiz: currentQuiz,
                 score: score,
                 total: currentQuestions.length,
                 percentage: Math.round((score / currentQuestions.length) * 100),
-                date: now.toLocaleDateString(),
-                time: now.toLocaleTimeString(),
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString(),
                 questions: allQuestions,
                 answers: allAnswers,
                 questionsSource: usingFallbackQuestions ? 'Default' : 'Google Sheets'
             };
 
             let saveSuccess = false;
-            let saveError = '';
-            
             try {
-                await fetch(CONFIG.webAppUrl, {
+                const response = await fetch(CONFIG.webAppUrl, {
                     method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(quizResults)
                 });
-                
-                saveSuccess = true;
-                
+                saveSuccess = response.ok;
             } catch (error) {
-                console.error('Error saving to Google Sheets:', error);
-                saveError = error.message;
-                saveSuccess = false;
+                console.error('Save error:', error);
             }
 
-            submitBtn.textContent = originalText;
+            submitBtn.textContent = '📝 Submit Quiz';
             submitBtn.disabled = false;
-            showResults(score, name, saveSuccess, saveError);
+            
+            showResults(score, saveSuccess);
         }
 
-        function showResults(score, name, saveSuccess, saveError) {
-            document.getElementById('quiz-section').classList.add('hidden');
-            document.getElementById('results-section').classList.remove('hidden');
+        function backToHome() {
+            // Reset form
+            document.getElementById('engineer-name').value = '';
+            document.getElementById('quiz-select').selectedIndex = 0;
+            currentQuestions = [];
+            wrongAnswers = [];
+            
+            showSection('landing-page');
+        }
 
+        // Initialize app
+        async function initializeApp() {
+            await testConnection();
+            await loadAvailableQuizzes();
+        }
+
+        async function loadAvailableQuizzes() {
+            try {
+                const response = await fetch(CONFIG.quizListUrl);
+                const data = await response.json();
+                
+                if (data.success && data.quizzes) {
+                    const select = document.getElementById('quiz-select');
+                    select.innerHTML = '';
+                    
+                    data.quizzes.forEach(quiz => {
+                        const option = document.createElement('option');
+                        option.value = quiz;
+                        option.textContent = quiz;
+                        select.appendChild(option);
+                    });
+                    
+                    // Add custom option
+                    const customOption = document.createElement('option');
+                    customOption.value = 'custom';
+                    customOption.textContent = 'Custom Quiz Name...';
+                    select.appendChild(customOption);
+                }
+            } catch (error) {
+                console.log('Could not load quiz list from sheets, using defaults');
+            }
+        }
+
+        async function loadQuizQuestions() {
+            try {
+                const url = `${CONFIG.questionsUrl}&quiz=${encodeURIComponent(currentQuiz)}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.success && data.questions && data.questions.length > 0) {
+                    currentQuestions = shuffleArray([...data.questions]);
+                    usingFallbackQuestions = false;
+                } else {
+                    throw new Error('No questions found');
+                }
+            } catch (error) {
+                console.log('Using default questions:', error);
+                currentQuestions = shuffleArray([...DEFAULT_QUESTIONS]);
+                usingFallbackQuestions = true;
+            }
+            
+            generateQuizHTML();
+            showSection('quiz-section');
+            updateProgress();
+        }
+
+        function generateQuizHTML() {
+            const form = document.getElementById('quiz-form');
+            const title = document.getElementById('quiz-title');
+            
+            title.textContent = currentQuiz;
+            form.innerHTML = '';
+
+            currentQuestions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                let questionHTML = `
+                    <div class="question-number">Question ${index + 1}</div>
+                    <h3>${question.question}</h3>
+                `;
+
+                if (question.type === 'multiple') {
+                    questionHTML += '<div class="options">';
+                    question.options.forEach((option, optionIndex) => {
+                        questionHTML += `
+                            <div class="option" onclick="selectOption(${index}, ${optionIndex})">
+                                <input type="radio" name="q${index}" value="${optionIndex}" id="q${index}_${optionIndex}">
+                                <label for="q${index}_${optionIndex}">${option}</label>
+                            </div>
+                        `;
+                    });
+                    questionHTML += '</div>';
+                } else if (question.type === 'true_false') {
+                    questionHTML += `
+                        <div class="options">
+                            <div class="option" onclick="selectOption(${index}, 'true')">
+                                <input type="radio" name="q${index}" value="true" id="q${index}_true">
+                                <label for="q${index}_true">True</label>
+                            </div>
+                            <div class="option" onclick="selectOption(${index}, 'false')">
+                                <input type="radio" name="q${index}" value="false" id="q${index}_false">
+                                <label for="q${index}_false">False</label>
+                            </div>
+                        </div>
+                    `;
+                } else if (question.type === 'short') {
+                    questionHTML += `
+                        <textarea class="text-answer" name="q${index}" placeholder="Enter your answer here..." 
+                                  id="q${index}_text" oninput="updateProgress()"></textarea>
+                    `;
+                }
+
+                questionDiv.innerHTML = questionHTML;
+                form.appendChild(questionDiv);
+            });
+        }
+
+        function selectOption(questionIndex, optionValue) {
+            const questionDiv = document.querySelectorAll('.question')[questionIndex];
+            questionDiv.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            if (typeof optionValue === 'number') {
+                questionDiv.querySelectorAll('.option')[optionValue].classList.add('selected');
+                document.getElementById(`q${questionIndex}_${optionValue}`).checked = true;
+            } else {
+                const optionElement = questionDiv.querySelector(`input[value="${optionValue}"]`).closest('.option');
+                optionElement.classList.add('selected');
+                document.querySelector(`input[value="${optionValue}"][name="q${questionIndex}"]`).checked = true;
+            }
+            
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = currentQuestions.length;
+            const answered = document.querySelectorAll('.option.selected').length + 
+                           Array.from(document.querySelectorAll('.text-answer')).filter(ta => ta.value.trim()).length;
+            
+            const percentage = total > 0 ? (answered / total) * 100 : 0;
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = `${answered} of ${total} questions answered`;
+        }
+
+        function showResults(score, saveSuccess) {
             const percentage = Math.round((score / currentQuestions.length) * 100);
             const scoreElement = document.getElementById('final-score');
             const messageElement = document.getElementById('score-message');
@@ -1174,51 +917,52 @@
 
             scoreElement.textContent = `${score}/${currentQuestions.length} (${percentage}%)`;
 
-            // Show appropriate George based on score
+            // Show appropriate George and message
             let georgeImage = '';
-            let georgeClass = '';
+            let scoreClass = '';
             
             if (percentage >= 80) {
                 georgeImage = GEORGE_IMAGES.celebrate;
-                georgeClass = 'high';
-                messageElement.textContent = `Outstanding work, ${name}! George says you've earned yourself a pint!`;
+                scoreClass = 'high';
+                messageElement.textContent = `Outstanding work, ${window.quizTakerName}! George says you've earned yourself a pint!`;
             } else if (percentage >= 60) {
-                // No George for medium scores - just neutral feedback
-                georgeClass = 'medium';
-                messageElement.textContent = `Good job, ${name}! You're on the right track, but there's room for improvement.`;
+                scoreClass = 'medium';
+                messageElement.textContent = `Good job, ${window.quizTakerName}! You're on the right track, but there's room for improvement.`;
             } else {
                 georgeImage = GEORGE_IMAGES.frustrated;
-                georgeClass = 'low';
-                messageElement.textContent = `${name}, George thinks you need to use your head more! Use the AI tutor below.`;
+                scoreClass = 'low';
+                messageElement.textContent = `${window.quizTakerName}, George thinks you need to use your head more! Use the AI tutor below.`;
             }
 
-            scoreElement.className = `score ${georgeClass}`;
+            scoreElement.className = `score ${scoreClass}`;
             
             if (georgeImage) {
-                georgeContainer.innerHTML = `<div class="george-image">${georgeImage}</div>`;
+                georgeContainer.innerHTML = `<img src="${georgeImage}" alt="George" class="results-george" onerror="this.style.display='none'">`;
             } else {
                 georgeContainer.innerHTML = '';
             }
 
+            // Save status
             if (saveSuccess) {
                 saveStatusElement.innerHTML = `
-                    <div style="background: #d4edda; color: #155724; padding: 20px; border-radius: 12px; margin: 30px 0;">
-                        ✅ Results automatically saved to Google Sheets
+                    <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                        ✅ Results saved to Google Sheets
                     </div>
                 `;
             } else {
                 saveStatusElement.innerHTML = `
-                    <div style="background: #f8d7da; color: #721c24; padding: 20px; border-radius: 12px; margin: 30px 0;">
-                        ❌ Failed to save to Google Sheets: ${saveError}
+                    <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                        ❌ Failed to save to Google Sheets
                     </div>
                 `;
             }
 
+            // ChatGPT help for wrong answers
             if (wrongAnswers.length > 0) {
                 const wrongQuestions = wrongAnswers.map(wa => wa.question).join('\n- ');
                 const explanations = wrongAnswers.map(wa => `${wa.question}: ${wa.explanation}`).join('\n\n');
                 
-                const prompt = `I'm a laundry engineer who needs help understanding these industrial equipment maintenance topics. Please explain these concepts in detail with practical examples:
+                const prompt = `I'm a laundry engineer who needs help understanding these industrial equipment maintenance topics:
 
 Questions I got wrong:
 - ${wrongQuestions}
@@ -1226,7 +970,7 @@ Questions I got wrong:
 Additional context:
 ${explanations}
 
-Please provide detailed explanations, common troubleshooting steps, and practical tips for each topic.`;
+Please provide detailed explanations, troubleshooting steps, and practical tips.`;
 
                 const encodedPrompt = encodeURIComponent(prompt);
                 const chatgptURL = `https://chat.openai.com/?q=${encodedPrompt}`;
@@ -1234,102 +978,457 @@ Please provide detailed explanations, common troubleshooting steps, and practica
                 chatgptSection.innerHTML = `
                     <a href="${chatgptURL}" target="_blank" class="chatgpt-link">
                         🤖 Get AI Help with Wrong Answers
-                        <br><small>Opens ChatGPT with your specific learning needs</small>
                     </a>
                 `;
             } else {
                 chatgptSection.innerHTML = `
-                    <div style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 30px; border-radius: 16px; margin-top: 30px;">
+                    <div style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 25px; border-radius: 15px; margin-top: 20px;">
                         🎉 Perfect Score! No additional study needed.
                     </div>
                 `;
             }
+
+            showSection('results-section');
         }
 
-        function restartQuiz() {
-            document.getElementById('results-section').classList.add('hidden');
-            document.getElementById('quiz-section').classList.remove('hidden');
-            document.getElementById('student-name').value = '';
-            currentQuestionIndex = 0;
-            shuffleArray(currentQuestions);
+        // Utility functions
+        function showSection(sectionId) {
+            const sections = ['landing-page', 'loading-section', 'quiz-section', 'results-section'];
+            sections.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        async function initializeApp() {
+            await testConnection();
+            await loadAvailableQuizzes();
+        }
+
+        async function loadAvailableQuizzes() {
+            try {
+                const response = await fetch(CONFIG.quizListUrl);
+                const data = await response.json();
+                
+                if (data.success && data.quizzes) {
+                    const select = document.getElementById('quiz-select');
+                    select.innerHTML = '';
+                    
+                    data.quizzes.forEach(quiz => {
+                        const option = document.createElement('option');
+                        option.value = quiz;
+                        option.textContent = quiz;
+                        select.appendChild(option);
+                    });
+                    
+                    // Add custom option
+                    const customOption = document.createElement('option');
+                    customOption.value = 'custom';
+                    customOption.textContent = 'Custom Quiz Name...';
+                    select.appendChild(customOption);
+                }
+            } catch (error) {
+                console.log('Could not load quiz list from sheets, using defaults');
+            }
+        }
+
+        function startQuiz() {
+            const name = document.getElementById('engineer-name').value.trim();
+            const selectedQuiz = document.getElementById('quiz-select').value;
+            
+            if (!name) {
+                alert('Please enter your name first!');
+                return;
+            }
+            
+            if (selectedQuiz === 'custom') {
+                const customQuiz = prompt('Enter custom quiz name:');
+                if (!customQuiz) return;
+                currentQuiz = customQuiz;
+            } else {
+                currentQuiz = selectedQuiz;
+            }
+            
+            // Store name for later use
+            window.quizTakerName = name;
+            
+            // Show loading and load quiz
+            showSection('loading-section');
+            loadQuizQuestions();
+        }
+
+        async function loadQuizQuestions() {
+            try {
+                const url = `${CONFIG.questionsUrl}&quiz=${encodeURIComponent(currentQuiz)}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.success && data.questions && data.questions.length > 0) {
+                    currentQuestions = shuffleArray([...data.questions]);
+                    usingFallbackQuestions = false;
+                } else {
+                    throw new Error('No questions found');
+                }
+            } catch (error) {
+                console.log('Using default questions:', error);
+                currentQuestions = shuffleArray([...DEFAULT_QUESTIONS]);
+                usingFallbackQuestions = true;
+            }
+            
             generateQuizHTML();
+            showSection('quiz-section');
+            updateProgress();
         }
 
+        function generateQuizHTML() {
+            const form = document.getElementById('quiz-form');
+            const title = document.getElementById('quiz-title');
+            
+            title.textContent = currentQuiz;
+            form.innerHTML = '';
+
+            currentQuestions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                let questionHTML = `
+                    <div class="question-number">Question ${index + 1}</div>
+                    <h3>${question.question}</h3>
+                `;
+
+                if (question.type === 'multiple') {
+                    questionHTML += '<div class="options">';
+                    question.options.forEach((option, optionIndex) => {
+                        questionHTML += `
+                            <div class="option" onclick="selectOption(${index}, ${optionIndex})">
+                                <input type="radio" name="q${index}" value="${optionIndex}" id="q${index}_${optionIndex}">
+                                <label for="q${index}_${optionIndex}">${option}</label>
+                            </div>
+                        `;
+                    });
+                    questionHTML += '</div>';
+                } else if (question.type === 'true_false') {
+                    questionHTML += `
+                        <div class="options">
+                            <div class="option" onclick="selectOption(${index}, 'true')">
+                                <input type="radio" name="q${index}" value="true" id="q${index}_true">
+                                <label for="q${index}_true">True</label>
+                            </div>
+                            <div class="option" onclick="selectOption(${index}, 'false')">
+                                <input type="radio" name="q${index}" value="false" id="q${index}_false">
+                                <label for="q${index}_false">False</label>
+                            </div>
+                        </div>
+                    `;
+                } else if (question.type === 'short') {
+                    questionHTML += `
+                        <textarea class="text-answer" name="q${index}" placeholder="Enter your answer here..." 
+                                  id="q${index}_text" oninput="updateProgress()"></textarea>
+                    `;
+                }
+
+                questionDiv.innerHTML = questionHTML;
+                form.appendChild(questionDiv);
+            });
+        }
+
+        function selectOption(questionIndex, optionValue) {
+            const questionDiv = document.querySelectorAll('.question')[questionIndex];
+            questionDiv.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            if (typeof optionValue === 'number') {
+                questionDiv.querySelectorAll('.option')[optionValue].classList.add('selected');
+                document.getElementById(`q${questionIndex}_${optionValue}`).checked = true;
+            } else {
+                const optionElement = questionDiv.querySelector(`input[value="${optionValue}"]`).closest('.option');
+                optionElement.classList.add('selected');
+                document.querySelector(`input[value="${optionValue}"][name="q${questionIndex}"]`).checked = true;
+            }
+            
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = currentQuestions.length;
+            const answered = document.querySelectorAll('.option.selected').length + 
+                           Array.from(document.querySelectorAll('.text-answer')).filter(ta => ta.value.trim()).length;
+            
+            const percentage = total > 0 ? (answered / total) * 100 : 0;
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = `${answered} of ${total} questions answered`;
+        }
+
+        async function submitQuiz() {
+            if (!confirm('Are you sure you want to submit your quiz?')) return;
+            
+            const submitBtn = event.target;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+
+            let score = 0;
+            wrongAnswers = [];
+            const allAnswers = [];
+            const allQuestions = [];
+
+            currentQuestions.forEach((question, index) => {
+                let userAnswer;
+                let isCorrect = false;
+
+                allQuestions.push(question.question);
+
+                if (question.type === 'multiple') {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    if (selected) {
+                        userAnswer = parseInt(selected.value);
+                        allAnswers.push(question.options[userAnswer]);
+                        isCorrect = userAnswer === question.correct;
+                    } else {
+                        allAnswers.push('No answer');
+                    }
+                } else if (question.type === 'short') {
+                    userAnswer = document.getElementById(`q${index}_text`).value.trim();
+                    allAnswers.push(userAnswer || 'No answer');
+                    isCorrect = userAnswer.length > 0;
+                }
+
+                if (isCorrect) {
+                    score++;
+                } else {
+                    wrongAnswers.push({
+                        question: question.question,
+                        explanation: question.explanation,
+                        userAnswer: userAnswer
+                    });
+                }
+            });
+
+            // Save results
+            const quizResults = {
+                name: window.quizTakerName,
+                quiz: currentQuiz,
+                score: score,
+                total: currentQuestions.length,
+                percentage: Math.round((score / currentQuestions.length) * 100),
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString(),
+                questions: allQuestions,
+                answers: allAnswers,
+                questionsSource: usingFallbackQuestions ? 'Default' : 'Google Sheets'
+            };
+
+            let saveSuccess = false;
+            try {
+                const response = await fetch(CONFIG.webAppUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(quizResults)
+                });
+                saveSuccess = response.ok;
+            } catch (error) {
+                console.error('Save error:', error);
+            }
+
+            submitBtn.textContent = '📝 Submit Quiz';
+            submitBtn.disabled = false;
+            
+            showResults(score, saveSuccess);
+        }
+
+        function showResults(score, saveSuccess) {
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            const scoreElement = document.getElementById('final-score');
+            const messageElement = document.getElementById('score-message');
+            const saveStatusElement = document.getElementById('results-save-status');
+            const chatgptSection = document.getElementById('chatgpt-section');
+            const georgeContainer = document.getElementById('george-container');
+
+            scoreElement.textContent = `${score}/${currentQuestions.length} (${percentage}%)`;
+
+            // Show appropriate George and message
+            let georgeImage = '';
+            let scoreClass = '';
+            
+            if (percentage >= 80) {
+                georgeImage = GEORGE_IMAGES.celebrate;
+                scoreClass = 'high';
+                messageElement.textContent = `Outstanding work, ${window.quizTakerName}! George says you've earned yourself a pint!`;
+            } else if (percentage >= 60) {
+                scoreClass = 'medium';
+                messageElement.textContent = `Good job, ${window.quizTakerName}! You're on the right track, but there's room for improvement.`;
+            } else {
+                georgeImage = GEORGE_IMAGES.frustrated;
+                scoreClass = 'low';
+                messageElement.textContent = `${window.quizTakerName}, George thinks you need to use your head more! Use the AI tutor below.`;
+            }
+
+            scoreElement.className = `score ${scoreClass}`;
+            
+            if (georgeImage) {
+                georgeContainer.innerHTML = `<img src="${georgeImage}" alt="George" class="results-george" onerror="this.style.display='none'">`;
+            } else {
+                georgeContainer.innerHTML = '';
+            }
+
+            // Save status
+            if (saveSuccess) {
+                saveStatusElement.innerHTML = `
+                    <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                        ✅ Results saved to Google Sheets
+                    </div>
+                `;
+            } else {
+                saveStatusElement.innerHTML = `
+                    <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                        ❌ Failed to save to Google Sheets
+                    </div>
+                `;
+            }
+
+            // ChatGPT help for wrong answers
+            if (wrongAnswers.length > 0) {
+                const wrongQuestions = wrongAnswers.map(wa => wa.question).join('\n- ');
+                const explanations = wrongAnswers.map(wa => `${wa.question}: ${wa.explanation}`).join('\n\n');
+                
+                const prompt = `I'm a laundry engineer who needs help understanding these industrial equipment maintenance topics:
+
+Questions I got wrong:
+- ${wrongQuestions}
+
+Additional context:
+${explanations}
+
+Please provide detailed explanations, troubleshooting steps, and practical tips.`;
+
+                const encodedPrompt = encodeURIComponent(prompt);
+                const chatgptURL = `https://chat.openai.com/?q=${encodedPrompt}`;
+
+                chatgptSection.innerHTML = `
+                    <a href="${chatgptURL}" target="_blank" class="chatgpt-link">
+                        🤖 Get AI Help with Wrong Answers
+                    </a>
+                `;
+            } else {
+                chatgptSection.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 25px; border-radius: 15px; margin-top: 20px;">
+                        🎉 Perfect Score! No additional study needed.
+                    </div>
+                `;
+            }
+
+            showSection('results-section');
+        }
+
+        // Admin functions
         function toggleAdmin() {
-            const content = document.getElementById('admin-content');
-            content.classList.toggle('show');
+            const dropdown = document.getElementById('admin-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        async function testConnection() {
+            const statusElement = document.getElementById('connection-status');
+            statusElement.textContent = '🔄 Testing connection...';
+            statusElement.className = 'status-indicator status-warning';
+            
+            try {
+                const testData = {
+                    name: 'Test User',
+                    quiz: 'Connection Test',
+                    score: 1,
+                    total: 1,
+                    percentage: 100,
+                    date: new Date().toLocaleDateString(),
+                    time: new Date().toLocaleTimeString(),
+                    questions: ['Test Question'],
+                    answers: ['Test Answer'],
+                    questionsSource: 'Test'
+                };
+                
+                const response = await fetch(CONFIG.webAppUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testData)
+                });
+                
+                if (response.ok) {
+                    statusElement.textContent = '✅ Connection working';
+                    statusElement.className = 'status-indicator status-connected';
+                } else {
+                    statusElement.textContent = `❌ Connection failed: HTTP ${response.status}`;
+                    statusElement.className = 'status-indicator status-disconnected';
+                }
+            } catch (error) {
+                statusElement.textContent = `❌ Connection error: ${error.message}`;
+                statusElement.className = 'status-indicator status-disconnected';
+            }
         }
 
         function openGoogleSheet() {
             window.open(CONFIG.sheetUrl, '_blank');
         }
 
-        async function selectQuiz() {
-            try {
-                // Load available quizzes from Google Sheets
-                const response = await fetch(CONFIG.quizListUrl);
-                const data = await response.json();
+        function refreshQuestions() {
+            if (confirm('Reload questions from Google Sheets?')) {
+                showSection('loading-section');
+                loadQuizQuestions();
+            }
+        }
+
+        // Utility functions
+        function showSection(sectionId) {
+            const sections = ['landing-page', 'loading-section', 'quiz-section', 'results-section'];
+            sections.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function backToHome() {
+            // Reset form
+            document.getElementById('engineer-name').value = '';
+            document.getElementById('quiz-select').selectedIndex = 0;
+            currentQuestions = [];
+            wrongAnswers = [];
+            
+            showSection('landing-page');
+        }
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            
+            // Close admin dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                const adminPanel = document.querySelector('.admin-panel');
+                const dropdown = document.getElementById('admin-dropdown');
                 
-                if (data.success && data.quizzes && data.quizzes.length > 0) {
-                    const availableQuizzes = data.quizzes;
-                    const quizList = availableQuizzes.map((quiz, index) => `${index + 1}. ${quiz}`).join('\n');
-                    const selection = prompt(`Select a quiz:\n\n${quizList}\n\nEnter number (1-${availableQuizzes.length}) or type custom quiz name:`);
-                    
-                    if (selection) {
-                        const num = parseInt(selection);
-                        if (num >= 1 && num <= availableQuizzes.length) {
-                            currentQuiz = availableQuizzes[num - 1];
-                        } else {
-                            currentQuiz = selection;
-                        }
-                        
-                        localStorage.setItem('currentQuiz', currentQuiz);
-                        document.getElementById('quiz-title').textContent = currentQuiz;
-                        alert(`Quiz changed to: ${currentQuiz}. Refreshing questions...`);
-                        initializeQuiz();
-                    }
-                } else {
-                    // Fallback to manual entry if Google Sheets fails
-                    const customQuiz = prompt('Enter quiz name (Google Sheets unavailable):');
-                    if (customQuiz) {
-                        currentQuiz = customQuiz;
-                        localStorage.setItem('currentQuiz', currentQuiz);
-                        document.getElementById('quiz-title').textContent = currentQuiz;
-                        alert(`Quiz changed to: ${currentQuiz}. Refreshing questions...`);
-                        initializeQuiz();
-                    }
+                if (!adminPanel.contains(event.target)) {
+                    dropdown.classList.remove('show');
                 }
-            } catch (error) {
-                console.error('Error loading quiz list:', error);
-                // Fallback to manual entry
-                const customQuiz = prompt('Enter quiz name (connection failed):');
-                if (customQuiz) {
-                    currentQuiz = customQuiz;
-                    localStorage.setItem('currentQuiz', currentQuiz);
-                    document.getElementById('quiz-title').textContent = currentQuiz;
-                    alert(`Quiz changed to: ${currentQuiz}. Refreshing questions...`);
-                    initializeQuiz();
-                }
-            }
-        }
-
-        async function refreshQuestions() {
-            document.getElementById('quiz-section').classList.add('hidden');
-            document.getElementById('loading-section').classList.remove('hidden');
-            await initializeQuiz();
-        }
-
-        function clearLocalData() {
-            if (confirm('Clear cached quiz selection?')) {
-                localStorage.removeItem('currentQuiz');
-                location.reload();
-            }
-        }
-
-        // Initialize when page loads
-        window.onload = function() {
-            initializeQuiz();
-        };
-    </script>
-</body>
-</html>
+            });
+        }); answer');
+                    }
+                } else if (question.type === 'true_false') {
+                    const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                    if (selected) {
+                        userAnswer = selected.value === 'true';
+                        allAnswers.push(userAnswer ? 'True' : 'False');
+                        isCorrect = userAnswer === question.correct;
+                    } else {
+                        allAnswers.push('No
