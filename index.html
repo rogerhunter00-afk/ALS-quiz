@@ -535,12 +535,7 @@
             <h1>🔧 Laundry Engineers Quiz</h1>
             <p>Knowledge Check - Industrial Equipment Maintenance</p>
             <!-- Welcoming George -->
-            <svg class="george-welcome" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                <!-- This is a placeholder for the actual George image -->
-                <rect width="400" height="400" fill="#3498db" rx="20"/>
-                <text x="200" y="200" text-anchor="middle" fill="white" font-size="24" font-weight="bold">Welcome George</text>
-                <text x="200" y="230" text-anchor="middle" fill="white" font-size="12">Replace with actual image</text>
-            </svg>
+<img class="george-welcome" src="images/george-welcome.png" alt="Welcome George">
         </div>
         
         <div class="admin-section">
@@ -631,32 +626,12 @@
             questionsSheetUrl: 'https://script.google.com/macros/s/AKfycbzCTRJ_166V_E9M4nEdyZRO-X-PqTxnpa_tDfkxSGKjOhblURlU_wuDAWNOTe2IomVe/exec?action=getQuestions'
         };
 
-        // George images as SVG (replace with actual images)
-        const GEORGE_IMAGES = {
-            welcome: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                <rect width="400" height="400" fill="#2ecc71" rx="20"/>
-                <text x="200" y="180" text-anchor="middle" fill="white" font-size="20" font-weight="bold">Welcoming George</text>
-                <text x="200" y="210" text-anchor="middle" fill="white" font-size="14">"RIGHT THEN, LET'S SEE"</text>
-                <text x="200" y="230" text-anchor="middle" fill="white" font-size="14">"WHAT YOU KNOW!"</text>
-            </svg>`,
-            
-            celebrate: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                <rect width="400" height="400" fill="#f39c12" rx="20"/>
-                <text x="200" y="160" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Celebrating George</text>
-                <text x="200" y="190" text-anchor="middle" fill="white" font-size="12">"OUTSTANDING!"</text>
-                <text x="200" y="210" text-anchor="middle" fill="white" font-size="12">"BUY YOURSELF"</text>
-                <text x="200" y="230" text-anchor="middle" fill="white" font-size="12">"A PINT!"</text>
-                <text x="200" y="260" text-anchor="middle" fill="white" font-size="24">🍺</text>
-            </svg>`,
-            
-            frustrated: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                <rect width="400" height="400" fill="#e74c3c" rx="20"/>
-                <text x="200" y="160" text-anchor="middle" fill="white" font-size="18" font-weight="bold">Frustrated George</text>
-                <text x="200" y="190" text-anchor="middle" fill="white" font-size="12">"C'MON. USE YOUR"</text>
-                <text x="200" y="210" text-anchor="middle" fill="white" font-size="12">"FRIGGIN' HEAD."</text>
-                <text x="200" y="240" text-anchor="middle" fill="white" font-size="24">😤</text>
-            </svg>`
-        };
+        // George images
+const GEORGE_IMAGES = {
+    welcome: `<img src="images/george-welcome.png" alt="Welcome George" style="width: 150px; height: auto;">`,
+    celebrate: `<img src="images/george-celebrate.png" alt="Celebrating George" style="width: 150px; height: auto;">`,
+    frustrated: `<img src="images/george-frustrated.png" alt="Frustrated George" style="width: 150px; height: auto;">`
+};
 
         // Default/fallback quiz questions
         const defaultQuizData = [
