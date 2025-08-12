@@ -1,9 +1,4 @@
-function refreshQuestions() {
-            if (confirm('Reload questions?')) {
-                showSection('loading-section');
-                loadQuizQuestions();
-            }
-        }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -445,9 +440,7 @@ function refreshQuestions() {
             .admin-dropdown { position: static; margin-top: 10px; }
         }
     </style>
-</head>
-<body>
-    <!-- First, define ALL JavaScript functions in the head -->
+
     <script>
         // CONFIGURATION
         const CONFIG = {
@@ -457,7 +450,7 @@ function refreshQuestions() {
             questionsUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec?action=getQuestions'
         };
 
-        // George image URLs - using full GitHub raw URLs for reliability
+        // George image URLs - using GitHub raw URLs
         const GEORGE_IMAGES = {
             welcome: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png',
             celebrate: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-celebrate.png',
@@ -507,20 +500,15 @@ function refreshQuestions() {
         let currentQuiz = 'Bearing Maintenance Quiz';
         let usingFallbackQuestions = false;
 
-        // Define ALL functions at the top level
+        // Admin functions
         function toggleAdmin() {
-            console.log('toggleAdmin called');
             const dropdown = document.getElementById('admin-dropdown');
             if (dropdown) {
                 dropdown.classList.toggle('show');
-                console.log('Dropdown toggled');
-            } else {
-                console.error('Admin dropdown not found');
             }
         }
 
         async function testConnection() {
-            console.log('testConnection called');
             const statusElement = document.getElementById('connection-status');
             if (!statusElement) return;
             
@@ -547,24 +535,24 @@ function refreshQuestions() {
         }
 
         function testImages() {
-            console.log('🧪 Manual image test triggered...');
-            testAllImageUrls();
-            
-            // Also try to load the current George welcome image and show result
-            const testImg = document.createElement('img');
+            const testImg = new Image();
             testImg.onload = function() {
-                alert('✅ Image test SUCCESS! The image loaded properly.');
-                console.log('Manual test: Image loaded successfully');
+                alert('✅ Image test SUCCESS! George image loaded properly.');
             };
             testImg.onerror = function() {
                 alert('❌ Image test FAILED! Check console for details.');
-                console.log('Manual test: Image failed to load');
             };
             testImg.src = GEORGE_IMAGES.welcome;
         }
 
+        function refreshQuestions() {
+            if (confirm('Reload questions?')) {
+                showSection('loading-section');
+                loadQuizQuestions();
+            }
+        }
+
         function startQuiz() {
-            console.log('startQuiz called');
             const name = document.getElementById('engineer-name').value.trim();
             const selectedQuiz = document.getElementById('quiz-select').value;
             
@@ -812,43 +800,14 @@ function refreshQuestions() {
             if (scoreElement) scoreElement.className = `score ${scoreClass}`;
             
             if (georgeContainer && georgeImage) {
-                console.log('Loading George image:', georgeImage);
-                georgeContainer.innerHTML = `<img src="${georgeImage}" alt="George" class="results-george" 
-                    onload="console.log('George results image loaded successfully')"
-                    onerror="console.error('George results image failed to load from: ${georgeImage}'); this.style.display='none'">`;
+                georgeContainer.innerHTML = `<img src="${georgeImage}" alt="George" class="results-george">`;
             }
 
             showSection('results-section');
         }
-
-        // Add a comprehensive image test function
-        function testAllImageUrls() {
-            console.log('🔍 Testing all possible image URL formats...');
-            
-            const imageTests = [
-                // GitHub raw URLs
-                'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png',
-                // GitHub Pages relative paths
-                './images/george-welcome.png',
-                '/ALS-quiz/images/george-welcome.png',
-                'images/george-welcome.png',
-                // GitHub Pages absolute
-                'https://rogerhunter00-afk.github.io/ALS-quiz/images/george-welcome.png'
-            ];
-            
-            imageTests.forEach((url, index) => {
-                const img = new Image();
-                img.onload = function() {
-                    console.log(`✅ SUCCESS - Image ${index + 1} loaded: ${url}`);
-                };
-                img.onerror = function() {
-                    console.log(`❌ FAILED - Image ${index + 1} failed: ${url}`);
-                };
-                img.src = url;
-            });
-        }
     </script>
-
+</head>
+<body>
     <div class="container">
         <!-- Admin Panel -->
         <div class="admin-panel">
@@ -858,7 +817,7 @@ function refreshQuestions() {
                 <div style="margin: 15px 0;">
                     <button class="btn btn-secondary" onclick="testConnection()">🔌 Test</button>
                     <button class="btn btn-secondary" onclick="openGoogleSheet()">📊 Sheet</button>
-                    <button class="btn btn-secondary" onclick="testImages()">🖼️ Test Images</button>
+                    <button class="btn btn-secondary" onclick="testImages()">🖼️ Images</button>
                     <button class="btn btn-secondary" onclick="refreshQuestions()">🔄 Refresh</button>
                 </div>
             </div>
@@ -871,10 +830,9 @@ function refreshQuestions() {
                 <p>Test Your Industrial Equipment Knowledge</p>
             </div>
             
-            <img src="./george-welcome.png" alt="Welcome George" class="welcome-george" 
-            <img src="https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png" alt="Welcome George" class="welcome-george" 
-                 onload="console.log('George welcome image loaded from GitHub raw')"
-                 onerror="console.error('GitHub raw image failed, trying fallback'); this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDI4MCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMzNDk4ZGIiIHJ4PSIyMCIvPjx0ZXh0IHg9IjE0MCIgeT0iMTQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPldlbGNvbWUgR2VvcmdlPC90ZXh0Pjx0ZXh0IHg9IjE0MCIgeT0iMTcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pjwvc3ZnPg=='">
+            <img src="https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png" 
+                 alt="Welcome George" 
+                 class="welcome-george">
             
             <div class="name-section">
                 <h2>Ready to test your knowledge?</h2>
@@ -951,9 +909,6 @@ function refreshQuestions() {
     <script>
         // Initialize when DOM loads
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded');
-            console.log('Current URL:', window.location.href);
-            testAllImageUrls(); // Test all possible image URLs
             testConnection();
             
             // Close admin dropdown when clicking outside
