@@ -30,98 +30,273 @@
             position: relative;
         }
         
-        /* Landing Page Styles */
+        /* Landing Page Styles - Enhanced UX */
         .landing-page {
             text-align: center;
-            padding: 40px 30px;
+            padding: 50px 30px;
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Subtle background pattern */
+        .landing-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23667eea' fill-opacity='0.03'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            opacity: 0.5;
+            z-index: 1;
+        }
+        
+        .landing-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .landing-header {
+            animation: fadeInDown 0.8s ease-out;
         }
         
         .landing-header h1 {
-            font-size: 2.8em;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-weight: 700;
+            font-size: 3.5em;
+            color: #1a252f;
+            margin-bottom: 8px;
+            font-weight: 800;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+            letter-spacing: -1px;
         }
         
         .landing-header p {
-            font-size: 1.2em;
-            color: #7f8c8d;
-            margin-bottom: 30px;
+            font-size: 1.4em;
+            color: #34495e;
+            margin-bottom: 25px;
+            font-weight: 500;
         }
         
         .welcome-george {
-            width: 400px;
+            width: 420px;
             height: auto;
-            margin: 20px auto 30px auto;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
+            margin: 25px auto 35px auto;
+            border-radius: 25px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15), 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
             display: block;
+            animation: fadeInUp 1s ease-out 0.3s both;
         }
         
         .welcome-george:hover {
-            transform: scale(1.02);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 35px 80px rgba(0,0,0,0.2), 0 15px 30px rgba(0,0,0,0.15);
         }
         
-        .name-section {
-            margin: 30px 0;
+        .interactive-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px 30px;
+            margin: 30px auto;
+            max-width: 500px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeInUp 1s ease-out 0.6s both;
         }
         
-        .name-section h2 {
-            font-size: 1.6em;
-            color: #34495e;
-            margin-bottom: 15px;
+        .section-title {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-weight: 700;
         }
         
         .name-input {
-            margin: 20px 0;
+            margin: 25px 0;
+            position: relative;
         }
         
         .name-input input {
-            padding: 16px 24px;
-            font-size: 1.2em;
-            border: 3px solid #ddd;
-            border-radius: 12px;
-            width: 350px;
-            max-width: 100%;
-            text-align: center;
+            padding: 18px 25px 18px 50px;
+            font-size: 1.3em;
+            border: 3px solid #e3e8ed;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
             transition: all 0.3s ease;
-            background: #f8f9fa;
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            font-weight: 500;
         }
         
         .name-input input:focus {
             outline: none;
             border-color: #3498db;
-            box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 25px rgba(52, 152, 219, 0.15), 0 4px 20px rgba(0,0,0,0.1);
             background: white;
+            transform: translateY(-2px);
+        }
+        
+        .name-input::before {
+            content: '👤';
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            pointer-events: none;
+            z-index: 3;
         }
         
         .quiz-selector {
             margin: 25px 0;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            border: 2px solid #e9ecef;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            border: 2px solid rgba(52, 152, 219, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-selector::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #f39c12);
         }
         
         .quiz-selector h3 {
             color: #2c3e50;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: 600;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .quiz-selector h3::before {
+            content: '📋';
             font-size: 1.1em;
         }
         
         .quiz-selector select {
-            padding: 12px;
-            font-size: 1em;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: 2px solid #e3e8ed;
+            border-radius: 12px;
             width: 100%;
-            max-width: 350px;
+            max-width: 380px;
             background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
         
-        /* Button Styles */
+        .quiz-selector select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .start-quiz-section {
+            margin-top: 35px;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+            font-size: 1.4em;
+            padding: 22px 45px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, #219a52, #27ae60);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(39, 174, 96, 0.4), 0 0 20px rgba(39, 174, 96, 0.2);
+        }
+        
+        .btn-success:hover::before {
+            left: 100%;
+        }
+        
+        .btn-success:active {
+            transform: translateY(-2px);
+        }
+        
+        .quiz-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            color: #34495e;
+            font-size: 0.95em;
+            animation: fadeIn 1s ease-out 1.2s both;
+        }
+        
+        /* Keyframe animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Enhanced Button Styles */
         .btn {
             padding: 18px 36px;
             border: none;
@@ -135,32 +310,38 @@
             margin: 10px;
             min-height: 56px;
             touch-action: manipulation;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
         
         .btn-primary {
-            background: #3498db;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
             box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
         }
         
         .btn-primary:hover {
-            background: #2980b9;
+            background: linear-gradient(135deg, #2980b9, #1f618d);
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
-        }
-        
-        .btn-success {
-            background: #27ae60;
-            color: white;
-            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
-            font-size: 1.3em;
-            padding: 20px 40px;
-        }
-        
-        .btn-success:hover {
-            background: #219a52;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
         }
         
         .btn-secondary {
@@ -429,13 +610,18 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Responsive Design */
+        /* Enhanced Responsive Design */
         @media (max-width: 768px) {
             .container { margin: 10px; }
-            .landing-page { padding: 30px 20px; }
-            .landing-header h1 { font-size: 2.2em; }
-            .welcome-george { width: 300px; }
-            .name-input input { width: 100%; font-size: 1.1em; }
+            .landing-page { padding: 40px 20px; }
+            .landing-header h1 { font-size: 2.8em; letter-spacing: -0.5px; }
+            .landing-header p { font-size: 1.2em; }
+            .welcome-george { width: 320px; }
+            .interactive-section { padding: 25px 20px; margin: 20px auto; }
+            .name-input input { width: 100%; font-size: 1.2em; padding: 16px 20px 16px 45px; }
+            .name-input::before { left: 15px; font-size: 1.1em; }
+            .quiz-selector { padding: 20px 15px; }
+            .btn-success { font-size: 1.2em; padding: 18px 35px; }
             .quiz-section { padding: 30px 20px; }
             .question { padding: 20px; }
             .admin-panel { position: static; margin: 20px; }
@@ -443,10 +629,22 @@
         }
         
         @media (max-width: 480px) {
-            .landing-header h1 { font-size: 1.8em; }
-            .welcome-george { width: 250px; }
-            .name-input input { padding: 14px 20px; }
-            .quiz-selector { padding: 15px; }
+            .landing-header h1 { font-size: 2.2em; }
+            .landing-header p { font-size: 1.1em; }
+            .welcome-george { width: 280px; }
+            .interactive-section { margin: 15px auto; }
+            .name-input input { padding: 14px 18px 14px 40px; font-size: 1.1em; }
+            .name-input::before { left: 12px; font-size: 1em; }
+            .quiz-selector { padding: 18px 12px; }
+            .quiz-selector select { padding: 12px 15px; font-size: 1em; }
+            .btn-success { font-size: 1.1em; padding: 16px 30px; letter-spacing: 0.5px; }
+            .section-title { font-size: 1.5em; }
+        }
+        
+        @media (max-width: 320px) {
+            .welcome-george { width: 240px; }
+            .landing-header h1 { font-size: 1.9em; }
+            .btn-success { padding: 14px 25px; }
         }
     </style>
 
@@ -786,6 +984,7 @@
             const scoreElement = document.getElementById('final-score');
             const messageElement = document.getElementById('score-message');
             const georgeContainer = document.getElementById('george-container');
+            const chatgptSection = document.getElementById('chatgpt-section');
 
             if (scoreElement) scoreElement.textContent = `${score}/${currentQuestions.length} (${percentage}%)`;
 
@@ -812,6 +1011,81 @@
                 georgeContainer.innerHTML = `<img src="${georgeImage}" alt="George" class="results-george">`;
             }
 
+            // Enhanced ChatGPT help section
+            if (chatgptSection) {
+                if (wrongAnswers.length > 0) {
+                    // Create detailed prompt for ChatGPT
+                    const wrongQuestions = wrongAnswers.map((wa, index) => `${index + 1}. ${wa.question}`).join('\n');
+                    const detailedExplanations = wrongAnswers.map((wa, index) => 
+                        `Question ${index + 1}: ${wa.question}\nCorrect Answer Context: ${wa.explanation || 'Review this topic area'}`
+                    ).join('\n\n');
+                    
+                    const enhancedPrompt = `I'm a laundry maintenance engineer who just completed a technical quiz on "${currentQuiz}". I need help understanding these specific topics I struggled with:
+
+QUESTIONS I GOT WRONG:
+${wrongQuestions}
+
+DETAILED CONTEXT:
+${detailedExplanations}
+
+Please provide for each topic:
+1. Clear technical explanations in practical terms
+2. Common troubleshooting steps I should know
+3. Safety considerations and best practices
+4. Real-world tips for commercial laundry equipment maintenance
+5. How to prevent these issues in the field
+
+Focus on actionable knowledge I can apply immediately in my maintenance work.`;
+
+                    // Use the new ChatGPT URL format with better encoding
+                    const encodedPrompt = encodeURIComponent(enhancedPrompt);
+                    const chatgptURL = `https://chat.openai.com/?model=gpt-4&q=${encodedPrompt}`;
+                    
+                    // Alternative URL format (more reliable)
+                    const alternativeURL = `https://chatgpt.com/?q=${encodedPrompt}`;
+
+                    chatgptSection.innerHTML = `
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 25px 0; border-left: 5px solid #e74c3c;">
+                            <h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.2em;">
+                                📚 Need Help with ${wrongAnswers.length} Question${wrongAnswers.length > 1 ? 's' : ''}?
+                            </h4>
+                            <p style="color: #7f8c8d; margin-bottom: 20px; line-height: 1.6;">
+                                Get personalized explanations and troubleshooting tips for the topics you missed:
+                            </p>
+                            <div style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 8px; border-left: 3px solid #3498db;">
+                                <strong style="color: #2c3e50;">Topics you'll get help with:</strong>
+                                <ul style="margin: 10px 0; padding-left: 20px; color: #34495e;">
+                                    ${wrongAnswers.map(wa => `<li style="margin: 5px 0;">${wa.question}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                                <a href="${chatgptURL}" target="_blank" class="chatgpt-link" style="flex: 1; min-width: 200px; max-width: 300px;">
+                                    🤖 Get AI Tutor Help (ChatGPT)
+                                </a>
+                                <a href="${alternativeURL}" target="_blank" class="chatgpt-link" style="background: linear-gradient(135deg, #667eea, #764ba2); flex: 1; min-width: 200px; max-width: 300px;">
+                                    🎓 Alternative AI Help
+                                </a>
+                            </div>
+                            <p style="font-size: 0.9em; color: #95a5a6; margin-top: 15px; text-align: center;">
+                                ⏱️ Takes 2-3 minutes • Gets specific help for your missed questions
+                            </p>
+                        </div>
+                    `;
+                } else {
+                    chatgptSection.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 30px; border-radius: 15px; margin-top: 25px; text-align: center;">
+                            <h3 style="margin-bottom: 15px; font-size: 1.4em;">🎉 Perfect Score!</h3>
+                            <p style="font-size: 1.1em; opacity: 0.9;">
+                                No additional study needed - you've mastered this topic!
+                            </p>
+                            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                                <p style="font-size: 0.95em;">Ready for the next challenge? Try another quiz!</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
             showSection('results-section');
         }
     </script>
@@ -834,35 +1108,43 @@
 
         <!-- Landing Page -->
         <div id="landing-page" class="landing-page">
-            <div class="landing-header">
-                <h1>🔧 Laundry Engineers Quiz</h1>
-                <p>Test Your Industrial Equipment Knowledge</p>
-            </div>
-            
-            <img src="https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png" 
-                 alt="Welcome George" 
-                 class="welcome-george">
-            
-            <div class="name-section">
-                <h2>Ready to test your knowledge?</h2>
-                <div class="name-input">
-                    <input type="text" id="engineer-name" placeholder="Enter your name" required>
+            <div class="landing-content">
+                <div class="landing-header">
+                    <h1>🔧 Laundry Engineers Quiz</h1>
+                    <p>How Well Do You Know Your Machines?</p>
+                </div>
+                
+                <img src="https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png" 
+                     alt="Welcome George" 
+                     class="welcome-george">
+                
+                <div class="interactive-section">
+                    <h2 class="section-title">Enter the Challenge</h2>
+                    
+                    <div class="name-input">
+                        <input type="text" id="engineer-name" placeholder="Enter your name" required>
+                    </div>
+                    
+                    <div class="quiz-selector">
+                        <h3>Choose Your Test</h3>
+                        <select id="quiz-select">
+                            <option value="Bearing Maintenance Quiz">Bearing Maintenance Quiz</option>
+                            <option value="Motor Troubleshooting">Motor Troubleshooting</option>
+                            <option value="Electrical Safety">Electrical Safety</option>
+                            <option value="custom">Custom Quiz Name...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="start-quiz-section">
+                        <button class="btn btn-success" onclick="startQuiz()">
+                            🚀 Start Quiz
+                        </button>
+                        <div class="quiz-info">
+                            ⏱️ Takes about 5 minutes • Test your technical knowledge
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="quiz-selector">
-                <h3>Select Quiz:</h3>
-                <select id="quiz-select">
-                    <option value="Bearing Maintenance Quiz">Bearing Maintenance Quiz</option>
-                    <option value="Motor Troubleshooting">Motor Troubleshooting</option>
-                    <option value="Electrical Safety">Electrical Safety</option>
-                    <option value="custom">Custom Quiz Name...</option>
-                </select>
-            </div>
-            
-            <button class="btn btn-success" onclick="startQuiz()">
-                🚀 Start Quiz
-            </button>
         </div>
 
         <!-- Loading Section -->
