@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+function refreshQuestions() {
+            if (confirm('Reload questions?')) {
+                showSection('loading-section');
+                loadQuizQuestions();
+            }
+        }<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -452,11 +457,11 @@
             questionsUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec?action=getQuestions'
         };
 
-        // George image URLs - fixed for GitHub Pages
+        // George image URLs - using full GitHub raw URLs for reliability
         const GEORGE_IMAGES = {
-            welcome: '/ALS-quiz/images/george-welcome.png',
-            celebrate: '/ALS-quiz/images/george-celebrate.png',
-            frustrated: '/ALS-quiz/images/george-frustrated.png'
+            welcome: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png',
+            celebrate: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-celebrate.png',
+            frustrated: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-frustrated.png'
         };
 
         // Default quiz questions
@@ -541,11 +546,21 @@
             window.open(CONFIG.sheetUrl, '_blank');
         }
 
-        function refreshQuestions() {
-            if (confirm('Reload questions?')) {
-                showSection('loading-section');
-                loadQuizQuestions();
-            }
+        function testImages() {
+            console.log('🧪 Manual image test triggered...');
+            testAllImageUrls();
+            
+            // Also try to load the current George welcome image and show result
+            const testImg = document.createElement('img');
+            testImg.onload = function() {
+                alert('✅ Image test SUCCESS! The image loaded properly.');
+                console.log('Manual test: Image loaded successfully');
+            };
+            testImg.onerror = function() {
+                alert('❌ Image test FAILED! Check console for details.');
+                console.log('Manual test: Image failed to load');
+            };
+            testImg.src = GEORGE_IMAGES.welcome;
         }
 
         function startQuiz() {
@@ -806,26 +821,30 @@
             showSection('results-section');
         }
 
-        // Add a test function to check all image paths
-        function testImagePaths() {
-            console.log('Testing image paths...');
-            console.log('Current page URL:', window.location.href);
-            console.log('Base URL:', window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')));
+        // Add a comprehensive image test function
+        function testAllImageUrls() {
+            console.log('🔍 Testing all possible image URL formats...');
             
-            Object.keys(GEORGE_IMAGES).forEach(key => {
+            const imageTests = [
+                // GitHub raw URLs
+                'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png',
+                // GitHub Pages relative paths
+                './images/george-welcome.png',
+                '/ALS-quiz/images/george-welcome.png',
+                'images/george-welcome.png',
+                // GitHub Pages absolute
+                'https://rogerhunter00-afk.github.io/ALS-quiz/images/george-welcome.png'
+            ];
+            
+            imageTests.forEach((url, index) => {
                 const img = new Image();
-                const imagePath = GEORGE_IMAGES[key];
-                
                 img.onload = function() {
-                    console.log(`✅ Image loaded successfully: ${key} (${imagePath})`);
+                    console.log(`✅ SUCCESS - Image ${index + 1} loaded: ${url}`);
                 };
-                
                 img.onerror = function() {
-                    console.error(`❌ Image failed to load: ${key} (${imagePath})`);
-                    console.log(`Full URL attempted: ${new URL(imagePath, window.location.href).href}`);
+                    console.log(`❌ FAILED - Image ${index + 1} failed: ${url}`);
                 };
-                
-                img.src = imagePath;
+                img.src = url;
             });
         }
     </script>
@@ -839,6 +858,7 @@
                 <div style="margin: 15px 0;">
                     <button class="btn btn-secondary" onclick="testConnection()">🔌 Test</button>
                     <button class="btn btn-secondary" onclick="openGoogleSheet()">📊 Sheet</button>
+                    <button class="btn btn-secondary" onclick="testImages()">🖼️ Test Images</button>
                     <button class="btn btn-secondary" onclick="refreshQuestions()">🔄 Refresh</button>
                 </div>
             </div>
@@ -852,9 +872,9 @@
             </div>
             
             <img src="./george-welcome.png" alt="Welcome George" class="welcome-george" 
-            <img src="/ALS-quiz/images/george-welcome.png" alt="Welcome George" class="welcome-george" 
-                 onload="console.log('George welcome image loaded successfully')"
-                 onerror="console.error('George welcome image failed to load from: /ALS-quiz/images/george-welcome.png'); this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDI4MCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMzNDk4ZGIiIHJ4PSIyMCIvPjx0ZXh0IHg9IjE0MCIgeT0iMTQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPldlbGNvbWUgR2VvcmdlPC90ZXh0Pjx0ZXh0IHg9IjE0MCIgeT0iMTcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pjwvc3ZnPg=='">
+            <img src="https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png" alt="Welcome George" class="welcome-george" 
+                 onload="console.log('George welcome image loaded from GitHub raw')"
+                 onerror="console.error('GitHub raw image failed, trying fallback'); this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDI4MCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMzNDk4ZGIiIHJ4PSIyMCIvPjx0ZXh0IHg9IjE0MCIgeT0iMTQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPldlbGNvbWUgR2VvcmdlPC90ZXh0Pjx0ZXh0IHg9IjE0MCIgeT0iMTcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pjwvc3ZnPg=='">
             
             <div class="name-section">
                 <h2>Ready to test your knowledge?</h2>
@@ -933,7 +953,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded');
             console.log('Current URL:', window.location.href);
-            testImagePaths(); // Test image loading
+            testAllImageUrls(); // Test all possible image URLs
             testConnection();
             
             // Close admin dropdown when clicking outside
