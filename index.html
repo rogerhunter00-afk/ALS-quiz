@@ -452,11 +452,11 @@
             questionsUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec?action=getQuestions'
         };
 
-        // George image URLs - updated for your GitHub structure
+        // George image URLs - fixed for GitHub Pages
         const GEORGE_IMAGES = {
-            welcome: './images/george-welcome.png',
-            celebrate: './images/george-celebrate.png',
-            frustrated: './images/george-frustrated.png'
+            welcome: '/ALS-quiz/images/george-welcome.png',
+            celebrate: '/ALS-quiz/images/george-celebrate.png',
+            frustrated: '/ALS-quiz/images/george-frustrated.png'
         };
 
         // Default quiz questions
@@ -797,10 +797,36 @@
             if (scoreElement) scoreElement.className = `score ${scoreClass}`;
             
             if (georgeContainer && georgeImage) {
-                georgeContainer.innerHTML = `<img src="${georgeImage}" alt="George" class="results-george" onerror="this.style.display='none'">`;
+                console.log('Loading George image:', georgeImage);
+                georgeContainer.innerHTML = `<img src="${georgeImage}" alt="George" class="results-george" 
+                    onload="console.log('George results image loaded successfully')"
+                    onerror="console.error('George results image failed to load from: ${georgeImage}'); this.style.display='none'">`;
             }
 
             showSection('results-section');
+        }
+
+        // Add a test function to check all image paths
+        function testImagePaths() {
+            console.log('Testing image paths...');
+            console.log('Current page URL:', window.location.href);
+            console.log('Base URL:', window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')));
+            
+            Object.keys(GEORGE_IMAGES).forEach(key => {
+                const img = new Image();
+                const imagePath = GEORGE_IMAGES[key];
+                
+                img.onload = function() {
+                    console.log(`✅ Image loaded successfully: ${key} (${imagePath})`);
+                };
+                
+                img.onerror = function() {
+                    console.error(`❌ Image failed to load: ${key} (${imagePath})`);
+                    console.log(`Full URL attempted: ${new URL(imagePath, window.location.href).href}`);
+                };
+                
+                img.src = imagePath;
+            });
         }
     </script>
 
@@ -826,8 +852,9 @@
             </div>
             
             <img src="./george-welcome.png" alt="Welcome George" class="welcome-george" 
-            <img src="./images/george-welcome.png" alt="Welcome George" class="welcome-george" 
-                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDI4MCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMzNDk4ZGIiIHJ4PSIyMCIvPjx0ZXh0IHg9IjE0MCIgeT0iMTQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPldlbGNvbWUgR2VvcmdlPC90ZXh0Pjx0ZXh0IHg9IjE0MCIgeT0iMTcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pjwvc3ZnPg=='">
+            <img src="/ALS-quiz/images/george-welcome.png" alt="Welcome George" class="welcome-george" 
+                 onload="console.log('George welcome image loaded successfully')"
+                 onerror="console.error('George welcome image failed to load from: /ALS-quiz/images/george-welcome.png'); this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDI4MCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMzNDk4ZGIiIHJ4PSIyMCIvPjx0ZXh0IHg9IjE0MCIgeT0iMTQwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPldlbGNvbWUgR2VvcmdlPC90ZXh0Pjx0ZXh0IHg9IjE0MCIgeT0iMTcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxMiI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pjwvc3ZnPg=='">
             
             <div class="name-section">
                 <h2>Ready to test your knowledge?</h2>
@@ -905,6 +932,8 @@
         // Initialize when DOM loads
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded');
+            console.log('Current URL:', window.location.href);
+            testImagePaths(); // Test image loading
             testConnection();
             
             // Close admin dropdown when clicking outside
