@@ -371,28 +371,45 @@
         .status-warning { background: #fff3cd; color: #856404; }
         .status-disconnected { background: #f8d7da; color: #721c24; }
         
-        /* Quiz Section */
+        /* Quiz Section - IMPROVED LAYOUT */
         .quiz-section {
-            padding: 40px;
+            padding: 30px 40px 40px 40px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
         }
         
         .quiz-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
+            padding: 25px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(52, 152, 219, 0.1);
         }
         
         .quiz-title {
             font-size: 2.2em;
             color: #2c3e50;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .quiz-title::before {
+            content: '🔧';
+            font-size: 1em;
         }
         
         .progress-container {
             background: #ecf0f1;
-            border-radius: 20px;
-            height: 10px;
+            border-radius: 25px;
+            height: 12px;
             margin: 20px 0;
             overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .progress-bar {
@@ -400,130 +417,218 @@
             height: 100%;
             width: 0%;
             transition: width 0.5s ease;
-            border-radius: 20px;
+            border-radius: 25px;
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
         }
         
         .progress-text {
             color: #7f8c8d;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 12px;
+            font-size: 1.1em;
         }
         
+        /* Enhanced Question Styling */
         .question {
             background: #ffffff;
             border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
+            padding: 35px;
+            margin-bottom: 30px;
             border: 2px solid #e9ecef;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
         }
         
         .question:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+            border-color: #3498db;
         }
         
         .question-number {
-            background: #3498db;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 10px 18px;
+            border-radius: 25px;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: inline-block;
+            font-size: 1em;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
         }
         
         .question h3 {
             color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: 1.3em;
-            line-height: 1.4;
+            margin-bottom: 25px;
+            font-size: 1.4em;
+            line-height: 1.5;
+            font-weight: 600;
         }
         
         .options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
         }
         
         .option {
             display: flex;
             align-items: center;
-            padding: 15px 18px;
+            padding: 18px 22px;
             background: #f8f9fa;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+            transition: left 0.5s ease;
         }
         
         .option:hover {
             background: #e3f2fd;
             border-color: #3498db;
+            transform: translateX(5px);
+        }
+        
+        .option:hover::before {
+            left: 100%;
         }
         
         .option.selected {
-            background: #e3f2fd;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
             border-color: #3498db;
-            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+            transform: translateX(5px);
         }
         
         .option input {
-            margin-right: 15px;
-            transform: scale(1.3);
+            margin-right: 18px;
+            transform: scale(1.4);
+            accent-color: #3498db;
         }
         
         .option label {
-            font-size: 1.05em;
+            font-size: 1.1em;
             cursor: pointer;
             flex: 1;
+            font-weight: 500;
+            color: #2c3e50;
         }
         
         .text-answer {
             width: 100%;
-            padding: 15px;
+            padding: 18px 22px;
             border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1.05em;
+            border-radius: 12px;
+            font-size: 1.1em;
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
             font-family: inherit;
             transition: all 0.3s ease;
+            background: #f8f9fa;
         }
         
         .text-answer:focus {
             outline: none;
             border-color: #3498db;
-            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
+            background: white;
+            transform: translateY(-2px);
         }
         
-        /* Results Section */
+        /* Enhanced Submit Button Area */
+        .submit-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        /* Results Section - IMPROVED LAYOUT */
         .results-section {
             text-align: center;
             padding: 50px 40px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+        }
+        
+        .results-header {
+            margin-bottom: 30px;
+        }
+        
+        .results-header h2 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 15px;
         }
         
         .results-george {
-            width: 200px;
+            width: 250px;
             height: auto;
             margin: 20px auto;
-            border-radius: 15px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .results-george:hover {
+            transform: translateY(-5px) scale(1.05);
         }
         
         .score-section {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 40px;
-            border-radius: 20px;
+            padding: 50px 40px;
+            border-radius: 25px;
             margin: 30px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .score-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
         }
         
         .score {
-            font-size: 3.5em;
+            font-size: 4em;
             font-weight: bold;
-            margin: 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin: 25px 0;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
         }
         
         .score.low { color: #ff6b6b; }
@@ -531,46 +636,139 @@
         .score.high { color: #6bcf7f; }
         
         .score-message {
-            font-size: 1.4em;
+            font-size: 1.5em;
             margin-bottom: 20px;
             font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Enhanced Save Status */
+        .save-status {
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+        
+        .save-status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        
+        .save-status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        
+        /* Enhanced ChatGPT Help Section */
+        .chatgpt-help {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 35px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 2px solid rgba(52, 152, 219, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        .chatgpt-help h4 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .help-topics {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .help-topics ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        
+        .help-topics li {
+            margin: 8px 0;
+            color: #34495e;
+            font-weight: 500;
         }
         
         .chatgpt-link {
             background: linear-gradient(135deg, #10a37f, #1a7f64);
             color: white;
-            padding: 20px 30px;
-            border-radius: 12px;
+            padding: 22px 35px;
+            border-radius: 15px;
             text-decoration: none;
             display: inline-block;
             margin-top: 20px;
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: 600;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(16, 163, 127, 0.3);
         }
         
         .chatgpt-link:hover {
             background: linear-gradient(135deg, #0d8f6a, #155a4a);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(16, 163, 127, 0.4);
+        }
+        
+        .help-description {
+            font-size: 0.95em;
+            color: #95a5a6;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        /* Perfect Score Celebration */
+        .perfect-score {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(39, 174, 96, 0.3);
+        }
+        
+        .perfect-score h3 {
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+        
+        .perfect-score-content {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
         }
         
         /* Utility Classes */
-        .hidden { display: none; }
+        .hidden { display: none !important; }
         .loading {
             text-align: center;
-            padding: 60px;
+            padding: 80px;
             color: #7f8c8d;
-            font-size: 1.2em;
+            font-size: 1.3em;
         }
         
         .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #ecf0f1;
-            border-top: 4px solid #3498db;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ecf0f1;
+            border-top: 5px solid #3498db;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 25px auto;
         }
         
         /* Keyframe animations */
@@ -610,6 +808,11 @@
             100% { transform: rotate(360deg); }
         }
         
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
         /* Enhanced Responsive Design */
         @media (max-width: 768px) {
             .container { margin: 10px; }
@@ -622,10 +825,14 @@
             .name-input::before { left: 15px; font-size: 1.1em; }
             .quiz-selector { padding: 20px 15px; }
             .btn-success { font-size: 1.2em; padding: 18px 35px; }
-            .quiz-section { padding: 30px 20px; }
-            .question { padding: 20px; }
+            .quiz-section { padding: 25px 20px 35px 20px; }
+            .question { padding: 25px; margin-bottom: 25px; }
             .admin-panel { position: static; margin: 20px; }
             .admin-dropdown { position: static; margin-top: 10px; }
+            .results-section { padding: 40px 25px; }
+            .quiz-header { padding: 20px; }
+            .score { font-size: 3em; }
+            .chatgpt-help { padding: 25px; }
         }
         
         @media (max-width: 480px) {
@@ -639,12 +846,21 @@
             .quiz-selector select { padding: 12px 15px; font-size: 1em; }
             .btn-success { font-size: 1.1em; padding: 16px 30px; letter-spacing: 0.5px; }
             .section-title { font-size: 1.5em; }
+            .quiz-section { padding: 20px 15px 30px 15px; }
+            .question { padding: 20px; }
+            .option { padding: 15px 18px; }
+            .results-george { width: 200px; }
+            .score { font-size: 2.5em; }
+            .chatgpt-help { padding: 20px; }
+            .submit-section { padding: 20px; margin-top: 35px; }
         }
         
         @media (max-width: 320px) {
             .welcome-george { width: 240px; }
             .landing-header h1 { font-size: 1.9em; }
             .btn-success { padding: 14px 25px; }
+            .results-george { width: 180px; }
+            .score { font-size: 2.2em; }
         }
     </style>
 </head>
@@ -930,25 +1146,7 @@
                 console.error('Save error:', error);
             }
             
-            // Update save status
-            const saveStatusElement = document.getElementById('results-save-status');
-            if (saveStatusElement) {
-                if (saveSuccess) {
-                    saveStatusElement.innerHTML = `
-                        <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin: 20px 0;">
-                            ✅ Results saved to Google Sheets successfully
-                        </div>
-                    `;
-                } else {
-                    saveStatusElement.innerHTML = `
-                        <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 10px; margin: 20px 0;">
-                            ❌ Failed to save results to Google Sheets
-                        </div>
-                    `;
-                }
-            }
-            
-            showResults(score);
+            showResults(score, saveSuccess);
         }
 
         function backToHome() {
@@ -1056,50 +1254,102 @@
                 questionDiv.innerHTML = questionHTML;
                 form.appendChild(questionDiv);
             });
+            
+            // Add submit section
+            const submitSection = document.createElement('div');
+            submitSection.className = 'submit-section';
+            submitSection.innerHTML = `
+                <button class="btn btn-success" onclick="submitQuiz()">
+                    📋 Submit Quiz
+                </button>
+            `;
+            form.appendChild(submitSection);
         }
 
-        function showResults(score) {
+        function showResults(score, saveSuccess) {
             const percentage = Math.round((score / currentQuestions.length) * 100);
-            const scoreElement = document.getElementById('final-score');
-            const messageElement = document.getElementById('score-message');
-            const georgeContainer = document.getElementById('george-container');
-            const chatgptSection = document.getElementById('chatgpt-section');
-
-            if (scoreElement) scoreElement.textContent = `${score}/${currentQuestions.length} (${percentage}%)`;
-
-            // Show George based on score
-            let georgeImage = '';
-            let scoreClass = '';
             
+            // Generate enhanced results HTML
+            const resultsHTML = `
+                <div class="results-header">
+                    <h2>Quiz Results</h2>
+                </div>
+                
+                <div id="george-container">
+                    ${getGeorgeImage(percentage)}
+                </div>
+                
+                <div class="score-section">
+                    <div class="score ${getScoreClass(percentage)}" id="final-score">${score}/${currentQuestions.length} (${percentage}%)</div>
+                    <div class="score-message" id="score-message">${getScoreMessage(percentage)}</div>
+                </div>
+                
+                <div class="save-status ${saveSuccess ? 'success' : 'error'}">
+                    ${saveSuccess ? 
+                        '✅ Results saved to Google Sheets successfully' : 
+                        '❌ Failed to save results to Google Sheets'
+                    }
+                </div>
+                
+                ${getChatGPTSection()}
+                
+                <button class="btn btn-primary" onclick="backToHome()" style="margin-top: 30px;">
+                    🏠 Take Another Quiz
+                </button>
+            `;
+            
+            document.getElementById('results-section').innerHTML = resultsHTML;
+            showSection('results-section');
+        }
+        
+        function getGeorgeImage(percentage) {
             if (percentage >= 80) {
-                georgeImage = GEORGE_IMAGES.celebrate;
-                scoreClass = 'high';
-                if (messageElement) messageElement.textContent = `Outstanding work, ${window.quizTakerName}! George says buy yourself a pint!`;
-            } else if (percentage >= 60) {
-                scoreClass = 'medium';
-                if (messageElement) messageElement.textContent = `Good job, ${window.quizTakerName}! Room for improvement.`;
+                return `<img src="${GEORGE_IMAGES.celebrate}" alt="Celebrating George" class="results-george">`;
+            } else if (percentage < 60) {
+                return `<img src="${GEORGE_IMAGES.frustrated}" alt="Frustrated George" class="results-george">`;
             } else {
-                georgeImage = GEORGE_IMAGES.frustrated;
-                scoreClass = 'low';
-                if (messageElement) messageElement.textContent = `${window.quizTakerName}, George thinks you need to use your head more!`;
+                return `<img src="${GEORGE_IMAGES.welcome}" alt="George" class="results-george">`;
             }
-
-            if (scoreElement) scoreElement.className = `score ${scoreClass}`;
+        }
+        
+        function getScoreClass(percentage) {
+            if (percentage >= 80) return 'high';
+            if (percentage >= 60) return 'medium';
+            return 'low';
+        }
+        
+        function getScoreMessage(percentage) {
+            if (percentage >= 80) {
+                return `Outstanding work, ${window.quizTakerName}! George says buy yourself a pint!`;
+            } else if (percentage >= 60) {
+                return `Good job, ${window.quizTakerName}! Room for improvement.`;
+            } else {
+                return `${window.quizTakerName}, George thinks you need to use your head more!`;
+            }
+        }
+        
+        function getChatGPTSection() {
+            if (wrongAnswers.length === 0) {
+                return `
+                    <div class="perfect-score">
+                        <h3>🎉 Perfect Score!</h3>
+                        <p style="font-size: 1.1em; opacity: 0.9;">
+                            No additional study needed - you've mastered this topic!
+                        </p>
+                        <div class="perfect-score-content">
+                            <p style="font-size: 0.95em;">Ready for the next challenge? Try another quiz!</p>
+                        </div>
+                    </div>
+                `;
+            }
             
-            if (georgeContainer && georgeImage) {
-                georgeContainer.innerHTML = `<img src="${georgeImage}" alt="George" class="results-george">`;
-            }
-
-            // Enhanced ChatGPT help section
-            if (chatgptSection) {
-                if (wrongAnswers.length > 0) {
-                    // Create detailed prompt for ChatGPT
-                    const wrongQuestions = wrongAnswers.map((wa, index) => `${index + 1}. ${wa.question}`).join('\n');
-                    const detailedExplanations = wrongAnswers.map((wa, index) => 
-                        `Question ${index + 1}: ${wa.question}\nCorrect Answer Context: ${wa.explanation || 'Review this topic area'}`
-                    ).join('\n\n');
-                    
-                    const enhancedPrompt = `I'm a laundry maintenance engineer who just completed a technical quiz on "${currentQuiz}". I need help understanding these specific topics I struggled with:
+            // Create detailed prompt for ChatGPT
+            const wrongQuestions = wrongAnswers.map((wa, index) => `${index + 1}. ${wa.question}`).join('\n');
+            const detailedExplanations = wrongAnswers.map((wa, index) => 
+                `Question ${index + 1}: ${wa.question}\nCorrect Answer Context: ${wa.explanation || 'Review this topic area'}`
+            ).join('\n\n');
+            
+            const enhancedPrompt = `I'm a laundry maintenance engineer who just completed a technical quiz on "${currentQuiz}". I need help understanding these specific topics I struggled with:
 
 QUESTIONS I GOT WRONG:
 ${wrongQuestions}
@@ -1116,50 +1366,31 @@ Please provide for each topic:
 
 Focus on actionable knowledge I can apply immediately in my maintenance work.`;
 
-                    // Use the new ChatGPT URL format with better encoding
-                    const encodedPrompt = encodeURIComponent(enhancedPrompt);
-                    const chatgptURL = `https://chat.openai.com/?model=gpt-4&q=${encodedPrompt}`;
+            const encodedPrompt = encodeURIComponent(enhancedPrompt);
+            const chatgptURL = `https://chat.openai.com/?model=gpt-4&q=${encodedPrompt}`;
 
-                    chatgptSection.innerHTML = `
-                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 25px 0; border-left: 5px solid #e74c3c;">
-                            <h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.2em;">
-                                📚 Need Help with ${wrongAnswers.length} Question${wrongAnswers.length > 1 ? 's' : ''}?
-                            </h4>
-                            <p style="color: #7f8c8d; margin-bottom: 20px; line-height: 1.6;">
-                                Get personalized explanations and troubleshooting tips for the topics you missed:
-                            </p>
-                            <div style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 8px; border-left: 3px solid #3498db;">
-                                <strong style="color: #2c3e50;">Topics you'll get help with:</strong>
-                                <ul style="margin: 10px 0; padding-left: 20px; color: #34495e;">
-                                    ${wrongAnswers.map(wa => `<li style="margin: 5px 0;">${wa.question}</li>`).join('')}
-                                </ul>
-                            </div>
-                            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-                                <a href="${chatgptURL}" target="_blank" class="chatgpt-link" style="flex: 1; min-width: 280px; max-width: 400px;">
-                                    🤖 Get AI Tutor Help (ChatGPT)
-                                </a>
-                            </div>
-                            <p style="font-size: 0.9em; color: #95a5a6; margin-top: 15px; text-align: center;">
-                                ⏱️ Takes 2-3 minutes • Gets specific help for your missed questions
-                            </p>
-                        </div>
-                    `;
-                } else {
-                    chatgptSection.innerHTML = `
-                        <div style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 30px; border-radius: 15px; margin-top: 25px; text-align: center;">
-                            <h3 style="margin-bottom: 15px; font-size: 1.4em;">🎉 Perfect Score!</h3>
-                            <p style="font-size: 1.1em; opacity: 0.9;">
-                                No additional study needed - you've mastered this topic!
-                            </p>
-                            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
-                                <p style="font-size: 0.95em;">Ready for the next challenge? Try another quiz!</p>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-
-            showSection('results-section');
+            return `
+                <div class="chatgpt-help">
+                    <h4>📚 Need Help with ${wrongAnswers.length} Question${wrongAnswers.length > 1 ? 's' : ''}?</h4>
+                    <p style="color: #7f8c8d; margin-bottom: 20px; line-height: 1.6;">
+                        Get personalized explanations and troubleshooting tips for the topics you missed:
+                    </p>
+                    <div class="help-topics">
+                        <strong style="color: #2c3e50;">Topics you'll get help with:</strong>
+                        <ul>
+                            ${wrongAnswers.map(wa => `<li>${wa.question}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div style="text-align: center;">
+                        <a href="${chatgptURL}" target="_blank" class="chatgpt-link">
+                            🤖 Get AI Tutor Help (ChatGPT)
+                        </a>
+                    </div>
+                    <p class="help-description">
+                        ⏱️ Takes 2-3 minutes • Gets specific help for your missed questions
+                    </p>
+                </div>
+            `;
         }
     </script>
 
@@ -1239,40 +1470,18 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
             <form id="quiz-form">
                 <!-- Questions generated dynamically -->
             </form>
-            
-            <div style="text-align: center; margin-top: 40px;">
-                <button class="btn btn-success" onclick="submitQuiz()">
-                    📝 Submit Quiz
-                </button>
-            </div>
         </div>
 
         <!-- Results Section -->
         <div id="results-section" class="results-section hidden">
-            <h2>Quiz Results</h2>
-            
-            <div id="george-container">
-                <!-- George appears here -->
-            </div>
-            
-            <div class="score-section">
-                <div class="score" id="final-score"></div>
-                <div class="score-message" id="score-message"></div>
-            </div>
-            
-            <div id="results-save-status"></div>
-            <div id="chatgpt-section"></div>
-            
-            <button class="btn btn-primary" onclick="backToHome()" style="margin-top: 30px;">
-                🏠 Take Another Quiz
-            </button>
+            <!-- Results content generated dynamically -->
         </div>
     </div>
 
     <script>
         // Initialize when DOM loads
         document.addEventListener('DOMContentLoaded', function() {
-            initializeApp(); // This will load available quizzes from Google Sheets
+            initializeApp();
             
             // Close admin dropdown when clicking outside
             document.addEventListener('click', function(event) {
