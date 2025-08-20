@@ -1333,11 +1333,9 @@
                 const response = await fetch(CONFIG.webAppUrl, {
                     method: 'POST',
                     headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+                        'Content-Type': 'text/plain;charset=utf-8'  // Changed from application/json
                     },
-                    body: JSON.stringify(quizResults),
-                    mode: 'cors' // Add CORS mode
+                    body: JSON.stringify(quizResults)
                 });
                 
                 console.log('Response status:', response.status);
