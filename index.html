@@ -632,6 +632,22 @@
             transition: all 0.3s ease;
         }
         
+        .results-george.angry {
+            width: 300px;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(231, 76, 60, 0.3), 0 0 30px rgba(231, 76, 60, 0.2);
+            filter: drop-shadow(0 0 20px rgba(231, 76, 60, 0.4));
+            animation: angryPulse 2s ease-in-out infinite;
+        }
+        
+        .results-george.celebrate {
+            width: 280px;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(39, 174, 96, 0.3), 0 0 30px rgba(39, 174, 96, 0.2);
+            filter: drop-shadow(0 0 20px rgba(39, 174, 96, 0.4));
+            animation: celebrateBounce 1.5s ease-in-out infinite;
+        }
+        
         .results-george:hover {
             transform: translateY(-5px) scale(1.05);
         }
@@ -642,7 +658,27 @@
         }
         
         
-        .score-display {
+        .george-score-container.low-score {
+            background: linear-gradient(135deg, #fff5f5, #fed7d7);
+            border: 3px solid #feb2b2;
+            box-shadow: 0 20px 60px rgba(231, 76, 60, 0.2);
+        }
+        
+        .george-score-container.high-score {
+            background: linear-gradient(135deg, #f0fff4, #c6f6d5);
+            border: 3px solid #9ae6b4;
+            box-shadow: 0 20px 60px rgba(39, 174, 96, 0.2);
+        }
+        
+        @keyframes angryPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes celebrateBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
             font-size: 3.5em;
             font-weight: 800;
             margin: 15px 0;
@@ -960,6 +996,12 @@
             .admin-panel { position: static; margin: 20px; }
             .admin-dropdown { position: static; margin-top: 10px; }
             .results-section { padding: 30px 20px; }
+            .results-george.angry {
+                width: 240px;
+            }
+            .results-george.celebrate {
+                width: 220px;
+            }
             .george-score-container { 
                 flex-direction: column; 
                 gap: 25px; 
@@ -968,7 +1010,7 @@
             }
             .score-summary { text-align: center; }
             .results-george { width: 180px; }
-            .score-display { font-size: 2.8em; }
+                    .score-display { font-size: 2.8em; }
             .chatgpt-help { padding: 25px 20px; }
             .help-topics { padding: 20px 15px; }
             .submit-section { padding: 20px; margin-top: 35px; }
@@ -1267,7 +1309,7 @@
                 }
             });
 
-            // Save results to Google Sheets
+            // Save results to Google Sheets with enhanced error handling
             const quizResults = {
                 name: window.quizTakerName,
                 quiz: currentQuiz,
@@ -1282,21 +1324,47 @@
             };
 
             let saveSuccess = false;
+            let saveError = '';
+            
+            console.log('Attempting to save to Google Sheets:', CONFIG.webAppUrl);
+            console.log('Data being sent:', quizResults);
+            
             try {
                 const response = await fetch(CONFIG.webAppUrl, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(quizResults)
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(quizResults),
+                    mode: 'cors' // Add CORS mode
                 });
-                saveSuccess = response.ok;
-                console.log('Save response:', response.status, response.statusText);
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                if (response.ok) {
+                    const responseData = await response.json();
+                    console.log('Response data:', responseData);
+                    saveSuccess = true;
+                } else {
+                    const errorText = await response.text();
+                    console.error('Save failed with status:', response.status, errorText);
+                    saveError = `HTTP ${response.status}: ${errorText}`;
+                }
             } catch (error) {
-                console.error('Save error:', error);
+                console.error('Save error details:', error);
+                saveError = error.message || 'Network error';
+                
+                // Check if it's a CORS error
+                if (error.message.includes('CORS') || error.message.includes('Access-Control')) {
+                    saveError = 'CORS policy error - Google Apps Script may need CORS configuration';
+                }
             }
             
-            // Ensure we show results
-            console.log('Showing results with score:', score, 'saveSuccess:', saveSuccess);
-            showResults(score, saveSuccess);
+            // Ensure we show results with detailed error info
+            console.log('Showing results with score:', score, 'saveSuccess:', saveSuccess, 'error:', saveError);
+            showResults(score, saveSuccess, saveError);
         }
 
         function backToHome() {
@@ -1430,10 +1498,10 @@
             form.appendChild(submitSection);
         }
 
-        function showResults(score, saveSuccess) {
+        function showResults(score, saveSuccess, saveError = '') {
             const percentage = Math.round((score / currentQuestions.length) * 100);
             
-            console.log('showResults called with:', { score, saveSuccess, percentage, wrongAnswers: wrongAnswers.length });
+            console.log('showResults called with:', { score, saveSuccess, percentage, wrongAnswers: wrongAnswers.length, saveError });
             
             // Generate enhanced results HTML
             const resultsHTML = `
@@ -1442,7 +1510,7 @@
                 </div>
                 
                 <div class="results-content">
-                    <div class="george-score-container">
+                    <div class="george-score-container ${getScoreContainerClass(percentage)}">
                         <div class="george-container">
                             ${getGeorgeImage(percentage)}
                         </div>
@@ -1456,7 +1524,7 @@
                     <div class="save-status ${saveSuccess ? 'success' : 'error'}">
                         ${saveSuccess ? 
                             'Results saved to Google Sheets successfully' : 
-                            'Failed to save results to Google Sheets'
+                            `Failed to save results to Google Sheets${saveError ? ': ' + saveError : ''}`
                         }
                     </div>
                     
@@ -1501,12 +1569,18 @@
         
         function getGeorgeImage(percentage) {
             if (percentage >= 80) {
-                return `<img src="${GEORGE_IMAGES.celebrate}" alt="Celebrating George" class="results-george">`;
+                return `<img src="${GEORGE_IMAGES.celebrate}" alt="Celebrating George" class="results-george celebrate">`;
             } else if (percentage < 60) {
-                return `<img src="${GEORGE_IMAGES.frustrated}" alt="Frustrated George" class="results-george">`;
+                return `<img src="${GEORGE_IMAGES.frustrated}" alt="Frustrated George" class="results-george angry">`;
             } else {
                 return `<img src="${GEORGE_IMAGES.welcome}" alt="George" class="results-george">`;
             }
+        }
+        
+        function getScoreContainerClass(percentage) {
+            if (percentage >= 80) return 'high-score';
+            if (percentage < 60) return 'low-score';
+            return '';
         }
         
         function getScoreClass(percentage) {
