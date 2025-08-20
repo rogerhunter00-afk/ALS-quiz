@@ -1,106 +1,4 @@
-function showResults(score) {
-            const percentage = Math.round((score / currentQuestions.length) * 100);
-            const scoreElement = document.getElementById('final-score');
-            const messageElement = document.getElementById('score-message');
-            const georgeContainer = document.getElementById('george-container');
-            const chatgptSection = document.getElementById('chatgpt-section');
-
-            if (scoreElement) scoreElement.textContent = `${score}/${currentQuestions.length} (${percentage}%)`;
-
-            // Show George based on score
-            let georgeImage = '';
-            let scoreClass = '';
-            
-            if (percentage >= 80) {
-                georgeImage = GEORGE_IMAGES.celebrate;
-                scoreClass = 'high';
-                if (messageElement) messageElement.textContent = `Outstanding work, ${window.quizTakerName}! George says buy yourself a pint!`;
-            } else if (percentage >= 60) {
-                scoreClass = 'medium';
-                if (messageElement) messageElement.textContent = `Good job, ${window.quizTakerName}! Room for improvement.`;
-            } else {
-                georgeImage = GEORGE_IMAGES.frustrated;
-                scoreClass = 'low';
-                if (messageElement) messageElement.textContent = `${window.quizTakerName}, George thinks you need to use your head more!`;
-            }
-
-            if (scoreElement) scoreElement.className = `score ${scoreClass}`;
-            
-            if (georgeContainer && georgeImage) {
-                georgeContainer.innerHTML = `<img src="${georgeImage}" alt="George" class="results-george">`;
-            }
-
-            // Enhanced ChatGPT help section
-            if (chatgptSection) {
-                if (wrongAnswers.length > 0) {
-                    // Create detailed prompt for ChatGPT
-                    const wrongQuestions = wrongAnswers.map((wa, index) => `${index + 1}. ${wa.question}`).join('\n');
-                    const detailedExplanations = wrongAnswers.map((wa, index) => 
-                        `Question ${index + 1}: ${wa.question}\nCorrect Answer Context: ${wa.explanation || 'Review this topic area'}`
-                    ).join('\n\n');
-                    
-                    const enhancedPrompt = `I'm a laundry maintenance engineer who just completed a technical quiz on "${currentQuiz}". I need help understanding these specific topics I struggled with:
-
-QUESTIONS I GOT WRONG:
-${wrongQuestions}
-
-DETAILED CONTEXT:
-${detailedExplanations}
-
-Please provide for each topic:
-1. Clear technical explanations in practical terms
-2. Common troubleshooting steps I should know
-3. Safety considerations and best practices
-4. Real-world tips for commercial laundry equipment maintenance
-5. How to prevent these issues in the field
-
-Focus on actionable knowledge I can apply immediately in my maintenance work.`;
-
-                    // Use the new ChatGPT URL format with better encoding
-                    const encodedPrompt = encodeURIComponent(enhancedPrompt);
-                    const chatgptURL = `https://chat.openai.com/?model=gpt-4&q=${encodedPrompt}`;
-
-                    chatgptSection.innerHTML = `
-                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 25px 0; border-left: 5px solid #e74c3c;">
-                            <h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.2em;">
-                                📚 Need Help with ${wrongAnswers.length} Question${wrongAnswers.length > 1 ? 's' : ''}?
-                            </h4>
-                            <p style="color: #7f8c8d; margin-bottom: 20px; line-height: 1.6;">
-                                Get personalized explanations and troubleshooting tips for the topics you missed:
-                            </p>
-                            <div style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 8px; border-left: 3px solid #3498db;">
-                                <strong style="color: #2c3e50;">Topics you'll get help with:</strong>
-                                <ul style="margin: 10px 0; padding-left: 20px; color: #34495e;">
-                                    ${wrongAnswers.map(wa => `<li style="margin: 5px 0;">${wa.question}</li>`).join('')}
-                                </ul>
-                            </div>
-                            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-                                <a href="${chatgptURL}" target="_blank" class="chatgpt-link" style="flex: 1; min-width: 280px; max-width: 400px;">
-                                    🤖 Get AI Tutor Help (ChatGPT)
-                                </a>
-                            </div>
-                            <p style="font-size: 0.9em; color: #95a5a6; margin-top: 15px; text-align: center;">
-                                ⏱️ Takes 2-3 minutes • Gets specific help for your missed questions
-                            </p>
-                        </div>
-                    `;
-                } else {
-                    chatgptSection.innerHTML = `
-                        <div style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 30px; border-radius: 15px; margin-top: 25px; text-align: center;">
-                            <h3 style="margin-bottom: 15px; font-size: 1.4em;">🎉 Perfect Score!</h3>
-                            <p style="font-size: 1.1em; opacity: 0.9;">
-                                No additional study needed - you've mastered this topic!
-                            </p>
-                            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
-                                <p style="font-size: 0.95em;">Ready for the next challenge? Try another quiz!</p>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-
-            showSection('results-section');
-        }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -314,90 +212,6 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
             animation: fadeInUp 1s ease-out 0.9s both;
         }
         
-        .btn-success {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
-            color: white;
-            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
-            font-size: 1.4em;
-            padding: 22px 45px;
-            position: relative;
-            overflow: hidden;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-success::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .btn-success:hover {
-            background: linear-gradient(135deg, #219a52, #27ae60);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(39, 174, 96, 0.4), 0 0 20px rgba(39, 174, 96, 0.2);
-        }
-        
-        .btn-success:hover::before {
-            left: 100%;
-        }
-        
-        .btn-success:active {
-            transform: translateY(-2px);
-        }
-        
-        .quiz-info {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(52, 152, 219, 0.1);
-            border-radius: 10px;
-            color: #34495e;
-            font-size: 0.95em;
-            animation: fadeIn 1s ease-out 1.2s both;
-        }
-        
-        /* Keyframe animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
         /* Enhanced Button Styles */
         .btn {
             padding: 18px 36px;
@@ -446,6 +260,48 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
             box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
         }
         
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+            font-size: 1.4em;
+            padding: 22px 45px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, #219a52, #27ae60);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(39, 174, 96, 0.4), 0 0 20px rgba(39, 174, 96, 0.2);
+        }
+        
+        .btn-success:hover::before {
+            left: 100%;
+        }
+        
+        .btn-success:active {
+            transform: translateY(-2px);
+        }
+        
         .btn-secondary {
             background: #95a5a6;
             color: white;
@@ -455,6 +311,16 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
         
         .btn-secondary:hover {
             background: #7f8c8d;
+        }
+        
+        .quiz-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            color: #34495e;
+            font-size: 0.95em;
+            animation: fadeIn 1s ease-out 1.2s both;
         }
         
         /* Admin Panel */
@@ -707,6 +573,38 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
             margin: 20px auto;
         }
         
+        /* Keyframe animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -749,7 +647,8 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
             .btn-success { padding: 14px 25px; }
         }
     </style>
-
+</head>
+<body>
     <script>
         // CONFIGURATION
         const CONFIG = {
@@ -759,7 +658,7 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
             questionsUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec?action=getQuestions'
         };
 
-        // George image URLs - using GitHub raw URLs
+        // George image URLs
         const GEORGE_IMAGES = {
             welcome: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png',
             celebrate: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-celebrate.png',
@@ -809,7 +708,7 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
         let currentQuiz = 'Bearing Maintenance Quiz';
         let usingFallbackQuestions = false;
 
-        // Admin functions
+        // Define ALL functions at the top level
         function toggleAdmin() {
             const dropdown = document.getElementById('admin-dropdown');
             if (dropdown) {
@@ -858,6 +757,41 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
             if (confirm('Reload questions?')) {
                 showSection('loading-section');
                 loadQuizQuestions();
+            }
+        }
+
+        // Initialize app
+        async function initializeApp() {
+            await testConnection();
+            await loadAvailableQuizzes();
+        }
+
+        async function loadAvailableQuizzes() {
+            try {
+                const response = await fetch(CONFIG.quizListUrl);
+                const data = await response.json();
+                
+                if (data.success && data.quizzes) {
+                    const select = document.getElementById('quiz-select');
+                    if (!select) return;
+                    
+                    select.innerHTML = '';
+                    
+                    data.quizzes.forEach(quiz => {
+                        const option = document.createElement('option');
+                        option.value = quiz;
+                        option.textContent = quiz;
+                        select.appendChild(option);
+                    });
+                    
+                    // Add custom option
+                    const customOption = document.createElement('option');
+                    customOption.value = 'custom';
+                    customOption.textContent = 'Custom Quiz Name...';
+                    select.appendChild(customOption);
+                }
+            } catch (error) {
+                console.log('Could not load quiz list from sheets, using defaults');
             }
         }
 
@@ -1185,9 +1119,6 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                     // Use the new ChatGPT URL format with better encoding
                     const encodedPrompt = encodeURIComponent(enhancedPrompt);
                     const chatgptURL = `https://chat.openai.com/?model=gpt-4&q=${encodedPrompt}`;
-                    
-                    // Alternative URL format (more reliable)
-                    const alternativeURL = `https://chatgpt.com/?q=${encodedPrompt}`;
 
                     chatgptSection.innerHTML = `
                         <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 25px 0; border-left: 5px solid #e74c3c;">
@@ -1231,8 +1162,7 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
             showSection('results-section');
         }
     </script>
-</head>
-<body>
+
     <div class="container">
         <!-- Admin Panel -->
         <div class="admin-panel">
