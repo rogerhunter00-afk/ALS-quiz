@@ -1,4 +1,106 @@
-<!DOCTYPE html>
+function showResults(score) {
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            const scoreElement = document.getElementById('final-score');
+            const messageElement = document.getElementById('score-message');
+            const georgeContainer = document.getElementById('george-container');
+            const chatgptSection = document.getElementById('chatgpt-section');
+
+            if (scoreElement) scoreElement.textContent = `${score}/${currentQuestions.length} (${percentage}%)`;
+
+            // Show George based on score
+            let georgeImage = '';
+            let scoreClass = '';
+            
+            if (percentage >= 80) {
+                georgeImage = GEORGE_IMAGES.celebrate;
+                scoreClass = 'high';
+                if (messageElement) messageElement.textContent = `Outstanding work, ${window.quizTakerName}! George says buy yourself a pint!`;
+            } else if (percentage >= 60) {
+                scoreClass = 'medium';
+                if (messageElement) messageElement.textContent = `Good job, ${window.quizTakerName}! Room for improvement.`;
+            } else {
+                georgeImage = GEORGE_IMAGES.frustrated;
+                scoreClass = 'low';
+                if (messageElement) messageElement.textContent = `${window.quizTakerName}, George thinks you need to use your head more!`;
+            }
+
+            if (scoreElement) scoreElement.className = `score ${scoreClass}`;
+            
+            if (georgeContainer && georgeImage) {
+                georgeContainer.innerHTML = `<img src="${georgeImage}" alt="George" class="results-george">`;
+            }
+
+            // Enhanced ChatGPT help section
+            if (chatgptSection) {
+                if (wrongAnswers.length > 0) {
+                    // Create detailed prompt for ChatGPT
+                    const wrongQuestions = wrongAnswers.map((wa, index) => `${index + 1}. ${wa.question}`).join('\n');
+                    const detailedExplanations = wrongAnswers.map((wa, index) => 
+                        `Question ${index + 1}: ${wa.question}\nCorrect Answer Context: ${wa.explanation || 'Review this topic area'}`
+                    ).join('\n\n');
+                    
+                    const enhancedPrompt = `I'm a laundry maintenance engineer who just completed a technical quiz on "${currentQuiz}". I need help understanding these specific topics I struggled with:
+
+QUESTIONS I GOT WRONG:
+${wrongQuestions}
+
+DETAILED CONTEXT:
+${detailedExplanations}
+
+Please provide for each topic:
+1. Clear technical explanations in practical terms
+2. Common troubleshooting steps I should know
+3. Safety considerations and best practices
+4. Real-world tips for commercial laundry equipment maintenance
+5. How to prevent these issues in the field
+
+Focus on actionable knowledge I can apply immediately in my maintenance work.`;
+
+                    // Use the new ChatGPT URL format with better encoding
+                    const encodedPrompt = encodeURIComponent(enhancedPrompt);
+                    const chatgptURL = `https://chat.openai.com/?model=gpt-4&q=${encodedPrompt}`;
+
+                    chatgptSection.innerHTML = `
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 25px 0; border-left: 5px solid #e74c3c;">
+                            <h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.2em;">
+                                📚 Need Help with ${wrongAnswers.length} Question${wrongAnswers.length > 1 ? 's' : ''}?
+                            </h4>
+                            <p style="color: #7f8c8d; margin-bottom: 20px; line-height: 1.6;">
+                                Get personalized explanations and troubleshooting tips for the topics you missed:
+                            </p>
+                            <div style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 8px; border-left: 3px solid #3498db;">
+                                <strong style="color: #2c3e50;">Topics you'll get help with:</strong>
+                                <ul style="margin: 10px 0; padding-left: 20px; color: #34495e;">
+                                    ${wrongAnswers.map(wa => `<li style="margin: 5px 0;">${wa.question}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                                <a href="${chatgptURL}" target="_blank" class="chatgpt-link" style="flex: 1; min-width: 280px; max-width: 400px;">
+                                    🤖 Get AI Tutor Help (ChatGPT)
+                                </a>
+                            </div>
+                            <p style="font-size: 0.9em; color: #95a5a6; margin-top: 15px; text-align: center;">
+                                ⏱️ Takes 2-3 minutes • Gets specific help for your missed questions
+                            </p>
+                        </div>
+                    `;
+                } else {
+                    chatgptSection.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 30px; border-radius: 15px; margin-top: 25px; text-align: center;">
+                            <h3 style="margin-bottom: 15px; font-size: 1.4em;">🎉 Perfect Score!</h3>
+                            <p style="font-size: 1.1em; opacity: 0.9;">
+                                No additional study needed - you've mastered this topic!
+                            </p>
+                            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                                <p style="font-size: 0.95em;">Ready for the next challenge? Try another quiz!</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            showSection('results-section');
+        }<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -822,25 +924,37 @@
             
             let score = 0;
             wrongAnswers = [];
+            const allAnswers = [];
+            const allQuestions = [];
             
             currentQuestions.forEach((question, index) => {
+                let userAnswer;
                 let isCorrect = false;
+
+                allQuestions.push(question.question);
 
                 if (question.type === 'multiple') {
                     const selected = document.querySelector(`input[name="q${index}"]:checked`);
                     if (selected) {
-                        const userAnswer = parseInt(selected.value);
+                        userAnswer = parseInt(selected.value);
+                        allAnswers.push(question.options[userAnswer]);
                         isCorrect = userAnswer === question.correct;
+                    } else {
+                        allAnswers.push('No answer');
                     }
                 } else if (question.type === 'true_false') {
                     const selected = document.querySelector(`input[name="q${index}"]:checked`);
                     if (selected) {
-                        const userAnswer = selected.value === 'true';
+                        userAnswer = selected.value === 'true';
+                        allAnswers.push(userAnswer ? 'True' : 'False');
                         isCorrect = userAnswer === question.correct;
+                    } else {
+                        allAnswers.push('No answer');
                     }
                 } else if (question.type === 'short') {
                     const textArea = document.getElementById(`q${index}_text`);
-                    const userAnswer = textArea ? textArea.value.trim() : '';
+                    userAnswer = textArea ? textArea.value.trim() : '';
+                    allAnswers.push(userAnswer || 'No answer');
                     isCorrect = userAnswer.length > 0;
                 }
 
@@ -849,28 +963,55 @@
                 } else {
                     wrongAnswers.push({
                         question: question.question,
-                        explanation: question.explanation
+                        explanation: question.explanation,
+                        userAnswer: userAnswer
                     });
                 }
             });
 
-            // Save to Google Sheets
+            // Save results to Google Sheets
+            const quizResults = {
+                name: window.quizTakerName,
+                quiz: currentQuiz,
+                score: score,
+                total: currentQuestions.length,
+                percentage: Math.round((score / currentQuestions.length) * 100),
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString(),
+                questions: allQuestions,
+                answers: allAnswers,
+                questionsSource: usingFallbackQuestions ? 'Default' : 'Google Sheets'
+            };
+
+            let saveSuccess = false;
             try {
-                await fetch(CONFIG.webAppUrl, {
+                const response = await fetch(CONFIG.webAppUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name: window.quizTakerName,
-                        quiz: currentQuiz,
-                        score: score,
-                        total: currentQuestions.length,
-                        percentage: Math.round((score / currentQuestions.length) * 100),
-                        date: new Date().toLocaleDateString(),
-                        time: new Date().toLocaleTimeString()
-                    })
+                    body: JSON.stringify(quizResults)
                 });
+                saveSuccess = response.ok;
+                console.log('Save response:', response.status, response.statusText);
             } catch (error) {
                 console.error('Save error:', error);
+            }
+            
+            // Update save status
+            const saveStatusElement = document.getElementById('results-save-status');
+            if (saveStatusElement) {
+                if (saveSuccess) {
+                    saveStatusElement.innerHTML = `
+                        <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                            ✅ Results saved to Google Sheets successfully
+                        </div>
+                    `;
+                } else {
+                    saveStatusElement.innerHTML = `
+                        <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                            ❌ Failed to save results to Google Sheets
+                        </div>
+                    `;
+                }
             }
             
             showResults(score);
@@ -890,7 +1031,11 @@
                 if (element) element.classList.add('hidden');
             });
             const targetElement = document.getElementById(sectionId);
-            if (targetElement) targetElement.classList.remove('hidden');
+            if (targetElement) {
+                targetElement.classList.remove('hidden');
+                // Scroll to top when showing new section
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
         function shuffleArray(array) {
@@ -1059,11 +1204,8 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                                 </ul>
                             </div>
                             <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-                                <a href="${chatgptURL}" target="_blank" class="chatgpt-link" style="flex: 1; min-width: 200px; max-width: 300px;">
+                                <a href="${chatgptURL}" target="_blank" class="chatgpt-link" style="flex: 1; min-width: 280px; max-width: 400px;">
                                     🤖 Get AI Tutor Help (ChatGPT)
-                                </a>
-                                <a href="${alternativeURL}" target="_blank" class="chatgpt-link" style="background: linear-gradient(135deg, #667eea, #764ba2); flex: 1; min-width: 200px; max-width: 300px;">
-                                    🎓 Alternative AI Help
                                 </a>
                             </div>
                             <p style="font-size: 0.9em; color: #95a5a6; margin-top: 15px; text-align: center;">
@@ -1200,7 +1342,7 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
     <script>
         // Initialize when DOM loads
         document.addEventListener('DOMContentLoaded', function() {
-            testConnection();
+            initializeApp(); // This will load available quizzes from Google Sheets
             
             // Close admin dropdown when clicking outside
             document.addEventListener('click', function(event) {
