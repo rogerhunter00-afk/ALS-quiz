@@ -1213,6 +1213,13 @@
         async function submitQuiz() {
             if (!confirm('Submit your quiz?')) return;
             
+            // Show loading while processing
+            const submitButton = document.querySelector('.submit-section .btn-success');
+            if (submitButton) {
+                submitButton.textContent = '⏳ Processing...';
+                submitButton.disabled = true;
+            }
+            
             let score = 0;
             wrongAnswers = [];
             const allAnswers = [];
@@ -1287,6 +1294,8 @@
                 console.error('Save error:', error);
             }
             
+            // Ensure we show results
+            console.log('Showing results with score:', score, 'saveSuccess:', saveSuccess);
             showResults(score, saveSuccess);
         }
 
@@ -1298,16 +1307,30 @@
 
         // Utility functions
         function showSection(sectionId) {
+            console.log('showSection called with:', sectionId);
+            
             const sections = ['landing-page', 'loading-section', 'quiz-section', 'results-section'];
+            
+            // Hide all sections first
             sections.forEach(id => {
                 const element = document.getElementById(id);
-                if (element) element.classList.add('hidden');
+                if (element) {
+                    element.classList.add('hidden');
+                    console.log('Hidden section:', id);
+                } else {
+                    console.warn('Section not found:', id);
+                }
             });
+            
+            // Show target section
             const targetElement = document.getElementById(sectionId);
             if (targetElement) {
                 targetElement.classList.remove('hidden');
+                console.log('Showing section:', sectionId);
                 // Scroll to top when showing new section
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                console.error('Target section not found:', sectionId);
             }
         }
 
@@ -1410,6 +1433,8 @@
         function showResults(score, saveSuccess) {
             const percentage = Math.round((score / currentQuestions.length) * 100);
             
+            console.log('showResults called with:', { score, saveSuccess, percentage, wrongAnswers: wrongAnswers.length });
+            
             // Generate enhanced results HTML
             const resultsHTML = `
                 <div class="results-header">
@@ -1445,8 +1470,33 @@
                 </div>
             `;
             
-            document.getElementById('results-section').innerHTML = resultsHTML;
+            // Make sure the results section exists and update it
+            const resultsSection = document.getElementById('results-section');
+            if (resultsSection) {
+                resultsSection.innerHTML = resultsHTML;
+                console.log('Results HTML updated');
+            } else {
+                console.error('Results section not found!');
+                return;
+            }
+            
+            // Force show the results section
+            console.log('Attempting to show results section');
             showSection('results-section');
+            
+            // Double-check that it's visible
+            setTimeout(() => {
+                const section = document.getElementById('results-section');
+                if (section && section.classList.contains('hidden')) {
+                    console.warn('Results section still hidden, forcing visibility');
+                    section.classList.remove('hidden');
+                    // Hide other sections
+                    ['landing-page', 'loading-section', 'quiz-section'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.classList.add('hidden');
+                    });
+                }
+            }, 100);
         }
         
         function getGeorgeImage(percentage) {
