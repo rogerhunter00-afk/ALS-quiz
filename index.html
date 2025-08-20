@@ -5,6 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laundry Engineers Quiz</title>
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        [data-theme="dark"] {
+            --primary-color: #5dade2;
+            --secondary-color: #58d68d;
+            --danger-color: #ec7063;
+            --warning-color: #f7dc6f;
+            --dark-color: #1a252f;
+            --light-color: #34495e;
+            --background-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+        
+        [data-theme="dark"] body {
+            background: var(--background-gradient);
+            color: #ecf0f1;
+        }
+        
+        [data-theme="dark"] .container {
+            background: #2c3e50;
+            color: #ecf0f1;
+        }
+        
+        [data-theme="dark"] .landing-page {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+        }
+        
+        [data-theme="dark"] .interactive-section,
+        [data-theme="dark"] .question,
+        [data-theme="dark"] .results-header,
+        [data-theme="dark"] .george-score-container,
+        [data-theme="dark"] .back-button-container {
+            background: #34495e;
+            color: #ecf0f1;
+        }
+        
+        [data-theme="dark"] .option {
+            background: #2c3e50;
+            color: #ecf0f1;
+        }
+        
+        [data-theme="dark"] .option:hover,
+        [data-theme="dark"] .option.selected {
+            background: #4a6741;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -15,9 +68,10 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #2c3e50;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--background-gradient);
             min-height: 100vh;
             padding: 15px;
+            transition: all 0.3s ease;
         }
         
         .container {
@@ -59,6 +113,44 @@
         .version-badge::before {
             content: '🔄';
             font-size: 0.9em;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 80px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+        }
+        
+        .theme-toggle::before {
+            content: '🌙';
+            font-size: 0.9em;
+        }
+        
+        [data-theme="dark"] .theme-toggle {
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+        }
+        
+        [data-theme="dark"] .theme-toggle::before {
+            content: '☀️';
         }
         
         /* Subtle background pattern */
@@ -425,23 +517,72 @@
             font-size: 1em;
         }
         
+        /* Enhanced Progress Animation */
         .progress-container {
             background: #ecf0f1;
             border-radius: 25px;
-            height: 12px;
+            height: 14px;
             margin: 20px 0;
             overflow: hidden;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .progress-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
         }
         
         .progress-bar {
-            background: linear-gradient(90deg, #3498db, #2ecc71);
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             height: 100%;
             width: 0%;
-            transition: width 0.5s ease;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 25px;
             box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+            position: relative;
+            overflow: hidden;
         }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progressShine 1.5s infinite;
+        }
+        
+        /* Question Transitions */
+        .question {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideInUp 0.6s ease-out forwards;
+        }
+        
+        .question:nth-child(1) { animation-delay: 0.1s; }
+        .question:nth-child(2) { animation-delay: 0.2s; }
+        .question:nth-child(3) { animation-delay: 0.3s; }
+        .question:nth-child(4) { animation-delay: 0.4s; }
+        .question:nth-child(5) { animation-delay: 0.5s; }
+        
         
         .progress-text {
             color: #7f8c8d;
@@ -450,33 +591,126 @@
             font-size: 1.1em;
         }
         
-        /* Enhanced Question Styling */
-        .question {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 35px;
-            margin-bottom: 30px;
-            border: 2px solid #e9ecef;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
+        /* Enhanced Hover Effects */
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 18px 22px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
             position: relative;
             overflow: hidden;
+            transform: translateX(0);
         }
         
-        .question::before {
+        .option::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #3498db, #2ecc71);
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+            transition: left 0.6s ease;
         }
         
-        .question:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
-            border-color: #3498db;
+        .option:hover {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-color: var(--primary-color);
+            transform: translateX(8px) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
+        }
+        
+        .option:hover::before {
+            left: 100%;
+        }
+        
+        .option.selected {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            transform: translateX(8px);
+        }
+        
+        .option.selected::after {
+            content: '✓';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        /* Enhanced Button Hover Effects */
+        .btn {
+            padding: 18px 36px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            min-height: 56px;
+            touch-action: manipulation;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(-2px);
+            transition: all 0.1s ease;
+        }
+        
+        /* Better Mobile Touch Targets */
+        @media (max-width: 768px) {
+            .option {
+                padding: 22px 25px;
+                margin: 8px 0;
+                min-height: 60px;
+            }
+            
+            .btn {
+                padding: 20px 40px;
+                min-height: 64px;
+                font-size: 1.3em;
+            }
+            
+            .theme-toggle {
+                padding: 12px 20px;
+                min-height: 48px;
+            }
         }
         
         .question-number {
@@ -499,52 +733,102 @@
             font-weight: 600;
         }
         
+        
         .options {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
         
-        .option {
-            display: flex;
-            align-items: center;
-            padding: 18px 22px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
+        /* Keyframe animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
-            transition: left 0.5s ease;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .option:hover {
-            background: #e3f2fd;
-            border-color: #3498db;
-            transform: translateX(5px);
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .option:hover::before {
-            left: 100%;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
-        .option.selected {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-            border-color: #3498db;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
-            transform: translateX(5px);
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes progressShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        @keyframes angryPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes celebrateBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Utility Classes */
+        .hidden { display: none !important; }
         
         .option input {
             margin-right: 18px;
@@ -940,8 +1224,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
         
-        /* Utility Classes */
-        .hidden { display: none !important; }
+        /* Enhanced Loading Animation */
         .loading {
             text-align: center;
             padding: 80px;
@@ -949,15 +1232,61 @@
             font-size: 1.3em;
         }
         
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
         .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #ecf0f1;
-            border-top: 5px solid #3498db;
+            width: 60px;
+            height: 60px;
+            border: 6px solid #ecf0f1;
+            border-top: 6px solid var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 25px auto;
+            position: relative;
         }
+        
+        .loading-spinner::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            border: 3px solid transparent;
+            border-top: 3px solid var(--secondary-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: spin 0.7s linear infinite reverse;
+        }
+        
+        .loading-text {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: var(--dark-color);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .loading-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .loading-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: bounce 1.4s ease-in-out infinite both;
+        }
+        
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dot:nth-child(3) { animation-delay: 0s; }
         
         /* Keyframe animations */
         @keyframes fadeInDown {
@@ -1092,7 +1421,12 @@
             questionsUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec?action=getQuestions'
         };
 
-        // George image URLs
+                
+        // App state
+        let currentQuestions = [];
+        let wrongAnswers = [];
+        let currentQuiz = 'Bearing Maintenance Quiz';
+        let usingFallbackQuestions = false;
         const GEORGE_IMAGES = {
             welcome: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png',
             celebrate: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-celebrate.png',
@@ -1136,11 +1470,20 @@
             }
         ];
 
-        // App state
-        let currentQuestions = [];
-        let wrongAnswers = [];
-        let currentQuiz = 'Bearing Maintenance Quiz';
-        let usingFallbackQuestions = false;
+        // Theme toggling functionality
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Initialize theme from localStorage
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
 
         // Define ALL functions at the top level
         function toggleAdmin() {
@@ -1715,7 +2058,8 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
 
         <!-- Landing Page -->
         <div id="landing-page" class="landing-page">
-            <div class="version-badge">v2.2.0</div>
+            <div class="version-badge">v2.3.0</div>
+            <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
             <div class="landing-content">
                 <div class="landing-header">
                     <h1>🔧 Laundry Engineers Quiz</h1>
@@ -1757,9 +2101,16 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
 
         <!-- Loading Section -->
         <div id="loading-section" class="loading hidden">
-            <div class="loading-spinner"></div>
-            <h3>Loading Quiz Questions...</h3>
-            <p>Fetching from Google Sheets...</p>
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Loading Quiz Questions...</div>
+                <div class="loading-dots">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                </div>
+                <p>Fetching from Google Sheets...</p>
+            </div>
         </div>
 
         <!-- Quiz Section -->
@@ -1786,6 +2137,7 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
     <script>
         // Initialize when DOM loads
         document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme(); // Initialize theme first
             initializeApp();
             
             // Close admin dropdown when clicking outside
