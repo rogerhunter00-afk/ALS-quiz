@@ -24,38 +24,38 @@
             --light-color: #001233;
             --background-gradient: linear-gradient(135deg, #000b33 0%, #001b5c 100%);
         }
-        
+
         [data-theme="dark"] body {
             background: var(--background-gradient);
-            color: #ecf0f1;
+            color: var(--dark-color);
         }
-        
+
         [data-theme="dark"] .container {
-            background: #2c3e50;
-            color: #ecf0f1;
+            background: var(--light-color);
+            color: var(--dark-color);
         }
-        
+
         [data-theme="dark"] .landing-page {
-            background: linear-gradient(135deg, #34495e, #2c3e50);
+            background: var(--background-gradient);
         }
-        
+
         [data-theme="dark"] .interactive-section,
         [data-theme="dark"] .question,
         [data-theme="dark"] .results-header,
         [data-theme="dark"] .george-score-container,
         [data-theme="dark"] .back-button-container {
-            background: #34495e;
-            color: #ecf0f1;
+            background: var(--light-color);
+            color: var(--dark-color);
         }
-        
+
         [data-theme="dark"] .option {
-            background: #2c3e50;
-            color: #ecf0f1;
+            background: var(--secondary-color);
+            color: var(--dark-color);
         }
-        
+
         [data-theme="dark"] .option:hover,
         [data-theme="dark"] .option.selected {
-            background: #4a6741;
+            background: var(--primary-color);
         }
         
         * {
