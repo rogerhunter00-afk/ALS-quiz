@@ -1464,6 +1464,7 @@
         let currentQuestions = [];
         let wrongAnswers = [];
         let currentQuiz = 'Bearing Maintenance Quiz';
+        let previousQuizSelection = currentQuiz;
         let usingFallbackQuestions = false;
         const GEORGE_IMAGES = {
             welcome: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png',
@@ -1688,24 +1689,30 @@
 
         function startQuiz() {
             const name = document.getElementById('engineer-name').value.trim();
-            const selectedQuiz = document.getElementById('quiz-select').value;
-            
+            const quizSelect = document.getElementById('quiz-select');
+            const selectedQuiz = quizSelect.value;
+
             if (!name) {
                 alert('Please enter your name!');
                 return;
             }
-            
+
             if (selectedQuiz === 'custom') {
                 const customQuiz = prompt('Enter quiz name:');
-                if (!customQuiz) return;
-                currentQuiz = customQuiz;
+                if (customQuiz === null || !customQuiz.trim()) {
+                    alert('Quiz selection canceled. Please choose a quiz to continue.');
+                    quizSelect.value = previousQuizSelection;
+                    return;
+                }
+                currentQuiz = customQuiz.trim();
             } else {
                 currentQuiz = selectedQuiz;
+                previousQuizSelection = selectedQuiz;
             }
-            
+
             window.quizTakerName = sanitizeHTML(name);
             showSection('loading-section');
-            setTimeout(() => loadQuizQuestions(), 500);
+            requestAnimationFrame(() => loadQuizQuestions());
         }
 
         function selectOption(questionIndex, optionValue) {
@@ -2304,13 +2311,23 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
         // Initialize when DOM loads
         document.addEventListener('DOMContentLoaded', function() {
             initializeTheme(); // Initialize theme first
-            initializeApp();
-            
+            initializeApp().finally(() => {
+                const quizSelect = document.getElementById('quiz-select');
+                if (quizSelect) {
+                    previousQuizSelection = quizSelect.value;
+                    quizSelect.addEventListener('change', () => {
+                        if (quizSelect.value !== 'custom') {
+                            previousQuizSelection = quizSelect.value;
+                        }
+                    });
+                }
+            });
+
             // Close admin dropdown when clicking outside
             document.addEventListener('click', function(event) {
                 const adminPanel = document.querySelector('.admin-panel');
                 const dropdown = document.getElementById('admin-dropdown');
-                
+
                 if (adminPanel && dropdown && !adminPanel.contains(event.target)) {
                     dropdown.classList.remove('show');
                 }
