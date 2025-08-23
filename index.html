@@ -985,6 +985,7 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
+        .score-display { 
             font-size: 3.5em;
             font-weight: 800;
             margin: 15px 0;
@@ -1372,7 +1373,6 @@
             .score-display { font-size: 4em; }
             .score-percentage { font-size: 2.2em; }
             .results-george { width: 180px; }
-                    .score-display { font-size: 2.8em; }
             .chatgpt-help { padding: 25px 20px; }
             .help-topics { padding: 20px 15px; }
             .submit-section { padding: 20px; margin-top: 35px; }
@@ -1400,14 +1400,13 @@
             .george-score-container { padding: 25px 15px; }
             .score-message { font-size: 1.1em; }
         }
-        }
         
         @media (max-width: 320px) {
             .welcome-george { width: 240px; }
             .landing-header h1 { font-size: 1.9em; }
             .btn-success { padding: 14px 25px; }
             .results-george { width: 180px; }
-            .score { font-size: 2.2em; }
+            .score-display { font-size: 2.2em; }
         }
     </style>
 </head>
@@ -1635,6 +1634,7 @@
             
             // Show loading while processing
             const submitButton = document.querySelector('.submit-section .btn-success');
+            const originalText = submitButton ? submitButton.textContent : '📋 Submit Quiz';
             if (submitButton) {
                 submitButton.textContent = '⏳ Processing...';
                 submitButton.disabled = true;
@@ -1741,6 +1741,13 @@
             // Ensure we show results with detailed error info
             console.log('Showing results with score:', score, 'saveSuccess:', saveSuccess, 'error:', saveError);
             showResults(score, saveSuccess, saveError);
+
+            // Reset button state if there was an error
+            if (submitButton && !saveSuccess) {
+                setTimeout(() => {
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    }, 1000);
         }
 
         function backToHome() {
