@@ -1824,7 +1824,15 @@
                     });
                 }
             } catch (error) {
-                console.error('Could not load quiz list from sheets');
+                console.error('Could not load quiz list from sheets', error);
+                const select = document.getElementById('quiz-select');
+                if (select) {
+                    select.innerHTML = '';
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = 'No quizzes available';
+                    select.appendChild(option);
+                }
             }
         }
 
