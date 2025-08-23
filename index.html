@@ -1741,6 +1741,40 @@
             }
         }
 
+        async function submitBulkQuestions(event) {
+            event.preventDefault();
+            const textarea = event.target.querySelector('textarea');
+            const submitBtn = event.submitter || event.target.querySelector('button[type="submit"]');
+            const feedback = document.getElementById('bq-feedback');
+
+            if (!textarea || !submitBtn || !feedback) return;
+
+            const questions = parseGPTQuiz(textarea.value);
+            feedback.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(CONFIG.questionsUrl + '?action=addQuestions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(questions)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    feedback.textContent = '✅ Added!';
+                    textarea.value = '';
+                    refreshQuestions();
+                    setTimeout(() => { feedback.textContent = ''; }, 1000);
+                } else {
+                    feedback.textContent = '❌ ' + (result.errors ? result.errors.join(', ') : 'Failed');
+                }
+            } catch (err) {
+                feedback.textContent = '❌ Error';
+            } finally {
+                submitBtn.disabled = false;
+            }
+        }
+
         // Initialize app
         async function initializeApp() {
             await testConnection();
