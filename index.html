@@ -1507,6 +1507,17 @@
             }
         }
 
+        async function fetchWithTimeout(resource, options = {}, timeout = 10000) {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(resource, { ...options, signal: controller.signal });
+                return response;
+            } finally {
+                clearTimeout(id);
+            }
+        }
+
         async function testConnection() {
             const statusElement = document.getElementById('connection-status');
             if (!statusElement) return;
@@ -1515,7 +1526,7 @@
             statusElement.className = 'status-indicator status-warning';
             
             try {
-                const response = await fetch(CONFIG.webAppUrl + '?test=true');
+                const response = await fetchWithTimeout(CONFIG.webAppUrl + '?test=true');
                 if (response.ok) {
                     statusElement.textContent = '✅ Connected';
                     statusElement.className = 'status-indicator status-connected';
@@ -1524,8 +1535,11 @@
                     statusElement.className = 'status-indicator status-disconnected';
                 }
             } catch (error) {
-                statusElement.textContent = '❌ Error';
+                statusElement.textContent = error.name === 'AbortError' ? '⏱️ Timeout' : '❌ Error';
                 statusElement.className = 'status-indicator status-disconnected';
+                if (error.name === 'AbortError' && confirm('Connection test timed out. Retry?')) {
+                    return testConnection();
+                }
             }
         }
 
@@ -1782,7 +1796,7 @@
 
         async function loadAvailableQuizzes() {
             try {
-                const response = await fetch(CONFIG.quizListUrl);
+                const response = await fetchWithTimeout(CONFIG.quizListUrl);
                 const data = await response.json();
                 
                 if (data.success && data.quizzes) {
@@ -1805,6 +1819,11 @@
                     select.appendChild(customOption);
                 }
             } catch (error) {
+                if (error.name === 'AbortError') {
+                    if (confirm('Loading quiz list timed out. Retry?')) {
+                        return loadAvailableQuizzes();
+                    }
+                }
                 console.log('Could not load quiz list from sheets, using defaults');
             }
         }
@@ -1994,7 +2013,7 @@
             console.log('Data being sent:', quizResults);
             
             try {
-                const response = await fetch(CONFIG.webAppUrl, {
+                const response = await fetchWithTimeout(CONFIG.webAppUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -2017,7 +2036,18 @@
             } catch (error) {
                 console.error('Save error details:', error);
                 saveError = error.message || 'Network error';
-                
+
+                if (error.name === 'AbortError') {
+                    saveError = 'Request timed out';
+                    if (submitButton) {
+                        submitButton.textContent = originalText;
+                        submitButton.disabled = false;
+                    }
+                    if (confirm('Submission timed out. Retry?')) {
+                        return submitQuiz();
+                    }
+                }
+
                 // Check if it's a CORS error
                 if (error.message.includes('CORS') || error.message.includes('Access-Control')) {
                     saveError = 'CORS policy error - Google Apps Script may need CORS configuration';
@@ -2102,9 +2132,9 @@
         async function loadQuizQuestions() {
             try {
                 const url = `${CONFIG.questionsUrl}&quiz=${encodeURIComponent(currentQuiz)}`;
-                const response = await fetch(url);
+                const response = await fetchWithTimeout(url);
                 const data = await response.json();
-                
+
                 if (data.success && data.questions && data.questions.length > 0) {
                     currentQuestions = shuffleArray([...data.questions]);
                     usingFallbackQuestions = false;
@@ -2112,11 +2142,16 @@
                     throw new Error('No questions found');
                 }
             } catch (error) {
+                if (error.name === 'AbortError') {
+                    if (confirm('Loading questions timed out. Retry?')) {
+                        return loadQuizQuestions();
+                    }
+                }
                 console.log('Using default questions');
                 currentQuestions = shuffleArray([...DEFAULT_QUESTIONS]);
                 usingFallbackQuestions = true;
             }
-            
+
             generateQuizHTML();
             showSection('quiz-section');
             updateProgress();
