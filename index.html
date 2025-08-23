@@ -1469,7 +1469,8 @@
         const GEORGE_IMAGES = {
             welcome: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png',
             celebrate: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-celebrate.png',
-            frustrated: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-frustrated.png'
+            frustrated: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-frustrated.png',
+            default: 'images/george-welcome.png'
         };
 
         // Default quiz questions
@@ -2109,11 +2110,11 @@
         
         function getGeorgeImage(percentage) {
             if (percentage >= 80) {
-                return `<img src="${GEORGE_IMAGES.celebrate}" alt="Celebrating George" class="results-george celebrate">`;
+                return `<img src="${GEORGE_IMAGES.celebrate}" alt="Celebrating George" class="results-george celebrate" onerror="this.onerror=null;this.src='${GEORGE_IMAGES.default}';">`;
             } else if (percentage < 60) {
-                return `<img src="${GEORGE_IMAGES.frustrated}" alt="Frustrated George" class="results-george angry">`;
+                return `<img src="${GEORGE_IMAGES.frustrated}" alt="Frustrated George" class="results-george angry" onerror="this.onerror=null;this.src='${GEORGE_IMAGES.default}';">`;
             } else {
-                return `<img src="${GEORGE_IMAGES.welcome}" alt="George" class="results-george">`;
+                return `<img src="${GEORGE_IMAGES.welcome}" alt="George" class="results-george" onerror="this.onerror=null;this.src='${GEORGE_IMAGES.default}';">`;
             }
         }
         
