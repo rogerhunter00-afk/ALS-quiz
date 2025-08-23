@@ -1655,8 +1655,12 @@
             const modal = document.getElementById('bulk-import-modal');
             if (modal) {
                 document.getElementById('bulk-import-form').reset();
-                document.getElementById('bulk-summary').textContent = '';
-                document.getElementById('bulk-errors').innerHTML = '';
+                const summary = document.getElementById('bulk-summary');
+                const errors = document.getElementById('bulk-errors');
+                summary.textContent = '';
+                errors.innerHTML = '';
+                summary.classList.add('hidden');
+                errors.classList.add('hidden');
                 modal.classList.remove('hidden');
             }
         }
@@ -1672,7 +1676,9 @@
             const summaryEl = document.getElementById('bulk-summary');
             const errorsEl = document.getElementById('bulk-errors');
             summaryEl.textContent = 'Submitting...';
+            summaryEl.classList.remove('hidden');
             errorsEl.innerHTML = '';
+            errorsEl.classList.add('hidden');
 
             let payload;
             try {
@@ -1693,7 +1699,7 @@
                 if (result.summary) {
                     summaryEl.textContent = `✅ ${result.summary.successful} added, ❌ ${result.summary.failed} failed`;
                 } else {
-                    summaryEl.textContent = '';
+                    summaryEl.classList.add('hidden');
                 }
                 if (result.errors && result.errors.length) {
                     const list = document.createElement('ul');
@@ -1703,7 +1709,10 @@
                         list.appendChild(li);
                     });
                     errorsEl.appendChild(list);
+                    errorsEl.classList.remove('hidden');
                     console.error('Bulk import validation errors', result.errors);
+                } else {
+                    errorsEl.classList.add('hidden');
                 }
                 if (result.summary && result.summary.failed === 0) {
                     refreshQuestions();
@@ -2298,8 +2307,8 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                         <button type="submit" class="btn btn-success">Submit</button>
                         <button type="button" class="btn btn-danger" onclick="closeBulkImport()">Cancel</button>
                     </div>
-                    <div id="bulk-summary" style="margin-top:10px;"></div>
-                    <div id="bulk-errors" style="margin-top:10px;color:red;"></div>
+                    <div id="bulk-summary" class="hidden" style="margin-top:10px;"></div>
+                    <div id="bulk-errors" class="hidden" style="margin-top:10px;color:red;"></div>
                 </form>
             </div>
         </div>
