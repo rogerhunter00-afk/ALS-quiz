@@ -59,10 +59,10 @@
             color: var(--text-color);
         }
         
-        [data-theme="dark"] .option:hover,
-        [data-theme="dark"] .option.selected {
-            background: #4a6741;
-        }
+[data-theme="dark"] .option:hover,
+[data-theme="dark"] .option.selected {
+    background: var(--secondary-color);
+}
         
         * {
             margin: 0;
@@ -94,7 +94,7 @@
         .landing-page {
             text-align: center;
             padding: 50px 30px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            background: linear-gradient(135deg, var(--light-color), color-mix(in srgb, var(--light-color), var(--dark-color) 10%));
             position: relative;
             overflow: hidden;
         }
@@ -104,7 +104,7 @@
             position: absolute;
             top: 20px;
             right: 80px;
-            background: linear-gradient(135deg, var(--warning-color), #e67e22);
+            background: linear-gradient(135deg, var(--warning-color), color-mix(in srgb, var(--warning-color), black 20%));
             color: white;
             border: none;
             padding: 10px 18px;
@@ -112,7 +112,7 @@
             font-size: 0.9em;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+            box-shadow: 0 4px 15px color-mix(in srgb, var(--warning-color), transparent 70%);
             z-index: 10;
             transition: all 0.3s ease;
             display: flex;
@@ -131,7 +131,7 @@
         }
         
         [data-theme="dark"] .theme-toggle {
-            background: linear-gradient(135deg, #f1c40f, var(--warning-color));
+            background: linear-gradient(135deg, color-mix(in srgb, var(--warning-color), white 20%), var(--warning-color));
         }
         
         [data-theme="dark"] .theme-toggle::before {
@@ -348,21 +348,21 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), #2980b9);
+            background: linear-gradient(135deg, var(--primary-color), color-mix(in srgb, var(--primary-color), black 20%));
             color: white;
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 6px 20px color-mix(in srgb, var(--primary-color), transparent 70%);
         }
-        
+
         .btn-primary:hover {
-            background: linear-gradient(135deg, #2980b9, #1f618d);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--primary-color), black 20%), color-mix(in srgb, var(--primary-color), black 40%));
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+            box-shadow: 0 8px 25px color-mix(in srgb, var(--primary-color), transparent 60%);
         }
-        
+
         .btn-success {
-            background: linear-gradient(135deg, #27ae60, var(--secondary-color));
+            background: linear-gradient(135deg, color-mix(in srgb, var(--secondary-color), black 20%), var(--secondary-color));
             color: white;
-            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 8px 25px color-mix(in srgb, var(--secondary-color), transparent 70%);
             font-size: 1.4em;
             padding: 22px 45px;
             position: relative;
@@ -388,9 +388,9 @@
         }
         
         .btn-success:hover {
-            background: linear-gradient(135deg, #219a52, #27ae60);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--secondary-color), black 30%), color-mix(in srgb, var(--secondary-color), black 10%));
             transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(39, 174, 96, 0.4), 0 0 20px rgba(39, 174, 96, 0.2);
+            box-shadow: 0 12px 35px color-mix(in srgb, var(--secondary-color), transparent 60%), 0 0 20px color-mix(in srgb, var(--secondary-color), transparent 80%);
         }
         
         .btn-success:hover::before {
@@ -402,14 +402,14 @@
         }
         
         .btn-secondary {
-            background: #95a5a6;
+            background: color-mix(in srgb, var(--dark-color), var(--light-color) 50%);
             color: white;
             font-size: 0.9em;
             padding: 10px 20px;
         }
-        
+
         .btn-secondary:hover {
-            background: #7f8c8d;
+            background: color-mix(in srgb, var(--dark-color), var(--light-color) 30%);
         }
         
         .quiz-info {
@@ -603,10 +603,10 @@
         }
         
         .option:hover {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--primary-color), white 80%), color-mix(in srgb, var(--primary-color), white 60%));
             border-color: var(--primary-color);
             transform: translateX(8px) translateY(-2px);
-            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 8px 25px color-mix(in srgb, var(--primary-color), transparent 80%);
         }
         
         .option:hover::before {
@@ -614,9 +614,9 @@
         }
         
         .option.selected {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--primary-color), white 80%), color-mix(in srgb, var(--primary-color), white 60%));
             border-color: var(--primary-color);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 5px 15px color-mix(in srgb, var(--primary-color), transparent 70%);
             transform: translateX(8px);
         }
         
@@ -699,7 +699,7 @@
         }
         
         .question-number {
-            background: linear-gradient(135deg, var(--primary-color), #2980b9);
+            background: linear-gradient(135deg, var(--primary-color), color-mix(in srgb, var(--primary-color), black 20%));
             color: white;
             padding: 10px 18px;
             border-radius: 25px;
@@ -707,7 +707,7 @@
             margin-bottom: 20px;
             display: inline-block;
             font-size: 1em;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 4px 15px color-mix(in srgb, var(--primary-color), transparent 70%);
         }
         
         .question h3 {
@@ -989,15 +989,15 @@
         
         
         .george-score-container.low-score {
-            background: linear-gradient(135deg, #fff5f5, #fed7d7);
-            border: 3px solid #feb2b2;
-            box-shadow: 0 20px 60px rgba(231, 76, 60, 0.2);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--danger-color), white 85%), color-mix(in srgb, var(--danger-color), white 60%));
+            border: 3px solid color-mix(in srgb, var(--danger-color), white 50%);
+            box-shadow: 0 20px 60px color-mix(in srgb, var(--danger-color), transparent 80%);
         }
-        
+
         .george-score-container.high-score {
-            background: linear-gradient(135deg, #f0fff4, #c6f6d5);
-            border: 3px solid #9ae6b4;
-            box-shadow: 0 20px 60px rgba(39, 174, 96, 0.2);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--secondary-color), white 85%), color-mix(in srgb, var(--secondary-color), white 60%));
+            border: 3px solid color-mix(in srgb, var(--secondary-color), white 50%);
+            box-shadow: 0 20px 60px color-mix(in srgb, var(--secondary-color), transparent 80%);
         }
         
         @keyframes angryPulse {
@@ -1016,17 +1016,17 @@
             text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
         }
         
-        .score-display.low { 
+        .score-display.low {
             color: var(--danger-color);
-            text-shadow: 2px 2px 8px rgba(231, 76, 60, 0.3);
+            text-shadow: 2px 2px 8px color-mix(in srgb, var(--danger-color), transparent 70%);
         }
-        .score-display.medium { 
+        .score-display.medium {
             color: var(--warning-color);
-            text-shadow: 2px 2px 8px rgba(243, 156, 18, 0.3);
+            text-shadow: 2px 2px 8px color-mix(in srgb, var(--warning-color), transparent 70%);
         }
-        .score-display.high { 
-            color: #27ae60;
-            text-shadow: 2px 2px 8px rgba(39, 174, 96, 0.3);
+        .score-display.high {
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 8px color-mix(in srgb, var(--secondary-color), transparent 70%);
         }
         
         .score-message {
@@ -1056,9 +1056,9 @@
         }
         
         .save-status.success {
-            background: linear-gradient(135deg, #d4edda, #c3e6cb);
-            color: #155724;
-            border: 2px solid #b8dabd;
+            background: linear-gradient(135deg, color-mix(in srgb, var(--secondary-color), white 80%), color-mix(in srgb, var(--secondary-color), white 60%));
+            color: color-mix(in srgb, var(--secondary-color), black 40%);
+            border: 2px solid color-mix(in srgb, var(--secondary-color), white 40%);
         }
         
         .save-status.success::before {
@@ -1067,9 +1067,9 @@
         }
         
         .save-status.error {
-            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
-            color: #721c24;
-            border: 2px solid #f1b0b7;
+            background: linear-gradient(135deg, color-mix(in srgb, var(--danger-color), white 80%), color-mix(in srgb, var(--danger-color), white 60%));
+            color: color-mix(in srgb, var(--danger-color), black 40%);
+            border: 2px solid color-mix(in srgb, var(--danger-color), white 40%);
         }
         
         .save-status.error::before {
@@ -1152,7 +1152,7 @@
         }
         
         .chatgpt-link {
-            background: linear-gradient(135deg, #10a37f, #1a7f64);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--secondary-color), black 10%), color-mix(in srgb, var(--secondary-color), black 30%));
             color: white;
             padding: 22px 35px;
             border-radius: 15px;
@@ -1161,7 +1161,7 @@
             font-size: 1.2em;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(16, 163, 127, 0.3);
+            box-shadow: 0 8px 25px color-mix(in srgb, var(--secondary-color), transparent 70%);
             position: relative;
             overflow: hidden;
         }
@@ -1178,9 +1178,9 @@
         }
         
         .chatgpt-link:hover {
-            background: linear-gradient(135deg, #0d8f6a, #155a4a);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--secondary-color), black 20%), color-mix(in srgb, var(--secondary-color), black 40%));
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(16, 163, 127, 0.4);
+            box-shadow: 0 12px 35px color-mix(in srgb, var(--secondary-color), transparent 60%);
         }
         
         .chatgpt-link:hover::before {
@@ -1197,13 +1197,13 @@
         
         /* Perfect Score Celebration */
         .perfect-score {
-            background: linear-gradient(135deg, #27ae60, var(--secondary-color));
+            background: linear-gradient(135deg, color-mix(in srgb, var(--secondary-color), black 20%), var(--secondary-color));
             color: white;
             padding: 40px;
             border-radius: 20px;
             margin-top: 30px;
             text-align: center;
-            box-shadow: 0 15px 40px rgba(39, 174, 96, 0.3);
+            box-shadow: 0 15px 40px color-mix(in srgb, var(--secondary-color), transparent 70%);
             position: relative;
             overflow: hidden;
         }
