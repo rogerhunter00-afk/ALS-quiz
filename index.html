@@ -2400,55 +2400,6 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
     `;
 }
             
-            // Create detailed prompt for ChatGPT
-            const wrongQuestions = wrongAnswers.map((wa, index) => `${index + 1}. ${wa.question}`).join('\n');
-            const detailedExplanations = wrongAnswers.map((wa, index) => 
-                `Question ${index + 1}: ${wa.question}\nCorrect Answer Context: ${wa.explanation || 'Review this topic area'}`
-            ).join('\n\n');
-            
-            const enhancedPrompt = `I'm a laundry maintenance engineer who just completed a technical quiz on "${currentQuiz}". I need help understanding these specific topics I struggled with:
-
-QUESTIONS I GOT WRONG:
-${wrongQuestions}
-
-DETAILED CONTEXT:
-${detailedExplanations}
-
-Please provide for each topic:
-1. Clear technical explanations in practical terms
-2. Common troubleshooting steps I should know
-3. Safety considerations and best practices
-4. Real-world tips for commercial laundry equipment maintenance
-5. How to prevent these issues in the field
-
-Focus on actionable knowledge I can apply immediately in my maintenance work.`;
-
-            const encodedPrompt = encodeURIComponent(enhancedPrompt);
-            const chatgptURL = `https://chat.openai.com/?model=gpt-4&q=${encodedPrompt}`;
-
-            return `
-                <div class="chatgpt-help">
-                    <h4>📚 Need Help with ${wrongAnswers.length} Question${wrongAnswers.length > 1 ? 's' : ''}?</h4>
-                    <div class="help-description">
-                        Get personalized explanations and troubleshooting tips for the topics you missed:
-                    </div>
-                    <div class="help-topics">
-                        <strong>Topics you'll get help with:</strong>
-                        <ul>
-                            ${wrongAnswers.map(wa => `<li>${wa.question}</li>`).join('')}
-                        </ul>
-                    </div>
-                    <div class="chatgpt-button-container">
-                        <a href="${chatgptURL}" target="_blank" class="chatgpt-link">
-                            🤖 Get AI Tutor Help (ChatGPT)
-                        </a>
-                    </div>
-                    <div class="help-description-bottom">
-                        ⏱️ Takes 2-3 minutes • Gets specific help for your missed questions
-                    </div>
-                </div>
-            `;
-        }
     </script>
 
     <div class="container">
