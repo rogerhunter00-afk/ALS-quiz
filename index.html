@@ -1453,10 +1453,10 @@
     <script>
         // CONFIGURATION
         const CONFIG = {
-            sheetUrl: 'https://docs.google.com/spreadsheets/d/1hl8L_oPTP5A47pIoGjaOV9vWg85x1BBSTEsUOXjqucE/edit?usp=sharing',
-            webAppUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec',
-            quizListUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec?action=getQuizzes',
-            questionsUrl: 'https://script.google.com/macros/s/AKfycbw917rSpnmVmrA07IDLWt699GJ3lZlGo8wYwpDCc77BhuaT4S_HMIuOYgLbTCtDhwNp/exec?action=getQuestions'
+            sheetUrl: '/sheet',
+            webAppUrl: '/api/webapp',
+            quizListUrl: '/api/quizzes',
+            questionsUrl: '/api/questions'
         };
 
                 
@@ -1539,7 +1539,7 @@
             statusElement.className = 'status-indicator status-warning';
             
             try {
-                const response = await fetch(CONFIG.webAppUrl + '?test=true');
+                const response = await fetch(`${CONFIG.webAppUrl}?test=true`);
                 if (response.ok) {
                     statusElement.textContent = '✅ Connected';
                     statusElement.className = 'status-indicator status-connected';
@@ -1630,7 +1630,7 @@
             const feedback = document.getElementById('aq-feedback');
             feedback.textContent = 'Submitting...';
             try {
-                const response = await fetch(CONFIG.questionsUrl + '?action=addQuestion', {
+                const response = await fetch(CONFIG.questionsUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -1918,7 +1918,7 @@
 
         async function loadQuizQuestions() {
             try {
-                const url = `${CONFIG.questionsUrl}&quiz=${encodeURIComponent(currentQuiz)}`;
+                const url = `${CONFIG.questionsUrl}?quiz=${encodeURIComponent(currentQuiz)}`;
                 const response = await fetch(url);
                 const data = await response.json();
                 
