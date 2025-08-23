@@ -1463,6 +1463,7 @@
         // App state
         let currentQuestions = [];
         let wrongAnswers = [];
+        let manualReview = [];
         let currentQuiz = 'Bearing Maintenance Quiz';
         let usingFallbackQuestions = false;
         const GEORGE_IMAGES = {
@@ -1757,12 +1758,14 @@
             
             let score = 0;
             wrongAnswers = [];
+            manualReview = [];
             const allAnswers = [];
             const allQuestions = [];
             
             currentQuestions.forEach((question, index) => {
                 let userAnswer;
                 let isCorrect = false;
+                let needsReview = false;
 
                 allQuestions.push(question.question);
 
@@ -1788,7 +1791,22 @@
                     const textArea = document.getElementById(`q${index}_text`);
                     userAnswer = textArea ? textArea.value.trim() : '';
                     allAnswers.push(userAnswer || 'No answer');
-                    isCorrect = userAnswer.length > 0;
+
+                    const acceptableAnswers = question.acceptableAnswers || question.answers;
+
+                    if (Array.isArray(acceptableAnswers) && acceptableAnswers.length > 0) {
+                        isCorrect = acceptableAnswers.some(ans => ans.trim().toLowerCase() === userAnswer.toLowerCase());
+                    } else {
+                        isCorrect = false;
+                        needsReview = userAnswer.length > 0;
+                    }
+
+                    if (needsReview) {
+                        manualReview.push({
+                            question: question.question,
+                            userAnswer: userAnswer
+                        });
+                    }
                 }
 
                 if (isCorrect) {
@@ -1797,7 +1815,8 @@
                     wrongAnswers.push({
                         question: question.question,
                         explanation: question.explanation,
-                        userAnswer: userAnswer
+                        userAnswer: userAnswer,
+                        needsReview: needsReview
                     });
                 }
             });
@@ -1813,6 +1832,7 @@
                 time: new Date().toLocaleTimeString(),
                 questions: allQuestions,
                 answers: allAnswers,
+                manualReview: manualReview,
                 questionsSource: usingFallbackQuestions ? 'Default' : 'Google Sheets'
             };
 
