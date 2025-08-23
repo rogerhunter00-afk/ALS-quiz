@@ -1879,6 +1879,12 @@
             return div.innerHTML;
         }
 
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.textContent;
+        }
+
         function showSection(sectionId) {
             console.log('showSection called with:', sectionId);
             
@@ -1942,56 +1948,102 @@
         function generateQuizHTML() {
             const form = document.getElementById('quiz-form');
             const title = document.getElementById('quiz-title');
-            
+
             if (!form || !title) return;
-            
-            title.textContent = currentQuiz;
+
+            title.textContent = escapeHTML(currentQuiz);
             form.innerHTML = '';
 
             currentQuestions.forEach((question, index) => {
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'question';
 
-                let questionHTML = `
-                    <div class="question-number">Question ${index + 1}</div>
-                    <h3>${question.question}</h3>
-                `;
+                const numberDiv = document.createElement('div');
+                numberDiv.className = 'question-number';
+                numberDiv.textContent = `Question ${index + 1}`;
+                questionDiv.appendChild(numberDiv);
+
+                const questionTitle = document.createElement('h3');
+                questionTitle.textContent = escapeHTML(question.question);
+                questionDiv.appendChild(questionTitle);
 
                 if (question.type === 'multiple') {
-                    questionHTML += '<div class="options">';
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'options';
                     question.options.forEach((option, optionIndex) => {
-                        questionHTML += `
-                            <div class="option" onclick="selectOption(${index}, ${optionIndex})">
-                                <input type="radio" name="q${index}" value="${optionIndex}" id="q${index}_${optionIndex}">
-                                <label for="q${index}_${optionIndex}">${option}</label>
-                            </div>
-                        `;
+                        const optionDiv = document.createElement('div');
+                        optionDiv.className = 'option';
+                        optionDiv.addEventListener('click', () => selectOption(index, optionIndex));
+
+                        const input = document.createElement('input');
+                        input.type = 'radio';
+                        input.name = `q${index}`;
+                        input.value = `${optionIndex}`;
+                        input.id = `q${index}_${optionIndex}`;
+
+                        const label = document.createElement('label');
+                        label.setAttribute('for', input.id);
+                        label.textContent = escapeHTML(option);
+
+                        optionDiv.appendChild(input);
+                        optionDiv.appendChild(label);
+                        optionsDiv.appendChild(optionDiv);
                     });
-                    questionHTML += '</div>';
+                    questionDiv.appendChild(optionsDiv);
                 } else if (question.type === 'true_false') {
-                    questionHTML += `
-                        <div class="options">
-                            <div class="option" onclick="selectOption(${index}, 'true')">
-                                <input type="radio" name="q${index}" value="true" id="q${index}_true">
-                                <label for="q${index}_true">True</label>
-                            </div>
-                            <div class="option" onclick="selectOption(${index}, 'false')">
-                                <input type="radio" name="q${index}" value="false" id="q${index}_false">
-                                <label for="q${index}_false">False</label>
-                            </div>
-                        </div>
-                    `;
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'options';
+
+                    const trueOption = document.createElement('div');
+                    trueOption.className = 'option';
+                    trueOption.addEventListener('click', () => selectOption(index, 'true'));
+
+                    const trueInput = document.createElement('input');
+                    trueInput.type = 'radio';
+                    trueInput.name = `q${index}`;
+                    trueInput.value = 'true';
+                    trueInput.id = `q${index}_true`;
+
+                    const trueLabel = document.createElement('label');
+                    trueLabel.setAttribute('for', trueInput.id);
+                    trueLabel.textContent = 'True';
+
+                    trueOption.appendChild(trueInput);
+                    trueOption.appendChild(trueLabel);
+
+                    const falseOption = document.createElement('div');
+                    falseOption.className = 'option';
+                    falseOption.addEventListener('click', () => selectOption(index, 'false'));
+
+                    const falseInput = document.createElement('input');
+                    falseInput.type = 'radio';
+                    falseInput.name = `q${index}`;
+                    falseInput.value = 'false';
+                    falseInput.id = `q${index}_false`;
+
+                    const falseLabel = document.createElement('label');
+                    falseLabel.setAttribute('for', falseInput.id);
+                    falseLabel.textContent = 'False';
+
+                    falseOption.appendChild(falseInput);
+                    falseOption.appendChild(falseLabel);
+
+                    optionsDiv.appendChild(trueOption);
+                    optionsDiv.appendChild(falseOption);
+                    questionDiv.appendChild(optionsDiv);
                 } else if (question.type === 'short') {
-                    questionHTML += `
-                        <textarea class="text-answer" name="q${index}" placeholder="Enter your answer here..." 
-                                  id="q${index}_text" oninput="updateProgress()"></textarea>
-                    `;
+                    const textarea = document.createElement('textarea');
+                    textarea.className = 'text-answer';
+                    textarea.name = `q${index}`;
+                    textarea.placeholder = 'Enter your answer here...';
+                    textarea.id = `q${index}_text`;
+                    textarea.addEventListener('input', updateProgress);
+                    questionDiv.appendChild(textarea);
                 }
 
-                questionDiv.innerHTML = questionHTML;
                 form.appendChild(questionDiv);
             });
-            
+
             // Add submit section
             const submitSection = document.createElement('div');
             submitSection.className = 'submit-section';
