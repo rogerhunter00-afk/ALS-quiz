@@ -1577,31 +1577,63 @@
             }
         }
 
-        function openImportModal() {
-            const modal = document.getElementById('import-quiz-modal');
+        function openBulkImport() {
+            const modal = document.getElementById('bulk-import-modal');
             if (modal) {
-                document.getElementById('import-quiz-text').value = '';
+                document.getElementById('bulk-questions').value = '';
+                const summary = document.getElementById('bulk-summary');
+                const errors = document.getElementById('bulk-errors');
+                if (summary) summary.textContent = '';
+                if (errors) errors.textContent = '';
                 modal.classList.remove('hidden');
             }
         }
 
-        function closeImportModal() {
-            const modal = document.getElementById('import-quiz-modal');
+        function closeBulkImport() {
+            const modal = document.getElementById('bulk-import-modal');
             if (modal) modal.classList.add('hidden');
         }
 
-        function parseImportQuiz() {
-            const text = document.getElementById('import-quiz-text').value;
+        async function submitBulkImport(event) {
+            event.preventDefault();
+            const textarea = document.getElementById('bulk-questions');
+            const summary = document.getElementById('bulk-summary');
+            const errors = document.getElementById('bulk-errors');
+            if (!textarea || !summary || !errors) return;
+
+            summary.textContent = '';
+            errors.textContent = '';
+
+            let data;
             try {
-                const data = JSON.parse(text);
-                console.log('Parsed quiz data:', data);
-                // TODO: submit parsed data to backend
-            } catch (e) {
-                console.error('Failed to parse quiz data:', e);
-                alert('Unable to parse quiz data. Please ensure it is valid JSON.');
+                data = JSON.parse(textarea.value);
+            } catch (err) {
+                errors.textContent = 'Invalid JSON';
                 return;
             }
-            closeImportModal();
+
+            try {
+                const response = await fetch(CONFIG.questionsUrl + '?action=addQuestions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    summary.textContent = `Inserted ${result.inserted} question${result.inserted === 1 ? '' : 's'}.`;
+                    if (result.errors && result.errors.length) {
+                        errors.innerHTML = result.errors.map(e => `Row ${e.index + 1}: ${e.errors.join(', ')}`).join('<br>');
+                    } else {
+                        textarea.value = '';
+                        setTimeout(() => { closeBulkImport(); }, 1000);
+                        refreshQuestions();
+                    }
+                } else {
+                    errors.textContent = result.errors ? result.errors.join(', ') : 'Failed to import questions';
+                }
+            } catch (err) {
+                errors.textContent = 'Error submitting questions';
+            }
         }
 
         function openAddQuestionForm() {
@@ -1765,40 +1797,6 @@
                 }
             } catch (err) {
                 feedback.textContent = '❌ Error';
-            }
-        }
-
-        async function submitBulkQuestions(event) {
-            event.preventDefault();
-            const textarea = event.target.querySelector('textarea');
-            const submitBtn = event.submitter || event.target.querySelector('button[type="submit"]');
-            const feedback = document.getElementById('bq-feedback');
-
-            if (!textarea || !submitBtn || !feedback) return;
-
-            const questions = parseGPTQuiz(textarea.value);
-            feedback.textContent = 'Submitting...';
-            submitBtn.disabled = true;
-
-            try {
-                const response = await fetch(CONFIG.questionsUrl + '?action=addQuestions', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(questions)
-                });
-                const result = await response.json();
-                if (result.success) {
-                    feedback.textContent = '✅ Added!';
-                    textarea.value = '';
-                    refreshQuestions();
-                    setTimeout(() => { feedback.textContent = ''; }, 1000);
-                } else {
-                    feedback.textContent = '❌ ' + (result.errors ? result.errors.join(', ') : 'Failed');
-                }
-            } catch (err) {
-                feedback.textContent = '❌ Error';
-            } finally {
-                submitBtn.disabled = false;
             }
         }
 
@@ -2393,7 +2391,7 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                     <button class="btn btn-secondary" onclick="testImages()">🖼️ Images</button>
                     <button class="btn btn-secondary" onclick="refreshQuestions()">🔄 Refresh</button>
                     <button class="btn btn-secondary" onclick="openAddQuestionForm()">➕ Add Question</button>
-                    <button class="btn btn-secondary" onclick="openImportModal()">📥 Import Quiz</button>
+                    <button class="btn btn-secondary" onclick="openBulkImport()">📥 Bulk Import</button>
                 </div>
             </div>
         </div>
@@ -2448,14 +2446,20 @@ Explanation: 2+2=4.
             </div>
         </div>
 
-        <div id="import-quiz-modal" class="modal hidden">
+        <div id="bulk-import-modal" class="modal hidden">
             <div class="modal-content">
-                <h3>Import Quiz</h3>
-                <textarea id="import-quiz-text" style="width:100%;height:200px;"></textarea>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-success" onclick="parseImportQuiz()">Parse &amp; Submit</button>
-                    <button type="button" class="btn btn-danger" onclick="closeImportModal()">Cancel</button>
-                </div>
+                <h3>Bulk Import Questions</h3>
+                <form id="bulk-import-form" onsubmit="submitBulkImport(event)">
+                    <label>Questions JSON
+                        <textarea id="bulk-questions" required></textarea>
+                    </label>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-danger" onclick="closeBulkImport()">Cancel</button>
+                    </div>
+                    <div id="bulk-summary" style="margin-top:10px;"></div>
+                    <div id="bulk-errors" style="margin-top:10px;color:red;"></div>
+                </form>
             </div>
         </div>
 
