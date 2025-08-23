@@ -2314,19 +2314,91 @@
         }
         
         function getChatGPTSection() {
-            if (wrongAnswers.length === 0) {
-                return `
-                    <div class="perfect-score">
-                        <h3>🎉 Perfect Score!</h3>
-                        <p style="font-size: 1.1em; opacity: 0.9;">
-                            No additional study needed - you've mastered this topic!
-                        </p>
-                        <div class="perfect-score-content">
-                            <p style="font-size: 0.95em;">Ready for the next challenge? Try another quiz!</p>
-                        </div>
-                    </div>
-                `;
-            }
+    if (wrongAnswers.length === 0) {
+        return `
+            <div class="perfect-score">
+                <h3>🎉 Perfect Score!</h3>
+                <p style="font-size: 1.1em; opacity: 0.9;">
+                    No additional study needed - you've mastered this topic!
+                </p>
+                <div class="perfect-score-content">
+                    <p style="font-size: 0.95em;">Ready for the next challenge? Try another quiz!</p>
+                </div>
+            </div>
+        `;
+    }
+
+    const wrongQuestions = wrongAnswers.map((wa, i) => `${i + 1}. ${wa.question}`).join('\n');
+    const detailedExplanations = wrongAnswers.map((wa, i) =>
+        `Question ${i + 1}: ${wa.question}\nCorrect Answer Context: ${wa.explanation || 'Review this topic area'}`
+    ).join('\n\n');
+
+    const enhancedPrompt =
+`I'm a laundry maintenance engineer who just completed a technical quiz on "${currentQuiz}". I need help understanding these specific topics I struggled with:
+
+QUESTIONS I GOT WRONG:
+${wrongQuestions}
+
+DETAILED CONTEXT:
+${detailedExplanations}
+
+Please provide for each topic:
+1. Clear technical explanations in practical terms
+2. Common troubleshooting steps I should know
+3. Safety considerations and best practices
+4. Real-world tips for commercial laundry equipment maintenance
+5. How to prevent these issues in the field
+
+Focus on actionable knowledge I can apply immediately in my maintenance work.`;
+
+    const chatgptURL = buildChatGPTURL(enhancedPrompt);
+
+    // We also render a copy button for the full (untrimmed) prompt
+    const safeId = 'gpt-full-prompt';
+
+    // Inline handler uses the helpers defined above
+    const copyBtnOnClick = `
+        (async () => {
+            const txt = document.getElementById('${safeId}').textContent;
+            const ok = await (window.copyToClipboard ? copyToClipboard(txt) : Promise.resolve(false));
+            const el = this;
+            const old = el.textContent;
+            el.textContent = ok ? '✅ Copied!' : '❌ Copy failed';
+            setTimeout(() => { el.textContent = old; }, 1200);
+        })();
+    `;
+
+    return `
+        <div class="chatgpt-help">
+            <h4>📚 Need Help with ${wrongAnswers.length} Question${wrongAnswers.length > 1 ? 's' : ''}?</h4>
+            <div class="help-description">
+                Get personalized explanations and troubleshooting tips for the topics you missed:
+            </div>
+            <div class="help-topics">
+                <strong>Topics you'll get help with:</strong>
+                <ul>
+                    ${wrongAnswers.map(wa => `<li>${wa.question}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="chatgpt-button-container" style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                <a href="${chatgptURL}" target="_blank" rel="noopener" class="chatgpt-link">
+                    🤖 Open in ChatGPT
+                </a>
+                <button type="button" class="btn btn-secondary" onclick="${copyBtnOnClick}">
+                    📋 Copy full prompt
+                </button>
+            </div>
+
+            <!-- Keep the *full* prompt available for copy -->
+            <pre id="${safeId}" style="white-space:pre-wrap; word-break:break-word; background:#f7f9fb; border:1px solid #e3e8ed; padding:12px; border-radius:10px; max-height:220px; overflow:auto; margin-top:12px;">${enhancedPrompt.replace(/[<>&]/g, s => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[s]))}</pre>
+
+            <div class="help-description-bottom">
+                🔗 Uses chatgpt.com deep-link • If it doesn't open, click "Copy full prompt" and paste it into ChatGPT
+            </div>
+        </div>
+    `;
+}
             
             // Create detailed prompt for ChatGPT
             const wrongQuestions = wrongAnswers.map((wa, index) => `${index + 1}. ${wa.question}`).join('\n');
