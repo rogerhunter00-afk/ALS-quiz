@@ -93,27 +93,6 @@
             overflow: hidden;
         }
         
-        .version-badge {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: linear-gradient(135deg, #34495e, #2c3e50);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(52, 73, 94, 0.3);
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .version-badge::before {
-            content: '🔄';
-            font-size: 0.9em;
-        }
         
         .theme-toggle {
             position: absolute;
@@ -1385,11 +1364,6 @@
             .quiz-section { padding: 25px 20px 35px 20px; }
             .question { padding: 25px; margin-bottom: 25px; }
             .admin-panel { position: static; margin: 20px; }
-            .version-badge {
-                position: static;
-                margin: 0 auto 20px auto;
-                display: inline-flex;
-            }
             .admin-dropdown { position: static; margin-top: 10px; }
             .results-section { padding: 30px 20px; }
             .results-george.angry {
@@ -2488,7 +2462,6 @@ Explanation: 2+2=4.
 
         <!-- Landing Page -->
         <div id="landing-page" class="landing-page">
-            <div class="version-badge">v2.3.0</div>
             <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
             <div class="landing-content">
                 <div class="landing-header">
