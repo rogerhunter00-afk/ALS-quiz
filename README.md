@@ -1,1 +1,1 @@
-# ALS-quiz
+# ALS Quiz
