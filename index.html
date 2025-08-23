@@ -1653,16 +1653,16 @@
 
         function openBulkImport() {
             const modal = document.getElementById('bulk-import-modal');
-            if (modal) {
-                document.getElementById('bulk-import-form').reset();
-                const summary = document.getElementById('bulk-summary');
-                const errors = document.getElementById('bulk-errors');
-                summary.textContent = '';
-                errors.innerHTML = '';
-                summary.classList.add('hidden');
-                errors.classList.add('hidden');
-                modal.classList.remove('hidden');
-            }
+            const form = document.getElementById('bulk-import-form');
+            const summary = document.getElementById('bulk-summary');
+            const errors = document.getElementById('bulk-errors');
+            if (!modal || !form || !summary || !errors) return;
+            form.reset();
+            summary.textContent = '';
+            errors.innerHTML = '';
+            summary.classList.add('hidden');
+            errors.classList.add('hidden');
+            modal.classList.remove('hidden');
         }
 
         function closeBulkImport() {
@@ -1675,10 +1675,13 @@
             const textarea = document.getElementById('bulk-questions');
             const summaryEl = document.getElementById('bulk-summary');
             const errorsEl = document.getElementById('bulk-errors');
+            const submitBtn = event.submitter || event.target.querySelector('button[type="submit"]');
+            if (!textarea || !summaryEl || !errorsEl || !submitBtn) return;
             summaryEl.textContent = 'Submitting...';
             summaryEl.classList.remove('hidden');
             errorsEl.innerHTML = '';
             errorsEl.classList.add('hidden');
+            submitBtn.disabled = true;
 
             let payload;
             try {
@@ -1686,6 +1689,7 @@
             } catch (err) {
                 summaryEl.textContent = '❌ Invalid JSON';
                 console.error('Bulk import JSON parse error', err);
+                submitBtn.disabled = false;
                 return;
             }
 
@@ -1721,6 +1725,8 @@
             } catch (err) {
                 summaryEl.textContent = '❌ Error';
                 console.error('Bulk import request failed', err);
+            } finally {
+                submitBtn.disabled = false;
             }
         }
 
