@@ -12,7 +12,7 @@
             --warning-color: #f39c12;
             --dark-color: #2c3e50;
             --light-color: #ecf0f1;
-            --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --background-gradient: linear-gradient(135deg, #001f3f 0%, #00a8e8 100%);
         }
         
         [data-theme="dark"] {
@@ -22,7 +22,7 @@
             --warning-color: #f7dc6f;
             --dark-color: #1a252f;
             --light-color: #34495e;
-            --background-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --background-gradient: linear-gradient(135deg, #000814 0%, #003b6f 100%);
         }
         
         [data-theme="dark"] body {
@@ -36,7 +36,7 @@
         }
         
         [data-theme="dark"] .landing-page {
-            background: linear-gradient(135deg, #34495e, #2c3e50);
+            background: var(--background-gradient);
         }
         
         [data-theme="dark"] .interactive-section,
@@ -88,7 +88,8 @@
         .landing-page {
             text-align: center;
             padding: 50px 30px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            background: var(--background-gradient);
+            color: #ffffff;
             position: relative;
             overflow: hidden;
         }
@@ -156,7 +157,7 @@
         
         .landing-header h1 {
             font-size: 3.5em;
-            color: #1a252f;
+            color: #ffffff;
             margin-bottom: 8px;
             font-weight: 800;
             text-shadow: 2px 4px 8px rgba(0,0,0,0.1);
@@ -165,7 +166,7 @@
         
         .landing-header p {
             font-size: 1.4em;
-            color: #34495e;
+            color: #e0f7fa;
             margin-bottom: 25px;
             font-weight: 500;
         }
@@ -896,7 +897,7 @@
         /* Results Section - IMPROVED LAYOUT */
         .results-section {
             padding: 40px;
-            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            background: var(--background-gradient);
         }
         
         .results-header {
