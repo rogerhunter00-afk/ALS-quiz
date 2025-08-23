@@ -1460,11 +1460,23 @@
         };
 
                 
-        // App state
-        let currentQuestions = [];
-        let wrongAnswers = [];
-        let currentQuiz = 'Bearing Maintenance Quiz';
-        let usingFallbackQuestions = false;
+        // Quiz state factory to avoid global variables
+        function createQuizState() {
+            return {
+                currentQuestions: [],
+                wrongAnswers: [],
+                currentQuiz: 'Bearing Maintenance Quiz',
+                usingFallbackQuestions: false,
+                reset() {
+                    this.currentQuestions = [];
+                    this.wrongAnswers = [];
+                    this.currentQuiz = 'Bearing Maintenance Quiz';
+                    this.usingFallbackQuestions = false;
+                }
+            };
+        }
+
+        const quizState = createQuizState();
         const GEORGE_IMAGES = {
             welcome: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png',
             celebrate: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-celebrate.png',
@@ -1687,6 +1699,9 @@
         }
 
         function startQuiz() {
+            // Reset quiz state to defaults before starting
+            quizState.reset();
+
             const name = document.getElementById('engineer-name').value.trim();
             const selectedQuiz = document.getElementById('quiz-select').value;
             
@@ -1698,11 +1713,11 @@
             if (selectedQuiz === 'custom') {
                 const customQuiz = prompt('Enter quiz name:');
                 if (!customQuiz) return;
-                currentQuiz = customQuiz;
+                quizState.currentQuiz = customQuiz;
             } else {
-                currentQuiz = selectedQuiz;
+                quizState.currentQuiz = selectedQuiz;
             }
-            
+
             window.quizTakerName = sanitizeHTML(name);
             showSection('loading-section');
             setTimeout(() => loadQuizQuestions(), 500);
@@ -1732,7 +1747,7 @@
         }
 
         function updateProgress() {
-            const total = currentQuestions.length;
+            const total = quizState.currentQuestions.length;
             const answered = document.querySelectorAll('.option.selected').length + 
                            Array.from(document.querySelectorAll('.text-answer')).filter(ta => ta.value.trim()).length;
             
@@ -1756,11 +1771,11 @@
             }
             
             let score = 0;
-            wrongAnswers = [];
+            quizState.wrongAnswers = [];
             const allAnswers = [];
             const allQuestions = [];
             
-            currentQuestions.forEach((question, index) => {
+            quizState.currentQuestions.forEach((question, index) => {
                 let userAnswer;
                 let isCorrect = false;
 
@@ -1794,7 +1809,7 @@
                 if (isCorrect) {
                     score++;
                 } else {
-                    wrongAnswers.push({
+                    quizState.wrongAnswers.push({
                         question: question.question,
                         explanation: question.explanation,
                         userAnswer: userAnswer
@@ -1805,15 +1820,15 @@
             // Save results to Google Sheets with enhanced error handling
             const quizResults = {
                 name: window.quizTakerName,
-                quiz: currentQuiz,
+                quiz: quizState.currentQuiz,
                 score: score,
-                total: currentQuestions.length,
-                percentage: Math.round((score / currentQuestions.length) * 100),
+                total: quizState.currentQuestions.length,
+                percentage: Math.round((score / quizState.currentQuestions.length) * 100),
                 date: new Date().toLocaleDateString(),
                 time: new Date().toLocaleTimeString(),
                 questions: allQuestions,
                 answers: allAnswers,
-                questionsSource: usingFallbackQuestions ? 'Default' : 'Google Sheets'
+                questionsSource: quizState.usingFallbackQuestions ? 'Default' : 'Google Sheets'
             };
 
             let saveSuccess = false;
@@ -1918,22 +1933,22 @@
 
         async function loadQuizQuestions() {
             try {
-                const url = `${CONFIG.questionsUrl}&quiz=${encodeURIComponent(currentQuiz)}`;
+                const url = `${CONFIG.questionsUrl}&quiz=${encodeURIComponent(quizState.currentQuiz)}`;
                 const response = await fetch(url);
                 const data = await response.json();
-                
+
                 if (data.success && data.questions && data.questions.length > 0) {
-                    currentQuestions = shuffleArray([...data.questions]);
-                    usingFallbackQuestions = false;
+                    quizState.currentQuestions = shuffleArray([...data.questions]);
+                    quizState.usingFallbackQuestions = false;
                 } else {
                     throw new Error('No questions found');
                 }
             } catch (error) {
                 console.log('Using default questions');
-                currentQuestions = shuffleArray([...DEFAULT_QUESTIONS]);
-                usingFallbackQuestions = true;
+                quizState.currentQuestions = shuffleArray([...DEFAULT_QUESTIONS]);
+                quizState.usingFallbackQuestions = true;
             }
-            
+
             generateQuizHTML();
             showSection('quiz-section');
             updateProgress();
@@ -1945,10 +1960,10 @@
             
             if (!form || !title) return;
             
-            title.textContent = currentQuiz;
+            title.textContent = quizState.currentQuiz;
             form.innerHTML = '';
 
-            currentQuestions.forEach((question, index) => {
+            quizState.currentQuestions.forEach((question, index) => {
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'question';
 
@@ -2004,9 +2019,9 @@
         }
 
         function showResults(score, saveSuccess, saveError = '') {
-            const percentage = Math.round((score / currentQuestions.length) * 100);
-            
-            console.log('showResults called with:', { score, saveSuccess, percentage, wrongAnswers: wrongAnswers.length, saveError });
+            const percentage = Math.round((score / quizState.currentQuestions.length) * 100);
+
+            console.log('showResults called with:', { score, saveSuccess, percentage, wrongAnswers: quizState.wrongAnswers.length, saveError });
             
             // Generate enhanced results HTML
             const resultsHTML = `
@@ -2020,7 +2035,7 @@
                             ${getGeorgeImage(percentage)}
                         </div>
                         <div class="score-summary">
-                            <div class="score-display ${getScoreClass(percentage)}">${score}/${currentQuestions.length}</div>
+                            <div class="score-display ${getScoreClass(percentage)}">${score}/${quizState.currentQuestions.length}</div>
                             <div class="score-percentage">(${percentage}%)</div>
                             <div class="score-message">${getScoreMessage(percentage)}</div>
                         </div>
@@ -2105,7 +2120,7 @@
         }
         
         function getChatGPTSection() {
-            if (wrongAnswers.length === 0) {
+            if (quizState.wrongAnswers.length === 0) {
                 return `
                     <div class="perfect-score">
                         <h3>🎉 Perfect Score!</h3>
@@ -2120,12 +2135,12 @@
             }
             
             // Create detailed prompt for ChatGPT
-            const wrongQuestions = wrongAnswers.map((wa, index) => `${index + 1}. ${wa.question}`).join('\n');
-            const detailedExplanations = wrongAnswers.map((wa, index) => 
+            const wrongQuestions = quizState.wrongAnswers.map((wa, index) => `${index + 1}. ${wa.question}`).join('\n');
+            const detailedExplanations = quizState.wrongAnswers.map((wa, index) =>
                 `Question ${index + 1}: ${wa.question}\nCorrect Answer Context: ${wa.explanation || 'Review this topic area'}`
             ).join('\n\n');
             
-            const enhancedPrompt = `I'm a laundry maintenance engineer who just completed a technical quiz on "${currentQuiz}". I need help understanding these specific topics I struggled with:
+            const enhancedPrompt = `I'm a laundry maintenance engineer who just completed a technical quiz on "${quizState.currentQuiz}". I need help understanding these specific topics I struggled with:
 
 QUESTIONS I GOT WRONG:
 ${wrongQuestions}
@@ -2147,14 +2162,14 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
 
             return `
                 <div class="chatgpt-help">
-                    <h4>📚 Need Help with ${wrongAnswers.length} Question${wrongAnswers.length > 1 ? 's' : ''}?</h4>
+                    <h4>📚 Need Help with ${quizState.wrongAnswers.length} Question${quizState.wrongAnswers.length > 1 ? 's' : ''}?</h4>
                     <div class="help-description">
                         Get personalized explanations and troubleshooting tips for the topics you missed:
                     </div>
                     <div class="help-topics">
                         <strong>Topics you'll get help with:</strong>
                         <ul>
-                            ${wrongAnswers.map(wa => `<li>${wa.question}</li>`).join('')}
+                            ${quizState.wrongAnswers.map(wa => `<li>${wa.question}</li>`).join('')}
                         </ul>
                     </div>
                     <div class="chatgpt-button-container">
