@@ -1822,6 +1822,7 @@
             });
 
             // Save results to Google Sheets with enhanced error handling
+            const sanitizedAnswers = allAnswers.map(ans => sanitizeHTML(ans));
             const quizResults = {
                 name: window.quizTakerName,
                 quiz: currentQuiz,
@@ -1831,7 +1832,7 @@
                 date: new Date().toLocaleDateString(),
                 time: new Date().toLocaleTimeString(),
                 questions: allQuestions,
-                answers: allAnswers,
+                answers: sanitizedAnswers,
                 manualReview: manualReview,
                 questionsSource: usingFallbackQuestions ? 'Default' : 'Google Sheets'
             };
