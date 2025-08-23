@@ -1806,30 +1806,44 @@
         }
 
         async function loadAvailableQuizzes() {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
+
             try {
-                const response = await fetch(CONFIG.quizListUrl);
+                const response = await fetch(CONFIG.quizListUrl, { signal: controller.signal });
+                clearTimeout(timeout);
                 const data = await response.json();
-                
+
+                const select = document.getElementById('quiz-select');
+                if (!select) return;
+
+                select.innerHTML = '';
+
                 if (data.success && data.quizzes) {
-                    const select = document.getElementById('quiz-select');
-                    if (!select) return;
-                    
-                    select.innerHTML = '';
-                    
                     data.quizzes.forEach(quiz => {
                         const option = document.createElement('option');
                         option.value = quiz;
                         option.textContent = quiz;
                         select.appendChild(option);
                     });
+                } else {
+                    const option = document.createElement('option');
+                    option.disabled = true;
+                    option.textContent = 'No quizzes available';
+                    select.appendChild(option);
                 }
             } catch (error) {
-                console.error('Could not load quiz list from sheets', error);
                 const select = document.getElementById('quiz-select');
+                if (error.name === 'AbortError') {
+                    if (confirm('Loading quiz list timed out. Retry?')) {
+                        return loadAvailableQuizzes();
+                    }
+                }
+                console.error('Could not load quiz list from sheets', error);
                 if (select) {
                     select.innerHTML = '';
                     const option = document.createElement('option');
-                    option.value = '';
+                    option.disabled = true;
                     option.textContent = 'No quizzes available';
                     select.appendChild(option);
                 }
