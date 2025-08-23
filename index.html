@@ -1315,6 +1315,12 @@
             gap: 8px;
             margin-top: 10px;
         }
+
+        .loading-error {
+            color: #dc3545;
+            margin-top: 15px;
+            font-weight: 600;
+        }
         
         .loading-dot {
             width: 12px;
@@ -1921,22 +1927,41 @@
                 const url = `${CONFIG.questionsUrl}&quiz=${encodeURIComponent(currentQuiz)}`;
                 const response = await fetch(url);
                 const data = await response.json();
-                
-                if (data.success && data.questions && data.questions.length > 0) {
+
+                if (
+                    data &&
+                    typeof data === 'object' &&
+                    'success' in data &&
+                    'questions' in data &&
+                    data.success &&
+                    Array.isArray(data.questions) &&
+                    data.questions.length > 0
+                ) {
                     currentQuestions = shuffleArray([...data.questions]);
                     usingFallbackQuestions = false;
+                    generateQuizHTML();
+                    showSection('quiz-section');
+                    updateProgress();
                 } else {
-                    throw new Error('No questions found');
+                    throw new Error('Invalid response');
                 }
             } catch (error) {
-                console.log('Using default questions');
-                currentQuestions = shuffleArray([...DEFAULT_QUESTIONS]);
-                usingFallbackQuestions = true;
+                console.error('Failed to load quiz questions:', error);
+                currentQuestions = [];
+                const loadingText = document.querySelector('#loading-section .loading-text');
+                if (loadingText) loadingText.textContent = 'Failed to load quiz questions.';
+                const loadingError = document.getElementById('loading-error');
+                if (loadingError) {
+                    loadingError.textContent = 'Unable to load quiz questions. Please try again.';
+                    loadingError.classList.remove('hidden');
+                }
+                const retryBtn = document.getElementById('retry-button');
+                if (retryBtn) retryBtn.classList.remove('hidden');
+                const spinner = document.querySelector('#loading-section .loading-spinner');
+                const dots = document.querySelector('#loading-section .loading-dots');
+                if (spinner) spinner.classList.add('hidden');
+                if (dots) dots.classList.add('hidden');
             }
-            
-            generateQuizHTML();
-            showSection('quiz-section');
-            updateProgress();
         }
 
         function generateQuizHTML() {
@@ -2276,6 +2301,8 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                     <div class="loading-dot"></div>
                 </div>
                 <p>Fetching from Google Sheets...</p>
+                <div id="loading-error" class="loading-error hidden"></div>
+                <button id="retry-button" class="btn btn-secondary hidden" type="button">Retry</button>
             </div>
         </div>
 
@@ -2305,7 +2332,23 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
         document.addEventListener('DOMContentLoaded', function() {
             initializeTheme(); // Initialize theme first
             initializeApp();
-            
+
+            const retryButton = document.getElementById('retry-button');
+            if (retryButton) {
+                retryButton.addEventListener('click', function() {
+                    const loadingText = document.querySelector('#loading-section .loading-text');
+                    if (loadingText) loadingText.textContent = 'Loading Quiz Questions...';
+                    const loadingError = document.getElementById('loading-error');
+                    if (loadingError) loadingError.classList.add('hidden');
+                    retryButton.classList.add('hidden');
+                    const spinner = document.querySelector('#loading-section .loading-spinner');
+                    const dots = document.querySelector('#loading-section .loading-dots');
+                    if (spinner) spinner.classList.remove('hidden');
+                    if (dots) dots.classList.remove('hidden');
+                    loadQuizQuestions();
+                });
+            }
+
             // Close admin dropdown when clicking outside
             document.addEventListener('click', function(event) {
                 const adminPanel = document.querySelector('.admin-panel');
