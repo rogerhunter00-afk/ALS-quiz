@@ -15,49 +15,6 @@
             --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
-        [data-theme="dark"] {
-            --primary-color: #5dade2;
-            --secondary-color: #58d68d;
-            --danger-color: #ec7063;
-            --warning-color: #f7dc6f;
-            --dark-color: #1a252f;
-            --light-color: #34495e;
-            --background-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-        }
-        
-        [data-theme="dark"] body {
-            background: var(--background-gradient);
-            color: #ecf0f1;
-        }
-        
-        [data-theme="dark"] .container {
-            background: #2c3e50;
-            color: #ecf0f1;
-        }
-        
-        [data-theme="dark"] .landing-page {
-            background: linear-gradient(135deg, #34495e, #2c3e50);
-        }
-        
-        [data-theme="dark"] .interactive-section,
-        [data-theme="dark"] .question,
-        [data-theme="dark"] .results-header,
-        [data-theme="dark"] .george-score-container,
-        [data-theme="dark"] .back-button-container {
-            background: #34495e;
-            color: #ecf0f1;
-        }
-        
-        [data-theme="dark"] .option {
-            background: #2c3e50;
-            color: #ecf0f1;
-        }
-        
-        [data-theme="dark"] .option:hover,
-        [data-theme="dark"] .option.selected {
-            background: #4a6741;
-        }
-        
         * {
             margin: 0;
             padding: 0;
@@ -113,44 +70,6 @@
         .version-badge::before {
             content: '🔄';
             font-size: 0.9em;
-        }
-        
-        .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 80px;
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
-            z-index: 10;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .theme-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
-        }
-        
-        .theme-toggle::before {
-            content: '🌙';
-            font-size: 0.9em;
-        }
-        
-        [data-theme="dark"] .theme-toggle {
-            background: linear-gradient(135deg, #f1c40f, #f39c12);
-        }
-        
-        [data-theme="dark"] .theme-toggle::before {
-            content: '☀️';
         }
         
         /* Subtle background pattern */
@@ -707,10 +626,6 @@
                 font-size: 1.3em;
             }
             
-            .theme-toggle {
-                padding: 12px 20px;
-                min-height: 48px;
-            }
         }
         
         .question-number {
@@ -1509,21 +1424,6 @@
                 explanation: 'VFDs control motor speed and torque for different wash cycles and energy efficiency.'
             }
         ];
-
-        // Theme toggling functionality
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
-
-        // Initialize theme from localStorage
-        function initializeTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        }
 
         // Define ALL functions at the top level
         function toggleAdmin() {
@@ -2489,7 +2389,6 @@ Explanation: 2+2=4.
         <!-- Landing Page -->
         <div id="landing-page" class="landing-page">
             <div class="version-badge">v2.3.0</div>
-            <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
             <div class="landing-content">
                 <div class="landing-header">
                     <h1>🔧 Laundry Engineers Quiz</h1>
@@ -2567,7 +2466,6 @@ Explanation: 2+2=4.
     <script>
         // Initialize when DOM loads
         document.addEventListener('DOMContentLoaded', function() {
-            initializeTheme(); // Initialize theme first
             initializeApp().finally(() => {
                 const quizSelect = document.getElementById('quiz-select');
                 if (quizSelect) {
