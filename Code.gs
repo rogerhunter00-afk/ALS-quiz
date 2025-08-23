@@ -1,4 +1,16 @@
 const SHEET_NAME = 'Questions';
+const QUIZ_LIST_SHEET_NAME = 'Quiz Name';
+
+function doGet(e) {
+  const action = e.parameter.action;
+  if (action === 'getQuizzes') {
+    return handleGetQuizzes();
+  }
+  return ContentService.createTextOutput(JSON.stringify({
+    success: false,
+    errors: ['Unsupported action']
+  })).setMimeType(ContentService.MimeType.JSON);
+}
 
 function doPost(e) {
   const action = e.parameter.action;
@@ -121,5 +133,26 @@ function handleAddQuestions(e) {
     success: true,
     inserted: rows.length,
     errors: errors,
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
+function handleGetQuizzes() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(QUIZ_LIST_SHEET_NAME);
+  if (!sheet) {
+    return ContentService.createTextOutput(JSON.stringify({
+      success: false,
+      errors: ['Quiz list sheet not found'],
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  const lastRow = sheet.getLastRow();
+  const quizzes = lastRow > 1
+    ? sheet.getRange(2, 1, lastRow - 1, 1).getValues().flat().filter(String)
+    : [];
+
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    quizzes: quizzes,
   })).setMimeType(ContentService.MimeType.JSON);
 }

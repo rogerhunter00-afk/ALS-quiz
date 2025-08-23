@@ -1463,8 +1463,7 @@
         // App state
         let currentQuestions = [];
         let wrongAnswers = [];
-        let currentQuiz = 'Bearing Maintenance Quiz';
-        let previousQuizSelection = currentQuiz;
+        let currentQuiz = '';
         let usingFallbackQuestions = false;
         const GEORGE_IMAGES = {
             welcome: 'https://raw.githubusercontent.com/rogerhunter00-afk/ALS-quiz/main/images/george-welcome.png',
@@ -1823,15 +1822,9 @@
                         option.textContent = quiz;
                         select.appendChild(option);
                     });
-                    
-                    // Add custom option
-                    const customOption = document.createElement('option');
-                    customOption.value = 'custom';
-                    customOption.textContent = 'Custom Quiz Name...';
-                    select.appendChild(customOption);
                 }
             } catch (error) {
-                console.log('Could not load quiz list from sheets, using defaults');
+                console.error('Could not load quiz list from sheets');
             }
         }
 
@@ -1845,18 +1838,11 @@
                 return;
             }
 
-            if (selectedQuiz === 'custom') {
-                const customQuiz = prompt('Enter quiz name:');
-                if (customQuiz === null || !customQuiz.trim()) {
-                    alert('Quiz selection canceled. Please choose a quiz to continue.');
-                    quizSelect.value = previousQuizSelection;
-                    return;
-                }
-                currentQuiz = customQuiz.trim();
-            } else {
-                currentQuiz = selectedQuiz;
-                previousQuizSelection = selectedQuiz;
+            if (!selectedQuiz) {
+                alert('Please choose a quiz to continue.');
+                return;
             }
+            currentQuiz = selectedQuiz;
 
             window.quizTakerName = sanitizeHTML(name);
             showSection('loading-section');
@@ -2509,12 +2495,7 @@ Explanation: 2+2=4.
                     
                     <div class="quiz-selector">
                         <h3>Choose Your Test</h3>
-                        <select id="quiz-select">
-                            <option value="Bearing Maintenance Quiz">Bearing Maintenance Quiz</option>
-                            <option value="Motor Troubleshooting">Motor Troubleshooting</option>
-                            <option value="Electrical Safety">Electrical Safety</option>
-                            <option value="custom">Custom Quiz Name...</option>
-                        </select>
+                        <select id="quiz-select"></select>
                     </div>
                     
                     <div class="start-quiz-section">
@@ -2568,17 +2549,7 @@ Explanation: 2+2=4.
         // Initialize when DOM loads
         document.addEventListener('DOMContentLoaded', function() {
             initializeTheme(); // Initialize theme first
-            initializeApp().finally(() => {
-                const quizSelect = document.getElementById('quiz-select');
-                if (quizSelect) {
-                    previousQuizSelection = quizSelect.value;
-                    quizSelect.addEventListener('change', () => {
-                        if (quizSelect.value !== 'custom') {
-                            previousQuizSelection = quizSelect.value;
-                        }
-                    });
-                }
-            });
+            initializeApp();
 
             // Close admin dropdown when clicking outside
             document.addEventListener('click', function(event) {
