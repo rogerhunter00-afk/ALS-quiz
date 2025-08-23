@@ -1802,9 +1802,23 @@
                 }
             });
 
+            const sanitizedName = sanitizeText(window.quizTakerName || '');
+            if (!sanitizedName) {
+                alert('Please enter a valid name.');
+                if (submitButton) {
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                }
+                return;
+            }
+
+            const sanitizedAnswers = allAnswers.map(ans =>
+                typeof ans === 'string' ? sanitizeText(ans) : ans
+            );
+
             // Save results to Google Sheets with enhanced error handling
             const quizResults = {
-                name: window.quizTakerName,
+                name: sanitizedName,
                 quiz: currentQuiz,
                 score: score,
                 total: currentQuestions.length,
@@ -1812,7 +1826,7 @@
                 date: new Date().toLocaleDateString(),
                 time: new Date().toLocaleTimeString(),
                 questions: allQuestions,
-                answers: allAnswers,
+                answers: sanitizedAnswers,
                 questionsSource: usingFallbackQuestions ? 'Default' : 'Google Sheets'
             };
 
@@ -1877,6 +1891,18 @@
             const div = document.createElement('div');
             div.textContent = str;
             return div.innerHTML;
+        }
+
+        function sanitizeText(str) {
+            if (!str) return '';
+            let sanitized = str.trim();
+            sanitized = sanitized.replace(/[\r\n]+/g, ' ');
+            sanitized = sanitized.replace(/"/g, '""');
+            sanitized = sanitized.replace(/,/g, ';');
+            if (/^[=+\-@]/.test(sanitized)) {
+                sanitized = "'" + sanitized;
+            }
+            return sanitized;
         }
 
         function showSection(sectionId) {
