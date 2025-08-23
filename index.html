@@ -1733,13 +1733,20 @@
 
         function updateProgress() {
             const total = currentQuestions.length;
-            const answered = document.querySelectorAll('.option.selected').length + 
-                           Array.from(document.querySelectorAll('.text-answer')).filter(ta => ta.value.trim()).length;
-            
+            let answered = 0;
+
+            document.querySelectorAll('.question').forEach(question => {
+                const hasSelected = question.querySelector('.option.selected');
+                const textAnswer = question.querySelector('.text-answer');
+                if (hasSelected || (textAnswer && textAnswer.value.trim())) {
+                    answered++;
+                }
+            });
+
             const percentage = total > 0 ? (answered / total) * 100 : 0;
             const progressBar = document.getElementById('progress-bar');
             const progressText = document.getElementById('progress-text');
-            
+
             if (progressBar) progressBar.style.width = percentage + '%';
             if (progressText) progressText.textContent = `${answered} of ${total} questions answered`;
         }
