@@ -1575,6 +1575,33 @@
             }
         }
 
+        function openImportModal() {
+            const modal = document.getElementById('import-quiz-modal');
+            if (modal) {
+                document.getElementById('import-quiz-text').value = '';
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeImportModal() {
+            const modal = document.getElementById('import-quiz-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function parseImportQuiz() {
+            const text = document.getElementById('import-quiz-text').value;
+            try {
+                const data = JSON.parse(text);
+                console.log('Parsed quiz data:', data);
+                // TODO: submit parsed data to backend
+            } catch (e) {
+                console.error('Failed to parse quiz data:', e);
+                alert('Unable to parse quiz data. Please ensure it is valid JSON.');
+                return;
+            }
+            closeImportModal();
+        }
+
         function openAddQuestionForm() {
             const modal = document.getElementById('add-question-modal');
             const quizSelect = document.getElementById('aq-quiz');
@@ -2182,6 +2209,7 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                     <button class="btn btn-secondary" onclick="testImages()">🖼️ Images</button>
                     <button class="btn btn-secondary" onclick="refreshQuestions()">🔄 Refresh</button>
                     <button class="btn btn-secondary" onclick="openAddQuestionForm()">➕ Add Question</button>
+                    <button class="btn btn-secondary" onclick="openImportModal()">📥 Import Quiz</button>
                 </div>
             </div>
         </div>
@@ -2219,6 +2247,17 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                     </div>
                     <div id="aq-feedback" style="margin-top:10px;"></div>
                 </form>
+            </div>
+        </div>
+
+        <div id="import-quiz-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Import Quiz</h3>
+                <textarea id="import-quiz-text" style="width:100%;height:200px;"></textarea>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-success" onclick="parseImportQuiz()">Parse &amp; Submit</button>
+                    <button type="button" class="btn btn-danger" onclick="closeImportModal()">Cancel</button>
+                </div>
             </div>
         </div>
 
