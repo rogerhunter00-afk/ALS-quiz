@@ -829,6 +829,45 @@
         
         /* Utility Classes */
         .hidden { display: none !important; }
+
+        /* Add Question Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .modal-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        #aq-options-list input {
+            display: block;
+            width: 100%;
+            margin-top: 5px;
+        }
         
         .option input {
             margin-right: 18px;
@@ -1536,6 +1575,82 @@
             }
         }
 
+        function openAddQuestionForm() {
+            const modal = document.getElementById('add-question-modal');
+            const quizSelect = document.getElementById('aq-quiz');
+            const sourceSelect = document.getElementById('quiz-select');
+            if (modal && quizSelect && sourceSelect) {
+                quizSelect.innerHTML = sourceSelect.innerHTML;
+                document.getElementById('add-question-form').reset();
+                modal.classList.remove('hidden');
+                updateOptionFields();
+            }
+        }
+
+        function closeAddQuestion() {
+            const modal = document.getElementById('add-question-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function updateOptionFields() {
+            const type = document.getElementById('aq-type').value;
+            const container = document.getElementById('aq-options-container');
+            const list = document.getElementById('aq-options-list');
+            if (type === 'multiple') {
+                container.classList.remove('hidden');
+                if (list.childElementCount === 0) {
+                    addOptionField();
+                    addOptionField();
+                }
+            } else {
+                container.classList.add('hidden');
+                list.innerHTML = '';
+            }
+        }
+
+        function addOptionField(value = '') {
+            const list = document.getElementById('aq-options-list');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = `Option ${list.childElementCount + 1}`;
+            input.value = value;
+            list.appendChild(input);
+        }
+
+        async function submitAddQuestion(event) {
+            event.preventDefault();
+            const payload = {
+                quiz: document.getElementById('aq-quiz').value,
+                type: document.getElementById('aq-type').value,
+                question: document.getElementById('aq-question').value,
+                options: Array.from(document.querySelectorAll('#aq-options-list input')).map(i => i.value).filter(v => v),
+                correct: document.getElementById('aq-correct').value,
+                explanation: document.getElementById('aq-explanation').value
+            };
+            const feedback = document.getElementById('aq-feedback');
+            feedback.textContent = 'Submitting...';
+            try {
+                const response = await fetch(CONFIG.questionsUrl + '?action=addQuestion', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    feedback.textContent = '✅ Added!';
+                    refreshQuestions();
+                    setTimeout(() => {
+                        closeAddQuestion();
+                        feedback.textContent = '';
+                    }, 1000);
+                } else {
+                    feedback.textContent = '❌ ' + (result.errors ? result.errors.join(', ') : 'Failed');
+                }
+            } catch (err) {
+                feedback.textContent = '❌ Error';
+            }
+        }
+
         // Initialize app
         async function initializeApp() {
             await testConnection();
@@ -2066,7 +2181,44 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                     <button class="btn btn-secondary" onclick="openGoogleSheet()">📊 Sheet</button>
                     <button class="btn btn-secondary" onclick="testImages()">🖼️ Images</button>
                     <button class="btn btn-secondary" onclick="refreshQuestions()">🔄 Refresh</button>
+                    <button class="btn btn-secondary" onclick="openAddQuestionForm()">➕ Add Question</button>
                 </div>
+            </div>
+        </div>
+
+        <div id="add-question-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Add Question</h3>
+                <form id="add-question-form" onsubmit="submitAddQuestion(event)">
+                    <label>Quiz
+                        <select id="aq-quiz"></select>
+                    </label>
+                    <label>Question
+                        <textarea id="aq-question" required></textarea>
+                    </label>
+                    <label>Type
+                        <select id="aq-type" onchange="updateOptionFields()">
+                            <option value="multiple">Multiple Choice</option>
+                            <option value="true_false">True/False</option>
+                            <option value="short">Short Answer</option>
+                        </select>
+                    </label>
+                    <div id="aq-options-container" class="hidden">
+                        <div id="aq-options-list"></div>
+                        <button type="button" class="btn btn-secondary" onclick="addOptionField()">➕ Option</button>
+                    </div>
+                    <label>Correct Answer
+                        <input type="text" id="aq-correct" required>
+                    </label>
+                    <label>Explanation
+                        <textarea id="aq-explanation" required></textarea>
+                    </label>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-danger" onclick="closeAddQuestion()">Cancel</button>
+                    </div>
+                    <div id="aq-feedback" style="margin-top:10px;"></div>
+                </form>
             </div>
         </div>
 
