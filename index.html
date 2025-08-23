@@ -1754,7 +1754,28 @@
                 submitButton.textContent = '⏳ Processing...';
                 submitButton.disabled = true;
             }
-            
+
+            // Verify all questions have been answered before scoring
+            const hasUnanswered = currentQuestions.some((question, index) => {
+                if (question.type === 'multiple' || question.type === 'true_false') {
+                    return !document.querySelector(`input[name="q${index}"]:checked`);
+                }
+                if (question.type === 'short') {
+                    const textArea = document.getElementById(`q${index}_text`);
+                    return !textArea || textArea.value.trim() === '';
+                }
+                return false;
+            });
+
+            if (hasUnanswered) {
+                alert('Please answer all questions before submitting.');
+                if (submitButton) {
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                }
+                return;
+            }
+
             let score = 0;
             wrongAnswers = [];
             const allAnswers = [];
