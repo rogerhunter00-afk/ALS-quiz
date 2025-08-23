@@ -12,6 +12,7 @@
             --warning-color: #f39c12;
             --dark-color: #2c3e50;
             --light-color: #ecf0f1;
+            --text-color: #2c3e50;
             --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
@@ -22,35 +23,36 @@
             --warning-color: #f7dc6f;
             --dark-color: #1a252f;
             --light-color: #34495e;
-            --background-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --text-color: #ecf0f1;
+            --background-gradient: linear-gradient(135deg, var(--dark-color) 0%, var(--light-color) 100%);
         }
-        
+
         [data-theme="dark"] body {
             background: var(--background-gradient);
-            color: #ecf0f1;
+            color: var(--text-color);
         }
-        
+
         [data-theme="dark"] .container {
-            background: #2c3e50;
-            color: #ecf0f1;
+            background: var(--dark-color);
+            color: var(--text-color);
         }
-        
+
         [data-theme="dark"] .landing-page {
-            background: linear-gradient(135deg, #34495e, #2c3e50);
+            background: linear-gradient(135deg, var(--light-color), var(--dark-color));
         }
-        
+
         [data-theme="dark"] .interactive-section,
         [data-theme="dark"] .question,
         [data-theme="dark"] .results-header,
         [data-theme="dark"] .george-score-container,
         [data-theme="dark"] .back-button-container {
-            background: #34495e;
-            color: #ecf0f1;
+            background: var(--light-color);
+            color: var(--text-color);
         }
-        
+
         [data-theme="dark"] .option {
-            background: #2c3e50;
-            color: #ecf0f1;
+            background: var(--dark-color);
+            color: var(--text-color);
         }
         
         [data-theme="dark"] .option:hover,
@@ -67,7 +69,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #2c3e50;
+            color: var(--text-color);
             background: var(--background-gradient);
             min-height: 100vh;
             padding: 15px;
@@ -98,7 +100,7 @@
             position: absolute;
             top: 20px;
             right: 80px;
-            background: linear-gradient(135deg, #f39c12, #e67e22);
+            background: linear-gradient(135deg, var(--warning-color), #e67e22);
             color: white;
             border: none;
             padding: 10px 18px;
@@ -125,7 +127,7 @@
         }
         
         [data-theme="dark"] .theme-toggle {
-            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            background: linear-gradient(135deg, #f1c40f, var(--warning-color));
         }
         
         [data-theme="dark"] .theme-toggle::before {
@@ -156,7 +158,7 @@
         
         .landing-header h1 {
             font-size: 3.5em;
-            color: #1a252f;
+            color: var(--text-color);
             margin-bottom: 8px;
             font-weight: 800;
             text-shadow: 2px 4px 8px rgba(0,0,0,0.1);
@@ -165,7 +167,7 @@
         
         .landing-header p {
             font-size: 1.4em;
-            color: #34495e;
+            color: var(--text-color);
             margin-bottom: 25px;
             font-weight: 500;
         }
@@ -200,7 +202,7 @@
         
         .section-title {
             font-size: 1.8em;
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 25px;
             font-weight: 700;
         }
@@ -226,7 +228,7 @@
         
         .name-input input:focus {
             outline: none;
-            border-color: #3498db;
+            border-color: var(--primary-color);
             box-shadow: 0 0 25px rgba(52, 152, 219, 0.15), 0 4px 20px rgba(0,0,0,0.1);
             background: white;
             transform: translateY(-2px);
@@ -260,11 +262,11 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #f39c12);
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--danger-color), var(--warning-color));
         }
         
         .quiz-selector h3 {
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 15px;
             font-size: 1.2em;
             font-weight: 600;
@@ -295,7 +297,7 @@
         
         .quiz-selector select:focus {
             outline: none;
-            border-color: #3498db;
+            border-color: var(--primary-color);
             box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
             transform: translateY(-1px);
         }
@@ -342,7 +344,7 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, var(--primary-color), #2980b9);
             color: white;
             box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
         }
@@ -354,7 +356,7 @@
         }
         
         .btn-success {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            background: linear-gradient(135deg, #27ae60, var(--secondary-color));
             color: white;
             box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
             font-size: 1.4em;
@@ -411,7 +413,7 @@
             padding: 15px;
             background: rgba(52, 152, 219, 0.1);
             border-radius: 10px;
-            color: #34495e;
+            color: var(--text-color);
             font-size: 0.95em;
             animation: fadeIn 1s ease-out 1.2s both;
         }
@@ -425,7 +427,7 @@
         }
         
         .admin-toggle {
-            background: #34495e;
+            background: var(--light-color);
             color: white;
             border: none;
             padding: 12px 20px;
@@ -460,9 +462,9 @@
             font-weight: 600;
         }
         
-        .status-connected { background: #d4edda; color: #155724; }
-        .status-warning { background: #fff3cd; color: #856404; }
-        .status-disconnected { background: #f8d7da; color: #721c24; }
+        .status-connected { background: var(--secondary-color); color: var(--text-color); }
+        .status-warning { background: var(--warning-color); color: var(--text-color); }
+        .status-disconnected { background: var(--danger-color); color: var(--text-color); }
         
         /* Quiz Section - IMPROVED LAYOUT */
         .quiz-section {
@@ -482,7 +484,7 @@
         
         .quiz-title {
             font-size: 2.2em;
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 20px;
             font-weight: 700;
             display: flex;
@@ -498,7 +500,7 @@
         
         /* Enhanced Progress Animation */
         .progress-container {
-            background: #ecf0f1;
+            background: var(--light-color);
             border-radius: 25px;
             height: 14px;
             margin: 20px 0;
@@ -693,7 +695,7 @@
         }
         
         .question-number {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: linear-gradient(135deg, var(--primary-color), #2980b9);
             color: white;
             padding: 10px 18px;
             border-radius: 25px;
@@ -705,7 +707,7 @@
         }
         
         .question h3 {
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 25px;
             font-size: 1.4em;
             line-height: 1.5;
@@ -851,7 +853,7 @@
         .option input {
             margin-right: 18px;
             transform: scale(1.4);
-            accent-color: #3498db;
+            accent-color: var(--primary-color);
         }
         
         .option label {
@@ -859,7 +861,7 @@
             cursor: pointer;
             flex: 1;
             font-weight: 500;
-            color: #2c3e50;
+            color: var(--text-color);
         }
         
         .text-answer {
@@ -877,7 +879,7 @@
         
         .text-answer:focus {
             outline: none;
-            border-color: #3498db;
+            border-color: var(--primary-color);
             box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
             background: white;
             transform: translateY(-2px);
@@ -910,7 +912,7 @@
         
         .results-header h2 {
             font-size: 2.5em;
-            color: #2c3e50;
+            color: var(--text-color);
             font-weight: 700;
             margin-bottom: 15px;
             display: flex;
@@ -1011,11 +1013,11 @@
         }
         
         .score-display.low { 
-            color: #e74c3c;
+            color: var(--danger-color);
             text-shadow: 2px 2px 8px rgba(231, 76, 60, 0.3);
         }
         .score-display.medium { 
-            color: #f39c12;
+            color: var(--warning-color);
             text-shadow: 2px 2px 8px rgba(243, 156, 18, 0.3);
         }
         .score-display.high { 
@@ -1025,7 +1027,7 @@
         
         .score-message {
             font-size: 1.3em;
-            color: #2c3e50;
+            color: var(--text-color);
             font-weight: 600;
             line-height: 1.4;
         }
@@ -1090,11 +1092,11 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #3498db, #2ecc71, #e74c3c, #f39c12);
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--danger-color), var(--warning-color));
         }
         
         .chatgpt-help h4 {
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 20px;
             font-size: 1.4em;
             display: flex;
@@ -1117,12 +1119,12 @@
             padding: 25px;
             border-radius: 15px;
             margin: 25px 0;
-            border-left: 4px solid #3498db;
+            border-left: 4px solid var(--primary-color);
             text-align: left;
         }
         
         .help-topics strong {
-            color: #2c3e50;
+            color: var(--text-color);
             font-size: 1.1em;
             display: block;
             margin-bottom: 15px;
@@ -1135,7 +1137,7 @@
         
         .help-topics li {
             margin: 10px 0;
-            color: #34495e;
+            color: var(--text-color);
             font-weight: 500;
             line-height: 1.4;
         }
@@ -1191,7 +1193,7 @@
         
         /* Perfect Score Celebration */
         .perfect-score {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            background: linear-gradient(135deg, #27ae60, var(--secondary-color));
             color: white;
             padding: 40px;
             border-radius: 20px;
@@ -1261,7 +1263,7 @@
         .loading-spinner {
             width: 60px;
             height: 60px;
-            border: 6px solid #ecf0f1;
+            border: 6px solid var(--light-color);
             border-top: 6px solid var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -1285,7 +1287,7 @@
         .loading-text {
             font-size: 1.4em;
             font-weight: 600;
-            color: var(--dark-color);
+            color: var(--text-color);
             animation: pulse 2s ease-in-out infinite;
         }
         
