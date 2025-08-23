@@ -1651,6 +1651,70 @@
             }
         }
 
+        function openBulkImport() {
+            const modal = document.getElementById('bulk-import-modal');
+            if (modal) {
+                document.getElementById('bulk-import-form').reset();
+                document.getElementById('bulk-summary').textContent = '';
+                document.getElementById('bulk-errors').innerHTML = '';
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeBulkImport() {
+            const modal = document.getElementById('bulk-import-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        async function submitBulkImport(event) {
+            event.preventDefault();
+            const textarea = document.getElementById('bulk-questions');
+            const summaryEl = document.getElementById('bulk-summary');
+            const errorsEl = document.getElementById('bulk-errors');
+            summaryEl.textContent = 'Submitting...';
+            errorsEl.innerHTML = '';
+
+            let payload;
+            try {
+                payload = JSON.parse(textarea.value);
+            } catch (err) {
+                summaryEl.textContent = '❌ Invalid JSON';
+                console.error('Bulk import JSON parse error', err);
+                return;
+            }
+
+            try {
+                const response = await fetch(CONFIG.questionsUrl + '?action=bulkImport', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.summary) {
+                    summaryEl.textContent = `✅ ${result.summary.successful} added, ❌ ${result.summary.failed} failed`;
+                } else {
+                    summaryEl.textContent = '';
+                }
+                if (result.errors && result.errors.length) {
+                    const list = document.createElement('ul');
+                    result.errors.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = `Question ${item.index}: ${item.errors.join(', ')}`;
+                        list.appendChild(li);
+                    });
+                    errorsEl.appendChild(list);
+                    console.error('Bulk import validation errors', result.errors);
+                }
+                if (result.summary && result.summary.failed === 0) {
+                    refreshQuestions();
+                    setTimeout(() => { closeBulkImport(); }, 1000);
+                }
+            } catch (err) {
+                summaryEl.textContent = '❌ Error';
+                console.error('Bulk import request failed', err);
+            }
+        }
+
         // Initialize app
         async function initializeApp() {
             await testConnection();
@@ -2182,6 +2246,7 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                     <button class="btn btn-secondary" onclick="testImages()">🖼️ Images</button>
                     <button class="btn btn-secondary" onclick="refreshQuestions()">🔄 Refresh</button>
                     <button class="btn btn-secondary" onclick="openAddQuestionForm()">➕ Add Question</button>
+                    <button class="btn btn-secondary" onclick="openBulkImport()">📥 Bulk Import</button>
                 </div>
             </div>
         </div>
@@ -2218,6 +2283,23 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                         <button type="button" class="btn btn-danger" onclick="closeAddQuestion()">Cancel</button>
                     </div>
                     <div id="aq-feedback" style="margin-top:10px;"></div>
+                </form>
+            </div>
+        </div>
+
+        <div id="bulk-import-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Bulk Import Questions</h3>
+                <form id="bulk-import-form" onsubmit="submitBulkImport(event)">
+                    <label>Questions JSON
+                        <textarea id="bulk-questions" required></textarea>
+                    </label>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="button" class="btn btn-danger" onclick="closeBulkImport()">Cancel</button>
+                    </div>
+                    <div id="bulk-summary" style="margin-top:10px;"></div>
+                    <div id="bulk-errors" style="margin-top:10px;color:red;"></div>
                 </form>
             </div>
         </div>
