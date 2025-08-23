@@ -1588,7 +1588,7 @@
                 currentQuiz = selectedQuiz;
             }
             
-            window.quizTakerName = name;
+            window.quizTakerName = sanitizeHTML(name);
             showSection('loading-section');
             setTimeout(() => loadQuizQuestions(), 500);
         }
@@ -1749,7 +1749,6 @@
                     submitButton.disabled = false;
                 }, 1000);
             }
-
         }
 
         function backToHome() {
@@ -1759,6 +1758,12 @@
         }
 
         // Utility functions
+        function sanitizeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         function showSection(sectionId) {
             console.log('showSection called with:', sectionId);
             
