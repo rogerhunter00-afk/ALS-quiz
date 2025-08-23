@@ -809,7 +809,7 @@
         /* Utility Classes */
         .hidden { display: none !important; }
 
-        /* Add Question Modal */
+        /* Modal Styles */
         .modal {
             position: fixed;
             top: 0;
@@ -840,12 +840,6 @@
             margin-top: 15px;
             display: flex;
             gap: 10px;
-        }
-
-        #aq-options-list input {
-            display: block;
-            width: 100%;
-            margin-top: 5px;
         }
         
         .option input {
@@ -1626,170 +1620,6 @@
             }
         }
 
-        function openAddQuestionForm() {
-            const modal = document.getElementById('add-question-modal');
-            const quizSelect = document.getElementById('aq-quiz');
-            const sourceSelect = document.getElementById('quiz-select');
-            if (modal && quizSelect && sourceSelect) {
-                quizSelect.innerHTML = sourceSelect.innerHTML;
-                document.getElementById('add-question-form').reset();
-                modal.classList.remove('hidden');
-                updateOptionFields();
-            }
-        }
-
-        function closeAddQuestion() {
-            const modal = document.getElementById('add-question-modal');
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function updateOptionFields() {
-            const type = document.getElementById('aq-type').value;
-            const container = document.getElementById('aq-options-container');
-            const list = document.getElementById('aq-options-list');
-            if (type === 'multiple') {
-                container.classList.remove('hidden');
-                if (list.childElementCount === 0) {
-                    addOptionField();
-                    addOptionField();
-                }
-            } else {
-                container.classList.add('hidden');
-                list.innerHTML = '';
-            }
-        }
-
-        function addOptionField(value = '') {
-            const list = document.getElementById('aq-options-list');
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.placeholder = `Option ${list.childElementCount + 1}`;
-            input.value = value;
-            list.appendChild(input);
-        }
-
-        function parseGPTQuiz(rawText) {
-            if (!rawText || !rawText.trim()) {
-                throw new Error('No quiz text provided');
-            }
-
-            const blocks = rawText.trim().split(/\n\s*\n/);
-            const questions = [];
-            const errors = [];
-
-            blocks.forEach((block, idx) => {
-                const lines = block.trim().split(/\n/).map(l => l.trim()).filter(Boolean);
-                if (lines.length === 0) return;
-
-                let question = lines.shift().replace(/^\d+[\.\)\-\s]*/, '').trim();
-                const options = [];
-                let correct = '';
-                let explanation = '';
-
-                lines.forEach(line => {
-                    const optMatch = line.match(/^[A-Z][\)\.\-\s]+(.+)/i);
-                    if (optMatch) {
-                        options.push(optMatch[1].trim());
-                        return;
-                    }
-                    const ansMatch = line.match(/^Answer:\s*(.+)/i);
-                    if (ansMatch) {
-                        correct = ansMatch[1].trim();
-                        return;
-                    }
-                    const expMatch = line.match(/^Explanation:\s*(.+)/i);
-                    if (expMatch) {
-                        explanation = expMatch[1].trim();
-                        return;
-                    }
-                });
-
-                if (!question) errors.push(`Block ${idx + 1}: Missing question`);
-                if (!correct) errors.push(`Block ${idx + 1}: Missing answer`);
-                if (!explanation) errors.push(`Block ${idx + 1}: Missing explanation`);
-
-                if (question && correct && explanation) {
-                    questions.push({ question, options, correct, explanation });
-                }
-            });
-
-            if (errors.length) {
-                throw new Error(errors.join(' | '));
-            }
-
-            return questions;
-        }
-
-        async function submitAddQuestion(event) {
-            event.preventDefault();
-            const feedback = document.getElementById('aq-feedback');
-            const bulkText = document.getElementById('aq-bulk') ? document.getElementById('aq-bulk').value.trim() : '';
-            const quiz = document.getElementById('aq-quiz').value;
-            const type = document.getElementById('aq-type').value;
-
-            if (bulkText) {
-                feedback.textContent = 'Submitting...';
-                try {
-                    const questions = parseGPTQuiz(bulkText);
-                    for (const q of questions) {
-                        const payload = { quiz, type, ...q };
-                        const response = await fetch(CONFIG.questionsUrl + '?action=addQuestion', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        const result = await response.json();
-                        if (!result.success) {
-                            throw new Error(result.errors ? result.errors.join(', ') : 'Failed');
-                        }
-                    }
-                    feedback.textContent = `✅ Added ${questions.length} question${questions.length > 1 ? 's' : ''}!`;
-                    refreshQuestions();
-                    setTimeout(() => {
-                        closeAddQuestion();
-                        feedback.textContent = '';
-                    }, 1000);
-                } catch (err) {
-                    feedback.textContent = '❌ ' + err.message;
-                }
-                return;
-            }
-
-            const payload = {
-                quiz,
-                type,
-                question: document.getElementById('aq-question').value,
-                options: Array.from(document.querySelectorAll('#aq-options-list input')).map(i => i.value).filter(v => v),
-                correct: document.getElementById('aq-correct').value,
-                explanation: document.getElementById('aq-explanation').value
-            };
-            if (!payload.question || !payload.correct || !payload.explanation) {
-                feedback.textContent = '❌ Please fill all required fields';
-                return;
-            }
-            feedback.textContent = 'Submitting...';
-            try {
-                const response = await fetch(CONFIG.questionsUrl + '?action=addQuestion', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json();
-                if (result.success) {
-                    feedback.textContent = '✅ Added!';
-                    refreshQuestions();
-                    setTimeout(() => {
-                        closeAddQuestion();
-                        feedback.textContent = '';
-                    }, 1000);
-                } else {
-                    feedback.textContent = '❌ ' + (result.errors ? result.errors.join(', ') : 'Failed');
-                }
-            } catch (err) {
-                feedback.textContent = '❌ Error';
-            }
-        }
-
         // Initialize app
         async function initializeApp() {
             await testConnection();
@@ -2424,59 +2254,8 @@ Focus on actionable knowledge I can apply immediately in my maintenance work.`;
                     <button class="btn btn-secondary" onclick="openGoogleSheet()">📊 Sheet</button>
                     <button class="btn btn-secondary" onclick="testImages()">🖼️ Images</button>
                     <button class="btn btn-secondary" onclick="refreshQuestions()">🔄 Refresh</button>
-                    <button class="btn btn-secondary" onclick="openAddQuestionForm()">➕ Add Question</button>
                     <button class="btn btn-secondary" onclick="openBulkImport()">📥 Bulk Import</button>
                 </div>
-            </div>
-        </div>
-
-        <div id="add-question-modal" class="modal hidden">
-            <div class="modal-content">
-                <h3>Add Question</h3>
-                <form id="add-question-form" novalidate onsubmit="submitAddQuestion(event)">
-                    <label>Quiz
-                        <select id="aq-quiz"></select>
-                    </label>
-                    <label>GPT Quiz (optional)
-                        <textarea id="aq-bulk" placeholder="Paste GPT-formatted quiz here"></textarea>
-                    </label>
-                    <details>
-                        <summary>Sample Format</summary>
-                        <pre>
-1. What is 2+2?
-A. 3
-B. 4
-C. 5
-Answer: B
-Explanation: 2+2=4.
-                        </pre>
-                    </details>
-                    <label>Question
-                        <textarea id="aq-question" required></textarea>
-                    </label>
-                    <label>Type
-                        <select id="aq-type" onchange="updateOptionFields()">
-                            <option value="multiple">Multiple Choice</option>
-                            <option value="true_false">True/False</option>
-                            <option value="short">Short Answer</option>
-                        </select>
-                    </label>
-                    <div id="aq-options-container" class="hidden">
-                        <div id="aq-options-list"></div>
-                        <button type="button" class="btn btn-secondary" onclick="addOptionField()">➕ Option</button>
-                    </div>
-                    <label>Correct Answer
-                        <input type="text" id="aq-correct" required>
-                    </label>
-                    <label>Explanation
-                        <textarea id="aq-explanation" required></textarea>
-                    </label>
-                    <div class="modal-actions">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                        <button type="button" class="btn btn-danger" onclick="closeAddQuestion()">Cancel</button>
-                    </div>
-                    <div id="aq-feedback" style="margin-top:10px;"></div>
-                </form>
             </div>
         </div>
 
