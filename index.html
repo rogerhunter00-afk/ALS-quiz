@@ -13,7 +13,9 @@
             --dark-color: #2c3e50;
             --light-color: #ecf0f1;
             --text-color: #2c3e50;
-            --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --background-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --landing-title-color: #ffffff;
+            --landing-subtitle-color: #e0f7fa;
         }
         
         [data-theme="dark"] {
@@ -25,6 +27,8 @@
             --light-color: #34495e;
             --text-color: #ecf0f1;
             --background-gradient: linear-gradient(135deg, var(--dark-color) 0%, var(--light-color) 100%);
+            --landing-title-color: var(--text-color);
+            --landing-subtitle-color: var(--text-color);
         }
 
         [data-theme="dark"] body {
@@ -38,7 +42,7 @@
         }
 
         [data-theme="dark"] .landing-page {
-            background: linear-gradient(135deg, var(--light-color), var(--dark-color));
+            background: var(--background-gradient);
         }
 
         [data-theme="dark"] .interactive-section,
@@ -158,7 +162,7 @@
         
         .landing-header h1 {
             font-size: 3.5em;
-            color: var(--text-color);
+            color: var(--landing-title-color);
             margin-bottom: 8px;
             font-weight: 800;
             text-shadow: 2px 4px 8px rgba(0,0,0,0.1);
@@ -167,7 +171,7 @@
         
         .landing-header p {
             font-size: 1.4em;
-            color: var(--text-color);
+            color: var(--landing-subtitle-color);
             margin-bottom: 25px;
             font-weight: 500;
         }
@@ -1264,7 +1268,7 @@
             width: 60px;
             height: 60px;
             border: 6px solid var(--light-color);
-            border-top: 6px solid var(--primary-color);
+            border-top-color: var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             position: relative;
