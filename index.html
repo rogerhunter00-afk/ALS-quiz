@@ -2154,7 +2154,13 @@
                 return `${window.quizTakerName}, George thinks you need to use your head more!`;
             }
         }
-        
+
+        // Build a deep link to ChatGPT with the provided prompt
+        function buildChatGPTURL(prompt) {
+            const encoded = encodeURIComponent(prompt);
+            return `https://chatgpt.com/?q=${encoded}`;
+        }
+
         function getChatGPTSection() {
     if (wrongAnswers.length === 0) {
         return `
