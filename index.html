@@ -67,13 +67,13 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #2c3e50;
+            color: var(--dark-color);
             background: var(--background-gradient);
             min-height: 100vh;
             padding: 15px;
             transition: all 0.3s ease;
         }
-        
+
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -88,7 +88,7 @@
         .landing-page {
             text-align: center;
             padding: 50px 30px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            background: var(--background-gradient);
             position: relative;
             overflow: hidden;
         }
@@ -98,7 +98,7 @@
             position: absolute;
             top: 20px;
             right: 80px;
-            background: linear-gradient(135deg, #f39c12, #e67e22);
+            background: linear-gradient(135deg, var(--warning-color), var(--danger-color));
             color: white;
             border: none;
             padding: 10px 18px;
@@ -125,7 +125,7 @@
         }
         
         [data-theme="dark"] .theme-toggle {
-            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            background: linear-gradient(135deg, var(--warning-color), var(--danger-color));
         }
         
         [data-theme="dark"] .theme-toggle::before {
